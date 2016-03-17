@@ -2,6 +2,8 @@
 /nbproject/
 /app/logs/
 /app/cache/
+!/app/cache/dev/translations/catalogue.fr.php
+!/app/cache/prod/translations/catalogue.fr.php
 /web/bundles/
 /web/uploads/
 /web/css/6f9f08b_css?family=Raleway:400,300,500,600,700,800_3.css
