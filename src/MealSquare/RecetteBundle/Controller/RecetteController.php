@@ -235,7 +235,7 @@ class RecetteController extends Controller {
             $em->flush();
 
             
-            if(!$recette->getArchive() && $recette->getVisibilite())
+            if(!$recette->getArchive())
                 return $this->redirect( $this->generateUrl( 'meal_square_recette_show', array('id' => $recette->getId()) ));
             else
                 return $this->redirect( $this->generateUrl('fos_user_profile_show'));
