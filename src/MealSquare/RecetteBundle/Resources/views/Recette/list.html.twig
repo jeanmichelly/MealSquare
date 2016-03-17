@@ -47,7 +47,6 @@
                     <div class="row tri">
                         <span>
                             {{ 'recettes.sortby'|trans({},'messages') }} 
-                            {{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}  |   
                             {% if pagination.isSorted('a.Titre') %} {% endif %} 
                             {{ knp_pagination_sortable(pagination, 'Titre', 'a.titre') }}
                         </span>

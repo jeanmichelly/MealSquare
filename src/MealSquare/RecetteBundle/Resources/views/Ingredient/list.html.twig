@@ -29,7 +29,6 @@
                             <div class="row tri">
                                 <span>
                                     {{ 'ingredients.sortby'|trans({},'messages') }} 
-                                    {{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}  |   
                                     {% if pagination.isSorted('a.libelle') %} {% endif %} 
                                     {{ knp_pagination_sortable(pagination, 'Libelle', 'a.libelle') }}
                                 </span>
