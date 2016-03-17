@@ -1,0 +1,34 @@
+{# header Twig template #}
+<header class="head" role="banner">
+    <!--wrap-->
+    <div class="wrap clearfix">
+        <a href="{{ path('meal_square_common_homepage') }}" title="MealSquare" class="logo">
+            {% image '@MealSquareCommonBundle/Resources/public/images/logo.png'  output="images/ico/logo.jpg" %}
+            <img src="{{ asset_url }}" width="160px" alt="MealSquare logo">
+            {% endimage %}
+        </a>
+
+        <nav class="main-nav" role="navigation" id="menu">
+            <ul>
+                <li><a href="{{ path('meal_square_common_homepage') }}" title="{{ 'common.menu.home'|trans }}"><span>{{ 'common.menu.home'|trans }}</span></a></li>
+                <li><a href="{{ path('meal_square_recette_list') }}" title="{{ 'common.menu.recipes'|trans }}"><span>{{ 'common.menu.recipes'|trans }}</span></a></li>
+                <li><a href="{{ path('meal_square_recette_ingredient_list') }}" title="{{ 'common.menu.ingredients'|trans }}"><span>{{ 'common.menu.ingredients'|trans }}</span></a></li>
+                <li><a href="{{ path('sonata_news_home') }}" title="{{ 'common.menu.news'|trans }}"><span>{{ 'common.menu.news'|trans }}</span></a></li>
+                <li><a href="{{ path('meal_square_common_contact') }}" title="{{ 'common.menu.contacts'|trans }}"><span>{{ 'common.menu.contacts'|trans }}</span></a></li>
+            </ul>
+        </nav>
+
+        <nav class="user-nav" role="navigation">
+                <ul>
+                        <li class="light"><a href="{{ path('meal_square_recette_search') }}" title="{{ 'common.menu.search_recipes'|trans }}"><i class="ico i-search"></i> <span>{{ 'common.menu.search_recipes'|trans }}</span></a></li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li class="medium"><a href="{{ path('sonata_user_profile_show') }}" title="{{ 'common.menu.account'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.account'|trans }}</span></a></li>
+                    {%else%}
+                        <li class="medium"><a href="{{ path('sonata_user_profile_show') }}" title="{{ 'common.menu.connect'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.connect'|trans }}</span></a></li>
+                    {% endif %}
+                        <li class="dark"><a href="{{ path('meal_square_recette_add') }}" title="{{ 'common.menu.submit_recipes'|trans }}"><i class="ico i-submitrecipe"></i> <span>{{ 'common.menu.submit_recipes'|trans }}</span></a></li>
+                </ul>
+        </nav>
+
+    </div>
+</header>

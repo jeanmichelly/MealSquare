@@ -1,0 +1,83 @@
+meal_square_recette_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MealSquareRecetteBundle:Default:index }
+    
+meal_square_recette_ingredient_list:
+    path:     /ingredient/list/
+    defaults: { _controller: MealSquareRecetteBundle:Ingredient:list }
+    
+meal_square_recette_ingredient_show:
+    path:     /ingredient/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Ingredient:show }
+
+meal_square_recette_list:
+    path:     /recette/list/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:list }
+    
+meal_square_recette_show:
+    path:     /recette/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:show }
+
+meal_square_recette_print:
+    path:     /recette/print/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:print }
+
+meal_square_recette_delete:
+    path:     /recette/delete/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:delete }
+    
+meal_square_recette_favoris_delete:
+    path:     /recette/favoris/delete/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:deleteFavoris }
+    
+meal_square_recette_favoris_add:
+    path:     /recette/favoris/add/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:addFavoris }
+    
+meal_square_recette_edit:
+    path:     /recette/edit/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:edit }
+    
+meal_square_recette_add:
+    path:     /recette/add/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:add }
+    
+meal_square_recette_clone:
+    path:     /recette/clone/{id}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:clone }
+    
+meal_square_recette_raccourci:
+    path:     /recette/raccourci/{id}-{slug}
+    defaults: { _controller: MealSquareRecetteBundle:Recette:raccourci }
+    
+meal_square_recette_search:
+    path:     /search/
+    defaults: { _controller: MealSquareRecetteBundle:Recherche:find }    
+    
+meal_square_ajax_ingredient:
+    path:     /asynchrone/ingredient
+    defaults: { _controller: MealSquareRecetteBundle:Asynchrone:ingredient }
+    condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
+    
+meal_square_ajax_like_recette:
+    path:     /asynchrone/recette/like/
+    defaults: { _controller: MealSquareRecetteBundle:Asynchrone:like }
+    condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
+    
+meal_square_ajax_rate_recette:
+    path:     /asynchrone/recette/rate/
+    defaults: { _controller: MealSquareRecetteBundle:Asynchrone:rate }
+    condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
+    
+meal_square_ajax_favoris_recette:
+    path:     /asynchrone/recette/favoris/
+    defaults: { _controller: MealSquareRecetteBundle:Asynchrone:favoris }
+    condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
+    
+meal_square_member_profil:
+    path:     /profile/membre-{id}
+    defaults: { _controller: ApplicationSonataUserBundle:ProfileFOSUser1:other }
+    
+meal_square_user_avatar:
+    path:     /profile/avatar
+    defaults: { _controller: ApplicationSonataUserBundle:ProfileFOSUser1:avatar }

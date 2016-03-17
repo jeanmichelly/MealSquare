@@ -1,0 +1,142 @@
+
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
+common:
+
+    # Header menu
+    menu:
+        home: Accueil
+        recipes: Les recettes
+        forums: Forum
+        search: Recherche
+        more: Plus
+        connexion: Connexion
+        ingredients: Les ingrédients
+        recettes: Les recettes
+        contacts: Contactez nous
+        submit_recipes: Ajouter une recette
+        account: Mon compte
+        search_recipes: Rechercher
+        news: Actualités
+        connect: Se Connecter
+
+    # User account box
+    user:
+        # Users types
+        types:
+            user: Membre
+            visitor: Visiteur
+
+        # User menu
+        menu:
+            account: Mon compte
+            emails: E-mails
+            logout: Déconnexion
+            connect: Se connecter
+            register: S'inscrire
+            help: Aide
+            admin: Administration
+            members: Membres
+            
+        profile:
+            about: Moi
+            recipes: Mes Recettes
+            favourite: Mes Favoris
+            badges: Mes Badges
+
+        # Sex
+        sex:
+            male: Homme
+            female: Femme
+            
+        #User information
+        information:
+            username: Nom d'utilisateur
+            fistname: Prenom
+            lastname: Nom
+            email: Adresse email
+
+    # Contact
+    contact:
+        message: Votre message
+        name: Votre nom
+        email: Votre adresse electronique
+        send: Envoyez le message
+        message: Votre message
+        title: Contactez - nous ?
+        
+    pagination:
+        previous: Précédent
+        next: Suivant
+        
+
+    
+
+    
+
+    # Footer
+    footer:
+        # Links
+        legalities: Mentions légales
+        help_us: Nous aider
+        change_locale: Changer de langue
+        desktop_version: Version ordinateur
+        mobile_version: Version mobile
+        help: Besoin d'aide ?
+        help_text: Contactez nous pour toutes informations concernant le site.
+        follow: Nous suivre
+        about: A propos de MealSquare
+        about_text: MealSquare est un site de recette culinaire.
+        
+
+        # Authors and version
+        text: "Réalisé par Nanocreatives<br />Propulsé par Symfony 2"
+        mobile_text: "Réalisé par Nanocreatives"
+        version: Version
+        
+        #Copyrights
+        copyrights: Copyright © 2015 MealSquare. Tous droits réservés
+
+
+    home:
+        bienvenu: Bienvenue sur MealSquare !
+        les_chiffres : Les chiffres de MealSquare
+        ingredients : Ingrédients
+        recettes : Recettes
+        utilisateurs : Utilisateurs
+        postes : Articles
+        media: Photos
+        intro : est une encyclopédie communtautaire centrée autour des recettes de cuisines
+        intro_part2 : Dès aujourd'hui, oubliez l'ensemble de vos livres de cuisine, et optez pour une bibliothèque culinaire numérique.
+        mealsquare : MealSquare 
+        nous_rejoindre : Nous rejoindre !
+        deja_membre : Déjà membre ? cliquer 
+        ici : ici
+        pour_connecter : pour vous connecter
+        membre: Membres
+        profil : Consulter votre profil
+        recette_de_la_journee : Recette du jour
+        plus_de_recette : Plus de recettes
+        haut : Retour Haut de la page
+        last_articles : Les derniers articles
+        more_articles : Voir plus d'article
+        no_article : Aucun article disponible
+        no_user : Pas d'utilisateur
+        no_recette : Aucune recette disponible
+        no_recetteofweek : Desolé, Nous n'avons pas encore sélectionné la recette de la semaine
+        no_recetteofmonth : Desolé, Nous n'avons pas encore sélectionné la recette du mois
+        no_recetteselectionne : Desolé, Nous n'avons pas encore sélectionné de recette
+        voir_article : Voir Article
+        see_also : Voir aussi
+        our_members : Nos Membres
+        newest : Nouveau
+        recetteofweek : Recette de la semaine
+        recetteofmonth : Recette du mois
+        recetteselection : Notre sélection
+        recetteclassic : Le grand classic
+        no_recetteclassic : Desolé, Nous n'avons pas encore sélectionné le grand classic
+        recetterate : La plus noté
+        shortcut: Quel type de recette cherchez vous?
+        
+    profile:
+        setting: Changer mes informations

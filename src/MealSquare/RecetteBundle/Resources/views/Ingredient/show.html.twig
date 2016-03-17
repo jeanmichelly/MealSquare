@@ -1,0 +1,105 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+
+{% block title %}
+    {{ingredient.libelle}}  - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+
+    <main class="main" role="main">
+        <!--wrap-->
+        <div class="wrap clearfix">
+            <!--breadcrumbs-->
+            <nav class="breadcrumbs">
+                <ul>
+                    <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
+                    <li><a href="{{path('meal_square_recette_ingredient_list')}}" title="{{ 'common.menu.ingredients'|trans }}">{{ 'common.menu.ingredients'|trans }}</a></li>          
+                    <li>{{ingredient.libelle}}</li>
+
+                </ul>
+            </nav>
+            <!--//breadcrumbs-->
+
+            <!--row-->
+            <div class="row">
+                <header class="s-title wow fadeInLeft">
+                    <h1>{{ingredient.libelle}}</h1>
+                </header>
+
+                <!--content-->
+                <section class="content three-fourth wow fadeInLeft">
+                    <!--blog entry-->
+                   
+                    <!--//blog entry-->
+                    <div class="row">
+                        <div class="full-width">
+                            <div class="container box">
+                                <div class="entry-featured demoanimate wow flash" data-wow-delay=".4s" data-wow-duration="1s" data-wow-offset="300">{% thumbnail ingredient.image,'big' %}</div> 
+                                <p>{{ingredient.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h2 class="ribbon bright">{{ 'ingredients.videos'|trans({},'messages')}}</h2>
+                    </div>
+                    <div class="entries row">
+                        {% if ingredient.galerie is not null %} 
+                            {% for galleryHasMedias in ingredient.galerie.GalleryHasMedias %}
+                                {% set technique = galleryHasMedias.media %}
+                                <!--item-->
+                                <div class="entry one-third wow fadeInLeft">
+                                    <figure>
+                                        {% thumbnail technique, 'square' with {'width':'100%','height':'auto'} %}
+                                        <figcaption><a class="video" href="{{technique.providerMetadata.provider_url~'watch?v='~technique.providerReference}}"><i style="margin:28% 0 3px" class="fa fa-play-circle fa-2x"></i> <span>{{ 'ingredients.video_detail'|trans({}, 'messages') }}</span></a></figcaption>
+                                    </figure>
+                                    <div class="container">
+                                        <p>{{technique.name}}</p> 
+                                    </div>
+                                </div>
+                                <!--item-->
+                            {% else %}
+                                <div class="container">
+                                    <h3> {{ 'ingredients.no_techniques'|trans({},'messages') }} </h3>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="container">
+                                <h3> {{ 'ingredients.no_techniques'|trans({},'messages') }} </h3>
+                            </div>
+                        {% endif %}
+                    </div>
+                </section>
+                <!--//content-->
+
+                <!--right sidebar-->
+                <aside class="sidebar one-fourth">
+                    <div class="widget">
+                        <h3>{{ 'ingredients.recettes'|trans({},'messages') ~ ' ' ~ ingredient.libelle }}</h3>
+                        <ul class="variantes-versions">
+                            {% for recette in recettes %}
+                                <li><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{% thumbnail recette.image,'small' with {'width':'32px'} %}
+                                <span>{{recette.titre}}</span></a><div class="clearfix"></div></li>
+                            {% else %}
+                                <li>Aucune recette disponible</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <!--//right sidebar-->
+            </div>
+            <!--//row-->
+        </div>
+        <!--//wrap-->
+    </main>
+    <!--//main-->
+{% endblock %}
+{% block script %}
+    <script> new WOW().init();</script>
+    <script>
+        $('.video').magnificPopup({
+            type: 'iframe'
+          });
+    </script>
+{% endblock %}

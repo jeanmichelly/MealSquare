@@ -1,0 +1,8 @@
+services:
+    mealsquare.type.ingredient:
+        class: MealSquare\RecetteBundle\Form\IngredientRecetteType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: ingredient_recette_type }
+
+

@@ -1,0 +1,118 @@
+## YAML Template.
+---
+ingredients:
+    detail: Détail sur l'ingrédient
+    sortby: Trier par
+    no: Il n'y a aucun ingrédient disponible
+    videos: Techniques en vidéo
+    recettes: Recettes à base de 
+    no_techniques: Aucune technique en vidéo pour cet ingrédient
+    video_detail: Lire la vidéo
+
+recettes:
+    ingredients : Liste des ingrédients de la recette
+    ingredient_small_title : Ingrédients de la recette
+    detail: Détail sur la recette
+    sortby: Trier par
+    not_visible: Cette recette n'est pas visible aux autres utilisateurs. Editez la pour le changer.
+    no: Il n'y a aucune recette disponible
+    preparation_time: Temps de préparation
+    coocking_time: Temps de cuisson
+    difficulty: Difficulté
+    serves: Nombre de personnes
+    category: Catégorie
+    saison: Saison
+    speciality: Spécialité
+    autor: Auteur
+    source: Source
+    add: Ajouter une recette
+    add_title: Ajouter une nouvelle recette
+    #add_favourite: Ajouter à mes favoris
+    add_favourite: Absent de mes favoris
+    remove_favourite: Dans mes favoris
+    edit: Editer la recette
+    remove: Supprimer la recette
+    share_facebook: Sur Facebook
+    share_twitter: Sur Twitter
+    dislike: J'aime cette recette
+    like: Je n'aime pas
+    connect_to_like: Vous devez être connecté pour aimer cette recette
+    connect_to_rate: Vous devez être connecté pour noter cette recette
+    connect_to_favourise: Vous devez être connecté pour ajouter cette recette à vos favoris
+    loading: ...
+    no_description: Aucune description disponible pour cette recette
+    share: Espace partage
+    edition: Gestion de la recette
+    who_liked: Les membres qui ont aimé cette recette
+    variantes: Variantes de la recette
+    versions: Versions de la recette
+    mother: Recette Mère
+    rate_recipe: Noter la recette
+    rate_display: Cette recette a obtenu une note de 
+    likes_display: personnes ont aimé cette recette 
+    like_display: personne aime cette recette
+    no_like: Personne n'a encore aimé cette recette. Soyez le premier
+    no_rate: Personne n'a encore évalué cette recette. Soyez le premier
+    no_result: Aucun résultat trouvé
+    rechercherecette: Recherche de recettes
+    paramrecherche: Paramètres de la recherche
+    recherchebyingredients : Rechercher par ingrédients
+    home_intro_instruction : Tout ce que vous devez faire c'est d'entrer un igredient, un plat ou un mot clé.
+    home_intro_instruction_categorie : Vous pouvez également choisir une catégorie spécifique, une saison, une spécialité.
+    home_intro_instruction_pub : Vous trouverez surement une recette à essayer.
+    home_commencer_plat : Trouvez une recette
+    no_recette_of_day : La recette du jour n'est pas encore disponible.
+    last_recette : Dernières recettes
+    search_ingredients_instruction: Cliquez sur ‘-’ pour retirer ingredient, ou ajoutez en grâce au bouton en dessous
+    search:
+        nbResults: résultat(s) trouvé(s)
+    print: Imprimer la recette
+    
+form:
+    add:
+        basics: Informations Générales
+        required: Tous les champs sont obligatoires
+        title: Titre de la recette
+        preparation: Temps de préparation (en minute)
+        cooking: Temps de Cuisson (en minute)
+        nbpeople: Pour combien de personne ?
+        difficulty: Difficulté
+        category: Choisir une catégorie
+        description: Description
+        description_text: Description de la recette
+        ingredients: Ingrédients
+        ingredient: Ingrédient
+        quantity: Quantité
+        add_ingredient: Ajouter un ingrédient
+        step: Etapes
+        step_text: Entrer les instructions de la recette, pas à pas
+        step_title: Un bref titre pour cette étape
+        step_description: Tâches à réaliser
+        add_step: Ajouter une étape
+        photo: Photo
+        choose_file: Choisir une photo
+        other: Autres Informations
+        country: Pays
+        season: Saison
+        speciality: Spécialité
+        publication: Publication
+        publication_text: Voulez-vous publier cette recette ou envisagez-vous encore de la modifier plus tard?
+        public: Rendre publique cette recette
+        publish: Enregistrer cette recette
+        source: Orgine de la recette
+        tags: Ajouter des tags à votre recette
+        
+    user:
+        avatar: Changez votre photo de profil
+        
+    edit:
+        title: Editer une recette
+
+    version:
+        title: Version de recette
+        action: Créer une autre version de cette recette
+        
+    variante:
+        title: Variante de recette
+        action: Créer une variante de cette recette         
+        

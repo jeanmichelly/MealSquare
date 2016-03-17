@@ -1,0 +1,94 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+
+{% block title %}
+    {{ 'common.menu.ingredients'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <main class="main" role="main">
+
+        <div class="wrap clearfix">
+            <!--row-->
+            <div class="row">
+                <!--content-->
+                <section class="content three-fourth">
+                    <!--cwrap-->
+                    <div class="cwrap">
+                        <!--breadcrumbs-->
+                        <nav class="breadcrumbs">
+                            <ul>
+                                <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
+                                <li>{{ 'common.menu.ingredients'|trans }}</li>
+                            </ul>
+                        </nav>
+                        <!--//breadcrumbs-->
+                        <header class="s-title">
+                            <h2 class="ribbon bright">{{ 'common.menu.ingredients'|trans }}</h2>
+                            <div class="row tri">
+                                <span>
+                                    {{ 'ingredients.sortby'|trans({},'messages') }} 
+                                    {{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}  |   
+                                    {% if pagination.isSorted('a.libelle') %} {% endif %} 
+                                    {{ knp_pagination_sortable(pagination, 'Libelle', 'a.libelle') }}
+                                </span>
+                            </div>
+                        </header>       
+
+                        <!--entries-->
+                        <div class="entries row">
+                            {% for article in pagination %}
+                                <!--item-->
+                                <div class="entry one-third wow fadeInLeft">
+                                    <figure>
+                                        {% thumbnail article.image, 'big' %}
+                                        <figcaption><a href="{{ path('meal_square_recette_ingredient_show',{'id':article.id}) }}"><i class="ico i-view"></i> <span>{{ 'ingredients.detail'|trans({}, 'messages') }}</span></a></figcaption>
+                                    </figure>
+
+                                    <div class="container">
+                                        <h2><a href="{{ path('meal_square_recette_ingredient_show',{'id':article.id}) }}">{{article.libelle}}</a></h2>
+                                    </div>
+                                </div>
+                                <!--item-->
+
+                            {% else %}
+                                <p></p>
+                            {% endfor %}
+                            <div class="quicklinks">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
+                        </div>
+                        <!--//entries-->
+                    </div>
+                    <!--//cwrap-->
+                </section>
+                <!--//content-->
+                <!--right sidebar-->
+                <aside class="sidebar one-fourth">
+                    <div class="widget wow fadeInRight">
+                        <h3>{{ 'common.home.shortcut'|trans({},'messages') }}</h3>
+                        <ul class="boxed">
+                            {% for raccourci in raccourcis%}
+                                <li class="{%if loop.index is odd %}light{%else%} medium{%endif%}">
+                                    <a href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
+                                        <i class="{{raccourci.icone}}"></i> 
+                                        <span>{{raccourci.nom}}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+            <!--//right sidebar-->
+        </div>
+        <!--//wrap-->
+    </main>
+{% endblock %}
+{% block script %}
+    <script> new WOW().init();</script>
+{% endblock %}
+
+
+

@@ -1,0 +1,394 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+
+{% block title %}
+    {{recette.titre}}  - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+
+    <main class="main" role="main">
+        <!--wrap-->
+        <div class="wrap clearfix">
+            <!--breadcrumbs-->
+            <nav class="breadcrumbs">
+                <ul>
+                    <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
+                    <li><a href="{{path('meal_square_recette_list')}}" title="{{ 'common.menu.recettes'|trans }}">{{ 'common.menu.recettes'|trans }}</a></li>          
+                    <li> {{recette.titre}}</li>
+                </ul>
+            </nav>
+        </div>
+        <!--//breadcrumbs-->
+        <div class="wrap clearfix">
+            <!--row-->
+            <div class="row">
+                <header class="s-title wow fadeInLeft">
+                    <h1>{{recette.titre}}</h1>
+                    {% if recetteisVisible is defined and not recetteisVisible%}
+                        <h4 style="padding:10px;background-color: white;border-radius: 5px;margin-bottom: 15px;text-align: center;color: red">
+                            <i class="fa fa-eye-slash"></i>&nbsp;
+                            {{ 'recettes.not_visible'|trans({},'messages') }}
+                        </h4>
+                    {%endif%}
+                </header>
+                <!--content-->
+                <section class="content three-fourth">
+                    <!--recipe-->
+                    <div class="recipe">
+                        <div class="row">
+                            <!--two-third-->
+                            <article class="two-third wow fadeInLeft">
+                                <div class="image">{% thumbnail recette.image,'big' %}</div>
+                                <div class="intro">
+                                    <p><strong>{{ 'form.add.description_text'|trans({},'messages') }}</strong></p> 
+                                    <p>
+                                        {% if recette.description is not null %}
+                                            {{ recette.description }}
+                                        {% else %}
+                                            {{ 'recettes.no_description'|trans({},'messages') }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="rate-like-display intro">
+                                    <p id="rate-display" class="one-half">
+                                        
+                                        {% if recette.note.average < 1 %}
+                                            {{ 'recettes.no_rate'|trans({},'messages') }}&nbsp;
+                                        {% else %}
+                                            {{ 'recettes.rate_display'|trans({},'messages') }}&nbsp;<span>{{recette.note.average}}</span>
+                                        {% endif %}
+                                    </p>
+                                    <p id="like-display" class="one-half" style="border-left: 2px solid white;">
+                                        {% if recette.like.numLikes ==0 %}
+                                            {{ 'recettes.no_like'|trans({},'messages') }}&nbsp;
+                                        {% elseif recette.like.numLikes ==1 %}
+                                            <span>1&nbsp;</span>{{ 'recettes.like_display'|trans({},'messages') }}
+                                        {% else %}
+                                            <span>{{recette.like.numLikes}}</span>&nbsp;{{ 'recettes.likes_display'|trans({},'messages') }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="instructions">
+                                    <ol>
+                                        {% for block in recette.getRecetteBlocks() %}
+                                            <li>{{ block.description | raw }}</li>
+                                            {% endfor %}    
+                                    </ol>
+                                </div>
+                            </article>
+                            <!--//two-third-->
+
+                            <!--one-third-->
+                            <article class="one-third wow fadeInDown">
+                                <dl class="basic">
+                                    <dt>{{ 'recettes.preparation_time'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getTempsPreparation()}} min</dd>
+                                    <dt>{{ 'recettes.coocking_time'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getTempsCuisson()}} min</dd>
+                                    <dt>{{ 'recettes.difficulty'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getDifficulte()}}</dd>
+                                    <dt>{{ 'recettes.serves'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getNbPersonne()}}</dd>
+                                    <dt>{{ 'recettes.saison'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getSaison()}}</dd>
+                                    <dt>{{ 'recettes.speciality'|trans({},'messages') }}</dt>
+                                    <dd style="font-size: 11px;padding: 2px;">{{recette.getSpecialite() |slice(0, 13)}}...</dd>
+                                </dl>
+
+                                <dl class="user">
+                                    <dt>{{ 'recettes.category'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getCategorie()}}</dd>
+                                    <dt>{{ 'recettes.autor'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getAuteur()}}</dd>
+                                    <dt>{{ 'recettes.source'|trans({},'messages') }}</dt>
+                                    <dd>{{recette.getSource()}}</dd>
+                                </dl>
+                                
+                                {% if recette.isIngredientsFormatted %}
+                                    <dl class="ingredients">
+                                        {% for ingr in recette.ingredients %}
+                                            <dt>{{ingr.quantite}}</dt>
+                                            <dd><a style="color:white" href="{{ path('meal_square_recette_ingredient_show',{'id':ingr.ingredient.id}) }}" title="{{ingr.ingredient.libelle}}">{{ingr.ingredient.libelle}}</a></dd>
+                                        {% endfor %}
+                                    </dl>
+                                {% else %}
+                                    <div class="widget">
+                                        <h3>{{ 'recettes.ingredient_small_title'|trans({},'messages') }}</h3>
+                                        <ul class=" ingredient-non-formatted">
+                                            {{ recette.fullIngredients | raw }}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                {% if not isRater %}
+                                    <div class="widget" style="text-align: center; color: rgb(219, 126, 121);">
+                                        <h3>{{ 'recettes.rate_recipe'|trans({},'messages') }}</h3>
+                                        <ul id="noter" class="note-recette">
+                                            <li>1</li>
+                                            <li>2</li>
+                                            <li>3</li>
+                                            <li>4</li>
+                                            <li>5</li>
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                                    <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id}) }}">{{ 'form.version.action'|trans({},'messages') }}</a>
+                                {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED")%}
+                                    <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id}) }}">{{ 'form.variante.action'|trans({},'messages') }}</a>
+                                {% endif %}
+                            </article>
+                            <!--//one-third-->
+                        </div>
+                    </div>
+                    <!--//recipe-->
+
+                    <!--comments-->
+                    <div class="comments wow fadeInUp" id="comments">
+                        <h2 style="text-align: center">Vous avez ou comptez tester cette recette ? Dites ce que vous en pensez.</h2>
+                        {{ include( 'MealSquareRecetteBundle:Disqus:comment.html.twig', { 'recette': recette } ) }}
+                    </div>
+                    <!--//comments-->
+                </section>
+                <!--//content-->
+
+                <!--right sidebar-->
+                <aside class="sidebar one-fourth wow fadeInRight">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                        {% if recette.versions is not null%}
+                            <div class="widget">
+                                <h3>{{ 'recettes.versions'|trans({},'messages') }}</h3>
+                                <ul class="variantes-versions">
+                                    {% for version in recette.versions %}
+                                        <li><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                        <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if recette.recetteMere is not null%}
+                        <div class="widget">
+                            <h3>{{ 'recettes.mother'|trans({},'messages') }}</h3>
+                            <ul class="variantes-versions">
+                                    <li><a href="{{ path('meal_square_recette_show',{'id':recette.recetteMere.id}) }}">{% thumbnail recette.recetteMere.image,'small' with {'width':'36px'} %}
+                                    <span>{{recette.recetteMere.titre}}</span></a><div class="clearfix"></div></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% if recette.variantes is not null%}
+                        <div class="widget">
+                            <h3>{{ 'recettes.variantes'|trans({},'messages') }}</h3>
+                            <ul class="variantes-versions">
+                                {% for variante in recette.variantes %}
+                                    <li><a href="{{ path('meal_square_recette_show',{'id':variante.id}) }}">{% thumbnail variante.image,'small' with {'width':'32px'} %}
+                                    <span>{{variante.titre}}</span></a><div class="clearfix"></div></li>
+                                {% else %}
+                                    <li>Aucune variante</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+{#                    <div class="widget nutrition">
+                        <h3>Nutrition facts <span>(per serving)</span></h3>
+                        <table>
+                            <tr>
+                                <td>Calories </td>
+                                <td>505</td>
+                            </tr>
+                        </table>
+                    </div>#}
+
+                    <div class="widget share">
+                        <h3>{{ 'recettes.share'|trans({},'messages') }}</h3>
+                        <ul class="boxed">
+                            <li class="light"><a href="#"title="{{ 'recettes.share_facebook'|trans({},'messages') }}"><i class="ico i-facebook"></i> <span>{{ 'recettes.share_facebook'|trans({},'messages') }}</span></a></li>
+                            <li class="medium"><a target='_blank' href="{{ path('meal_square_recette_print',{ 'id':recette.id }) }}" title="{{ 'recettes.print'|trans({},'messages') }}"><i class="fa fa-print fa-3x"></i> <span>{{ 'recettes.print'|trans({},'messages') }}</span></a></li>
+                            {% if isLiker is defined and isLiker %}
+                                {% set likeButtonTitle = 'recettes.dislike'|trans({},'messages') %}
+                            {% else %}
+                                {% set likeButtonTitle = 'recettes.like'|trans({},'messages') %}
+                            {% endif %}
+                            <li class="dark"><a id="like-recette" class="{% if isLiker is defined and isLiker %}isLiker{% endif %}"  href="#" title="{{likeButtonTitle}}"><i class="ico i-favourites"></i> <span>{{likeButtonTitle}}</span></a></li>
+                        </ul>
+                    </div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <div class="widget share">
+                        <h3>{{ 'recettes.edition'|trans({},'messages') }}</h3>
+                        <ul class="boxed">
+                            {% if recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                                <li class="light"><a href="{{ path('meal_square_recette_edit',{ 'id':recette.id }) }}"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
+                                <li class="medium"><a href="{{ path('meal_square_recette_delete',{ 'id':recette.id }) }}"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+                            {% else %}
+                                <li class="light link-not-activated"><a href="#"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
+                                <li class="medium link-not-activated"><a href="#"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+                            {% endif %}
+                            {% if isFavoris is defined and isFavoris %}
+                                {% set favorisButtonTitle = 'recettes.remove_favourite'|trans({},'messages') %}
+                            {% else %}
+                                {% set favorisButtonTitle = 'recettes.add_favourite'|trans({},'messages') %}
+                            {% endif %}
+                            <li class="dark"><a href="#" id="favoris-recette" class="{% if isFavoris is defined and isFavoris %}isFavoris{% endif %}"  title="{{ favorisButtonTitle }}"><i class="fa fa-3x fa-star"></i> <span>{{ favorisButtonTitle }}</span></a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <div class="widget members">
+                        <h3>{{ 'recettes.who_liked'|trans({},'messages') }}</h3>
+                        <ul class="boxed">
+                            {% for like in likers %}
+                                <li>
+                                    <div class="avatar">
+                                        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") or app.user is null or app.user.id != like.liker.id %}
+                                            <a class="ajax-popup-link" href="{{ path('meal_square_member_profil',{ 'id':like.liker.id }) }}">
+                                                {% thumbnail like.liker.avatar,'square' with {'width':'100%','height':'100%' } %}
+                                                <span style="font-size: 10px">{{like.liker.username}}</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ path('fos_user_profile_show') }}">
+                                                {% thumbnail like.liker.avatar,'square' with {'width':'100%','height':'100%' } %}
+                                                <span style="font-size: 10px">{{like.liker.username}}</span>
+                                            </a>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <!--//right sidebar-->
+            </div>
+            <!--//row-->
+        </div>
+        <!--//wrap-->
+    </main>
+    <!--//main-->
+{% endblock %}
+{% block script %}
+    <script> new WOW().init();</script>
+    <script>
+        $('.ajax-popup-link').magnificPopup({
+            closeBtnInside:true,
+            midClick: true,
+            type: 'ajax'
+          });
+        $('#like-recette').click(function(event){
+            event.preventDefault();
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                alert("{{ 'recettes.connect_to_like'|trans({},'messages') }}");
+            {% else %}
+                button = $(this);
+                like_display = $('#like-display');
+                like_display.html('<i class="fa fa-spin fa-spinner"></i><br/><span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
+                
+                button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
+                $.ajax({
+                    url: "{{ path('meal_square_ajax_like_recette') }}",
+                    dataType: "json",
+                    data : { id: "{{ recette.like.id }}" },
+                    type: 'POST',
+                    success: function (data)
+                    {
+                        button.toggleClass("isLiker");
+                        if(button.hasClass("isLiker")){
+                            button.html('<i class="ico i-favourites"></i> <span>{{ 'recettes.dislike'|trans({},'messages') }}</span>');
+                        }else{
+                            button.html('<i class="ico i-favourites"></i> <span>{{ 'recettes.like'|trans({},'messages') }}</span>');
+                        }
+                        if(data['likes'] === 0){
+                            like_display.html("{{ 'recettes.no_like'|trans({},'messages') }}&nbsp;");
+                        }else if(data['likes'] === 1){
+                            like_display.html("<span>1&nbsp;</span>{{ 'recettes.like_display'|trans({},'messages') }}");
+                        }else{
+                            like_display.html("<span>"+data['likes']+"</span>&nbsp;{{ 'recettes.likes_display'|trans({},'messages') }}");
+                        }
+                        
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            {% endif %}
+        });
+        
+            
+    </script>
+    
+    <script>
+        $('#noter li').click(function(event){
+            event.preventDefault();
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                alert("{{ 'recettes.connect_to_rate'|trans({},'messages') }}");
+            {% else %}
+                container = $("#noter").parent();
+                note = $(this).html();
+                rate_display = $('#rate-display');
+                rate_display.html('<i class="fa fa-spin fa-spinner"></i><br/><br/>');
+                
+                container.html('<br/><i class="fa fa-spin fa-spinner fa-3x"></i><br/>');
+                $.ajax({
+                    url: "{{ path('meal_square_ajax_rate_recette') }}",
+                    dataType: "json",
+                    data : { id: "{{ recette.note.id }}", note: note },
+                    type: 'POST',
+                    success: function (data)
+                    {
+                        container.toggleClass("isRater");
+                        container.html("<p style='padding:10px;color:white;'>Votre note a bien été prise en compte</p>");
+                        
+                        if(data['average'] < 1){
+                            rate_display.html("{{ 'recettes.no_rate'|trans({},'messages') }}&nbsp;");
+                        }else{
+                            rate_display.html("{{ 'recettes.rate_display'|trans({},'messages') }}&nbsp;<span>"+data['average']+"</span>");
+                        }
+                        
+                        
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            {% endif %}
+        });
+        
+            
+    </script>
+    
+    <script>
+    $('#favoris-recette').click(function(event){
+        event.preventDefault();
+        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            alert("{{ 'recettes.connect_to_favourise'|trans({},'messages') }}");
+        {% else %}
+            button = $(this);
+            button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
+            $.ajax({
+                url: "{{ path('meal_square_ajax_favoris_recette') }}",
+                dataType: "json",
+                data : { id: "{{ recette.id }}" },
+                type: 'POST',
+                success: function (data)
+                {
+                    console.log(data);
+                    button.toggleClass("isFavoris");
+                    if(button.hasClass("isFavoris")){
+                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.remove_favourite'|trans({},'messages') }}</span>');
+                    }else{
+                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.add_favourite'|trans({},'messages') }}</span>');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+            {% endif %}
+    });
+</script>
+{% endblock %}
