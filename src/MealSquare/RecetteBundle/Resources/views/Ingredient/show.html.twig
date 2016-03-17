@@ -37,7 +37,7 @@
                         <div class="full-width">
                             <div class="container box">
                                 <div class="entry-featured demoanimate wow flash" data-wow-delay=".4s" data-wow-duration="1s" data-wow-offset="300">{% thumbnail ingredient.image,'big' %}</div> 
-                                <p>{{ingredient.description}}</p>
+                                <p>{{ingredient.description|raw}}</p>
                             </div>
                         </div>
                     </div>
