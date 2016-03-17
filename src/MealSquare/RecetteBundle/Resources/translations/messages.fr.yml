@@ -86,7 +86,6 @@ form:
         add_ingredient: Ajouter un ingrédient
         step: Etapes
         step_text: Entrer les instructions de la recette, pas à pas
-        step_title: Un bref titre pour cette étape
         step_description: Tâches à réaliser
         add_step: Ajouter une étape
         photo: Photo

@@ -183,7 +183,6 @@
         </div>
     {% else %}
         <div class="f-row instruction"  data-content="{{ name }}">
-            <div class="full">{{ form_widget(row.titre, { 'attr': {'placeholder': 'form.add.step_title'|trans({},'messages')} }) }}</div>
             <button  data-related="{{ name }}" id="remove-step" class="remove">-</button>
             <div class="full">{{ form_widget(row.description, { 'attr': {'placeholder': 'form.add.step_description'|trans({},'messages')} }) }}</div>
         </div>

@@ -15,7 +15,6 @@ class InfosBlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
             ->add('description')
         ;
     }

@@ -24,13 +24,6 @@ class InfosBlock
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
-     */
-    private $titre;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -100,30 +93,6 @@ class InfosBlock
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set titre
-     *
-     * @param string $titre
-     *
-     * @return InfosBlock
-     */
-    public function setTitre($titre)
-    {
-        $this->titre = $titre;
-
-        return $this;
-    }
-
-    /**
-     * Get titre
-     *
-     * @return string
-     */
-    public function getTitre()
-    {
-        return $this->titre;
     }
 
     /**
@@ -199,9 +168,6 @@ class InfosBlock
     }
     
     public function __toString() {
-        if(is_null($this->titre))
-            return substr($this->description, 0, 20);
-        else 
-            return $this->titre;
+        return substr($this->description, 0, 20);
     }
 }
