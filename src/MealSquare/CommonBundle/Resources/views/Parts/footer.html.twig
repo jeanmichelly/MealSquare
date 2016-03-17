@@ -27,8 +27,13 @@
 
                         <nav class="foot-nav">
                             <ul>
-                                <li><a href="#" title="{{ 'common.menu.home'|trans }}"><span>{{ 'common.menu.home'|trans }}</span></a></li>
-                                <li><a href="#" title="{{ 'common.menu.recipes'|trans }}"><span>{{ 'common.menu.recipes'|trans }}</span></a></li>
+                                {% if app.request.get('_route') == 'meal_square_common_homepage' %}
+                                    <li><a href="javascript:void(0)" title="{{ 'common.menu.home'|trans }}" class="scroll-to-top"><span>{{ 'common.menu.home'|trans }}</span></a></li>
+                                {% else %}
+                                    <li><a href="{{ path('meal_square_common_homepage') }}" title="{{ 'common.menu.home'|trans }}"><span>{{ 'common.menu.home'|trans }}</span></a></li>
+                                {% endif %}
+
+                                <li><a href="{{ path('meal_square_recette_list') }}" title="{{ 'common.menu.recipes'|trans }}"><span>{{ 'common.menu.recipes'|trans }}</span></a></li>
                                 <li><a href="{{ path('meal_square_recette_ingredient_list') }}" title="{{ 'common.menu.ingredients'|trans }}"><span>{{ 'common.menu.ingredients'|trans }}</span></a></li>
                                 <li><a href="{{ path('sonata_news_home') }}" title="{{ 'common.menu.news'|trans }}"><span>{{ 'common.menu.news'|trans }}</span></a></li>
                                 {#<li><a href="#" title="{{ 'common.menu.forums'|trans }}"><span>{{ 'common.menu.forums'|trans }}</span></a></li>#}
@@ -40,7 +45,7 @@
                                     </a></li>
                                 {% else %}
                                     <li><a href="{{ path('sonata_user_security_login') }}" title="{{ 'common.user.menu.connect'|trans }}">{{ 'common.user.menu.connect'|trans }}</a></li>
-                                    <li><a href="{{ path('sonata_user_profile_edit') }}" title="{{ 'common.user.menu.register'|trans }}">{{ 'common.user.menu.register'|trans }}</a></li>
+                                    <li><a href="{{ path('fos_user_registration_register') }}" title="{{ 'common.user.menu.register'|trans }}">{{ 'common.user.menu.register'|trans }}</a></li>
                                 {% endif %}													
                             </ul>
                         </nav>
