@@ -58,7 +58,7 @@
                                             <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{{recette.Titre | slice (0, 20)}}{% if recette.Titre|length > 20 %} ...{% endif %}</a></h2> 
                                             <div class="actions">
                                                 <div>
-                                                    <div class="difficulty"><i class="ico i-medium"></i><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
+                                                    <div class="difficulty"><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
                                                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                                                         <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
                                                             {% endif %}
