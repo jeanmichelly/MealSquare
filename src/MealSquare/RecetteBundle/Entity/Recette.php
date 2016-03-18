@@ -4,6 +4,7 @@ namespace MealSquare\RecetteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Recette
@@ -48,6 +49,10 @@ class Recette
      * @var integer
      *
      * @ORM\Column(name="nbPersonne", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Le nombre de personnes doit être supérieur à 0"
+     * )
      */
     private $nbPersonne;
 
@@ -69,6 +74,10 @@ class Recette
      * @var integer
      *
      * @ORM\Column(name="tempsCuisson", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Le temps de cuisson doit être supérieur à 0"
+     * )
      */
     private $tempsCuisson;
 
@@ -76,6 +85,10 @@ class Recette
      * @var integer
      *
      * @ORM\Column(name="tempsPreparation", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Le temps de préparation doit être supérieur à 0"
+     * )
      */
     private $tempsPreparation;
 

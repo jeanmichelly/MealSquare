@@ -23,7 +23,7 @@ class RecetteType extends AbstractType
                 'required'  => true,
                 'empty_value' => 'Spécialité',
             ))
-            ->add('nbPersonne')
+            ->add('nbPersonne', 'integer', array('attr' => array('min' => '1')))
             ->add('description')
             ->add('visibilite', 'checkbox', array(
                     'required'=>false
@@ -40,8 +40,8 @@ class RecetteType extends AbstractType
                 'required'  => true,
                 'empty_value' => 'Niveau de difficulté?',
             ))
-            ->add('tempsCuisson')
-            ->add('tempsPreparation')
+            ->add('tempsCuisson', 'integer', array('attr' => array('min' => '1')))
+            ->add('tempsPreparation', 'integer', array('attr' => array('min' => '1')))
             ->add('recetteBlocks', 'collection', array(
                 'type' => new InfosBlockType(),
                 'prototype' => true,
