@@ -3,6 +3,7 @@
 namespace MealSquare\RecetteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * IngredientRecette
@@ -22,9 +23,13 @@ class IngredientRecette
     private $id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="quantite", type="string", length=255)
+     * @ORM\Column(name="quantite", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "La quantité doit être supérieur à 0"
+     * )
      */
     private $quantite;
     

@@ -34,7 +34,8 @@ class IngredientRecetteType extends AbstractType
         $transformer = new IngredientDataTransformer($this->om);
         
         $builder
-            ->add('quantite', 'text', array('required'=>true))
+            ->add('quantite', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
+            )
             ->add('ingredient','ingredient_type', array(
                 'compound' => true)
             )
