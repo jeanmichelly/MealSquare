@@ -177,8 +177,9 @@
     
     {% if field == 'ingredient' %}
         <div class="f-row ingredient"  data-content="{{ name }}">
-            <div class="large">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages')} }) }}</div>
+            <div class="third">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages')} }) }}</div>
             <div class="third">{{ form_widget(row.quantite, { 'attr': {'placeholder': 'form.add.quantity'|trans({},'messages')} }) }}</div>
+            <div class="third">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages')} }) }}</div>
             <button  data-related="{{ name }}"  id="remove-ingredient" class="remove">-</button>
         </div>
     {% else %}

@@ -37,6 +37,18 @@ class IngredientRecette
      * @var \MealSquare\RecetteBundle\Entity\Ingredient
      * @ORM\ManyToOne(targetEntity="MealSquare\RecetteBundle\Entity\Ingredient", cascade={"persist"}, fetch="LAZY")
      */
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unitMeasurement", type="string", length=255)
+     */
+    private $unitMeasurement;
+
+    /**
+     * @var \MealSquare\RecetteBundle\Entity\Ingredient
+     * @ORM\ManyToOne(targetEntity="MealSquare\RecetteBundle\Entity\Ingredient", cascade={"persist"}, fetch="LAZY")
+     */
     protected $ingredient;
     
     /**
@@ -51,6 +63,7 @@ class IngredientRecette
         $clone = new IngredientRecette();
         
         $clone->setQuantite($this->quantite);
+        $clone->setUnitMeasurement($this->unitMeasurement);
         $clone->setIngredient($this->ingredient);
         
         return $clone;
@@ -89,6 +102,30 @@ class IngredientRecette
     public function getQuantite()
     {
         return $this->quantite;
+    }
+
+    /**
+     * Set unitMeasurement
+     *
+     * @param string $unitMeasurement
+     *
+     * @return Recette
+     */
+    public function setUnitMeasurement($unitMeasurement)
+    {
+        $this->unitMeasurement = $unitMeasurement;
+
+        return $this;
+    }
+
+    /**
+     * Get unitMeasurement
+     *
+     * @return string
+     */
+    public function getUnitMeasurement()
+    {
+        return $this->unitMeasurement;
     }
 
     /**

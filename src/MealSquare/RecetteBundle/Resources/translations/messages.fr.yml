@@ -83,6 +83,7 @@ form:
         ingredients: Ingrédients
         ingredient: Ingrédient
         quantity: Quantité
+        unitMeasurement: Unité de mesure
         add_ingredient: Ajouter un ingrédient
         step: Etapes
         step_text: Entrer les instructions de la recette, pas à pas

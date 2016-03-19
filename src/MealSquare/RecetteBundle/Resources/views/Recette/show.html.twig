@@ -109,7 +109,7 @@
                                 {% if recette.isIngredientsFormatted %}
                                     <dl class="ingredients">
                                         {% for ingr in recette.ingredients %}
-                                            <dt>{{ingr.quantite}}</dt>
+                                            <dt>{{ingr.quantite}} {{ingr.unitMeasurement}}</dt>
                                             <dd><a style="color:white" href="{{ path('meal_square_recette_ingredient_show',{'id':ingr.ingredient.id}) }}" title="{{ingr.ingredient.libelle}}">{{ingr.ingredient.libelle}}</a></dd>
                                         {% endfor %}
                                     </dl>

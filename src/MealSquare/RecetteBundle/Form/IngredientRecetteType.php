@@ -36,6 +36,22 @@ class IngredientRecetteType extends AbstractType
         $builder
             ->add('quantite', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
             )
+            ->add('unitMeasurement', 'choice', array(
+                'choices'   => array(
+                    'unité' => 'unité',
+                    'ml' => 'ml',
+                    'l' => 'l', 
+                    'mg' => 'mg', 
+                    'g' => 'g',
+                    'kg' => 'kg',
+                    'livre' => 'livre',
+                    'gousse' => 'gousse',
+                    'cuillère à soupe' => 'cuillère à soupe',
+                    'cuillère à café' => 'cuillère à café',
+                    'tasse' => 'tasse'),
+                'required'  => true,
+                'empty_value' => 'Unité de mesure',
+            ))
             ->add('ingredient','ingredient_type', array(
                 'compound' => true)
             )
