@@ -107,12 +107,16 @@
                                 </dl>
                                 
                                 {% if recette.isIngredientsFormatted %}
-                                    <dl class="ingredients">
-                                        {% for ingr in recette.ingredients %}
-                                            <dt>{{ingr.quantite}} {{ingr.unitMeasurement}}</dt>
-                                            <dd><a style="color:white" href="{{ path('meal_square_recette_ingredient_show',{'id':ingr.ingredient.id}) }}" title="{{ingr.ingredient.libelle}}">{{ingr.ingredient.libelle}}</a></dd>
-                                        {% endfor %}
-                                    </dl>
+                                    <div class="widget">
+                                        <h3>{{ 'recettes.ingredient_small_title'|trans({},'messages') }}</h3>
+                                        <ul>
+                                            {% for ingr in recette.ingredients %}
+                                                <li>{{ingr.quantite}} {{ingr.unitMeasurement}}
+                                                    <a href="{{ path('meal_square_recette_ingredient_show',{'id':ingr.ingredient.id}) }}" title="{{ingr.ingredient.libelle}}">{{ingr.ingredient.libelle}}</a>
+                                                </li>
+                                            {% endfor %}                                        
+                                        </ul>
+                                    </div>
                                 {% else %}
                                     <div class="widget">
                                         <h3>{{ 'recettes.ingredient_small_title'|trans({},'messages') }}</h3>

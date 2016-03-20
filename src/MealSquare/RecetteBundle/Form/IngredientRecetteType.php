@@ -31,7 +31,7 @@ class IngredientRecetteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
         $builder
-            ->add('quantity', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
+            ->add('quantite', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
             )
             ->add('unitMeasurement', 'choice', array(
                 'choices'   => array(
