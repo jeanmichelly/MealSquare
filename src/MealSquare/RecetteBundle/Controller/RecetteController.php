@@ -16,7 +16,7 @@ class RecetteController extends Controller {
 
     public function listAction(Request $request) {
         $em         = $this->get('doctrine.orm.entity_manager');
-        $dql        = "SELECT a FROM MealSquareRecetteBundle:Recette a WHERE a.visibilite = true AND a.archive =false ORDER BY a.titre DESC";
+        $dql        = "SELECT a FROM MealSquareRecetteBundle:Recette a WHERE a.visibilite = true AND a.archive =false ORDER BY a.dateCreation DESC";
         $query      = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');
