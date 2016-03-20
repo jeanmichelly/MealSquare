@@ -57,6 +57,7 @@ class RecetteEditType extends AbstractType
                     'by_reference' => false
             ))
             ->add('pays',"genemu_jqueryselect2_country", array(
+                'required'  => false,
                 'empty_value' => 'Pays' 
             ))
             ->add('saison', 'choice', array(

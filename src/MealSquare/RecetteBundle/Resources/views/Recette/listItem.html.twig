@@ -7,12 +7,15 @@
     <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{{recette.Titre | slice (0, 20)}}</a></h2> 
     <div class="actions">
         <div>
+        <div><i class="ico i-preparation"></i>{{ recette.tempsPreparation }}min</div>
+            <div><i class="ico i-cuisson"></i>{{ recette.tempsCuisson }}min</div>
+            <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
+            <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
             <div class="difficulty"><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                 <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
             {% endif %}
-            <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
-            <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
+            
         </div>
     </div>
 </div>

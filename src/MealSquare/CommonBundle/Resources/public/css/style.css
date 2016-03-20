@@ -764,6 +764,8 @@ div.uploader.disabled.active span.action 		{}
 .i-easy				{background-position:-268px 0;width:14px;height:13px;}
 .i-medium			{background-position:-283px 0;width:14px;height:13px;}
 .i-hard				{background-position:-298px 0;width:14px;height:13px;}
+.i-preparation				{background-position:-313px 0;width:19px;height:14px;}
+.i-cuisson				{background-position:-332px 0;width:19px;height:14px;}
 
 .i-members			{background-position:0 -225px;width:111px;height:95px;}
 .i-recipes			{background-position:-111px -225px;width:80px;height:95px;}
