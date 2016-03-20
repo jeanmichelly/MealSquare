@@ -135,7 +135,6 @@ class ImportRecetteCommand extends ContainerAwareCommand{
                     ->setDifficulte($difficulte)
                     ->setSpecialite($specialite)
                     ->setVisibilite(true)
-                    
             ;
             
             // On traite la catégorie

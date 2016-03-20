@@ -22,6 +22,7 @@ recettes:
     serves: Nombre de personnes
     category: Catégorie
     saison: Saison
+    pays: Pays
     speciality: Spécialité
     autor: Auteur
     source: Source
