@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use MealSquare\RecetteBundle\Form\DataTransformer\IngredientDataTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
 
 class IngredientRecetteType extends AbstractType
 {
@@ -28,13 +29,9 @@ class IngredientRecetteType extends AbstractType
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        
-        // cela suppose que le gestionnaire d'entité a été passé en option
-        $transformer = new IngredientDataTransformer($this->om);
-        
+    {        
         $builder
-            ->add('quantite', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
+            ->add('quantity', 'integer', array('required'=>true, 'attr' => array('min' => '1'))
             )
             ->add('unitMeasurement', 'choice', array(
                 'choices'   => array(
@@ -55,16 +52,15 @@ class IngredientRecetteType extends AbstractType
             ->add('ingredient','ingredient_type', array(
                 'compound' => true)
             )
-            ->add(
-                $builder->create('ingredient','text', array(
-                    'label' => false,
-                    'attr' => array(
-                            'placeholder' => 'Ingredient',
-                            'data-id' => 'libelle'
-                        ),
-                    'required'=>true
-                ))->addModelTransformer($transformer)
-            )
+            ->add('ingredient', 'entity', array(
+                'class' => 'MealSquare\RecetteBundle\Entity\Ingredient',
+                'query_builder' => function(EntityRepository $er ) {
+                    return $er->createQueryBuilder('c')
+                              ->orderBy('c.libelle', 'ASC');
+                },
+                'required'  => true,
+                'empty_value' => 'Ingrédient',
+            ))
         ;
     }
     
