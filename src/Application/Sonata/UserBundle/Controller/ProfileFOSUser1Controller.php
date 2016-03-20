@@ -37,8 +37,11 @@ class ProfileFOSUser1Controller extends BaseController
         }
         
         $repository = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Recette");
-        $recettes = $repository->findByAuteur($user);
-
+        $recettes = $repository->findBy(
+                                    array ('auteur' => $user),
+                                    array('dateCreation' => 'DESC')
+                                ); 
+        
         return $this->render('SonataUserBundle:Profile:show.html.twig', array(
             'user'   => $user,
             'recettes' => $recettes,
