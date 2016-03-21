@@ -136,7 +136,6 @@
             
             addSelector.click(function(event) {
                 addFormField($(this));
-                autocompleteIngredient($('input[data-id=libelle]'),$('input[data-id=id]'),"{{ path('meal_square_ajax_ingredient') }}");
                 return false;
             });
             $('body').on('click', removeSelector ,function(event) {

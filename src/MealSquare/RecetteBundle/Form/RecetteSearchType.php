@@ -60,18 +60,19 @@ class RecetteSearchType extends AbstractType{
                 'required'  => False,
             ))
             ->add('ingredients', 'collection', array(
-                'type' => 'text',
+                'type' => 'entity',
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'options'  => array(
+                    'class' => 'MealSquare\RecetteBundle\Entity\Ingredient',
+                    'query_builder' => function(EntityRepository $er ) {
+                        return $er->createQueryBuilder('c')
+                                 ->orderBy('c.libelle', 'ASC');
+                    },
                     'required'  => true,
-                    'label'      => false,
-                    'attr' => array(
-                            'placeholder' => 'Ingredient',
-                            'data-id' => 'libelle'
-                        ),
+                    'empty_value' => 'Ingrédient',
                 )
             ))
             ->setMethod('GET')
