@@ -15,12 +15,13 @@ file that was distributed with this source code.
             <div class="panel-heading">
                 <h3 class="panel-title">{{ 'title_user_edit_authentication'|trans({}, 'SonataUserBundle') }}</h3>
             </div>
-            <div class="panel-body">
-                <form action="{{ path('sonata_user_profile_edit_authentication') }}" method="POST" class="form-horizontal">
-                    {{ form_widget(form) }}
-
-                    <button type="submit" name="submit" class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
-                </form>
+            <div class="panel-body row">
+                <dl class="basic full-width">
+                    <dt style="width: 35%">Nom d'utilisateur</dt>
+                    <dd style="width: 65%">{{ app.user.username }}</dd>
+                    <dt style="width: 35%">Email</dt>
+                    <dd style="width: 65%">{{ app.user.email }}</dd>
+                </dl>
             </div>
         </div>
     </div>
