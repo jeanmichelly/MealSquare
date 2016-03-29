@@ -166,9 +166,11 @@
                             <div class="widget">
                                 <h3>{{ 'recettes.versions'|trans({},'messages') }}</h3>
                                 <ul class="variantes-versions">
-                                    {% for version in recette.versions %}
-                                        <li><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
-                                        <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                    {% for groupVersion in recette.versions %}
+                                        {% for version in groupVersion.versions %}
+                                            <li><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                            <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                        {% endfor %}
                                     {% endfor %}
                                 </ul>
                             </div>

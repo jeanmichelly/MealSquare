@@ -244,13 +244,10 @@ class Recette
      *      )
      */
     private $variantes;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="Recette", inversedBy="recetteMere")
-     * @ORM\JoinTable(name="versions",
-     *      joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="version_recette_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="GroupVersions", inversedBy="versions")
+     * @ORM\JoinTable(name="versions")
      */
     private $versions;
     
@@ -323,6 +320,19 @@ class Recette
         return $this->image;
     }
 
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Recette
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -987,16 +997,13 @@ class Recette
     /**
      * Add version
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $version
+     * @param \MealSquare\RecetteBundle\Entity\GroupVersions $version
      *
      * @return Recette
      */
-    public function addVersion(\MealSquare\RecetteBundle\Entity\Recette $version)
+    public function addVersion(\MealSquare\RecetteBundle\Entity\GroupVersions $version)
     {
-        if (!$this->versions->contains($version)) {
-            $version->setRecetteMere($this);
-            $this->versions[] = $version;
-        }
+        $this->versions[] = $version;
 
         return $this;
     }
@@ -1004,14 +1011,11 @@ class Recette
     /**
      * Remove version
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $version
+     * @param \MealSquare\RecetteBundle\Entity\GroupVersions $version
      */
-    public function removeVersion(\MealSquare\RecetteBundle\Entity\Recette $version)
+    public function removeVersion(\MealSquare\RecetteBundle\Entity\GroupVersions $version)
     {
-        if ($this->versions->contains($version)) {
-            $version->setRecetteMere(null);
-            $this->versions->removeElement($version);
-        }
+        $this->versions->removeElement($version);
     }
 
     /**
