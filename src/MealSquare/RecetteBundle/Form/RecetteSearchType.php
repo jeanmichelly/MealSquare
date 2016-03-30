@@ -48,6 +48,14 @@ class RecetteSearchType extends AbstractType{
                 'required' => false
             ))
             ->add('categorie', 'entity', array(
+				'class' => 'Application\Sonata\ClassificationBundle\Entity\Category',
+					'query_builder' => function(EntityRepository $er ) {
+						return $er->createQueryBuilder('c')
+							->join('c.context','co')
+							->where('co.name  = :context')
+							->setParameter('context', 'recette')
+							->orderBy('c.name', 'ASC');
+					},
                 'empty_value' => 'Catégorie',
                 'required'  => False,
             ))
@@ -58,11 +66,6 @@ class RecetteSearchType extends AbstractType{
                 'allow_delete' => true,
                 'by_reference' => false,
                 'options'  => array(
-                    'class' => 'MealSquare\RecetteBundle\Entity\Ingredient',
-                    'query_builder' => function(EntityRepository $er ) {
-                        return $er->createQueryBuilder('c')
-                                 ->orderBy('c.libelle', 'ASC');
-                    },
                     'required'  => true,
 					'label'      => false,
 					'attr' => array(
