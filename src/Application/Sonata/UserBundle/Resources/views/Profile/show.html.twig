@@ -64,6 +64,8 @@
                             <div class="tab-content" id="about">
                                 <div class="row">
                                     <dl class="basic two-third">
+                                        <dt>{{ 'form.label_gender'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.gender}}</dd>
                                         <dt>{{ 'form.username'|trans({}, 'SonataUserBundle') }}</dt>
                                         <dd>{{ app.user.username}}</dd>
                                         <dt>{{ 'form.label_name'|trans({}, 'SonataUserBundle') }}</dt>
@@ -72,6 +74,18 @@
                                         <dd>{{ app.user.firstname}}</dd>
                                         <dt>{{ 'form.label_email'|trans({}, 'SonataUserBundle') }}</dt>
                                         <dd>{{ app.user.email}}</dd>
+                                        <dt>{{ 'form.label_date_of_birth'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.dateOfBirth}}</dd>
+                                        <dt>{{ 'form.label_website'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.website}}</dd>
+                                        <dt>{{ 'form.label_biography'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.biography}}</dd>
+                                        <dt>{{ 'form.label_locale'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.locale}}</dd>
+                                        <dt>{{ 'form.label_timezone'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.timezone}}</dd>
+                                        <dt>{{ 'form.label_phone'|trans({}, 'SonataUserBundle') }}</dt>
+                                        <dd>{{ app.user.phone}}</dd>
                                     </dl>
 
                                     <div class="one-third">
