@@ -237,11 +237,8 @@ class Recette
     private $recetteMere;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Recette", inversedBy="recetteMere")
-     * @ORM\JoinTable(name="variantes",
-     *      joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="variante_recette_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="GroupVariantes", inversedBy="variantes")
+     * @ORM\JoinTable(name="variantes")
      */
     private $variantes;
 
@@ -318,20 +315,6 @@ class Recette
     public function getImage()
     {
         return $this->image;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Recette
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -953,19 +936,15 @@ class Recette
     }
 
     /**
-     * Add variante
+     * Add Variante
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $variante
+     * @param \MealSquare\RecetteBundle\Entity\GroupVariantes $variante
      *
      * @return Recette
      */
-    public function addVariante(\MealSquare\RecetteBundle\Entity\Recette $variante)
+    public function addVariante(\MealSquare\RecetteBundle\Entity\GroupVariantes $variante)
     {
-        if (!$this->variantes->contains($variante)) {
-            $variante->setRecetteMere($this);
-            $this->variantes[] = $variante;
-        }
-        
+        $this->variantes[] = $variante;
 
         return $this;
     }
@@ -973,15 +952,11 @@ class Recette
     /**
      * Remove variante
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $variante
+     * @param \MealSquare\RecetteBundle\Entity\GroupVariantes $variante
      */
-    public function removeVariante(\MealSquare\RecetteBundle\Entity\Recette $variante)
+    public function removeVariante(\MealSquare\RecetteBundle\Entity\GroupVariantes $variante)
     {
-        if ($this->variantes->contains($variante)) {
-            $variante->setRecetteMere(null);
-            $this->variantes->removeElement($variante);
-        }
-        
+        $this->variantes->removeElement($variante);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace MealSquare\RecetteBundle\Controller;
 
 use MealSquare\RecetteBundle\Entity\Recette;
 use MealSquare\RecetteBundle\Entity\GroupVersions;
+use MealSquare\RecetteBundle\Entity\GroupVariantes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -319,8 +320,21 @@ class RecetteController extends Controller {
 
                     $clone->addVersion($groupVersions);
                 }
-                else
-                    $recette->addVariante($clone);
+                else {
+                    if ( count($recette->getVariantes()) == 0 ) {
+                        $groupVariantes = new GroupVariantes();
+                        $groupVariantes->addVariante($recette);
+                        $groupVariantes->addVariante($clone);
+                        $em->persist($groupVariantes);
+                        $recette->addVariante($groupVariantes);
+                    } else {
+                        $variantes = $recette->getVariantes();
+                        $groupVariantesRepository = $em->getRepository("MealSquareRecetteBundle:GroupVariantes");
+                        $groupVariantes = $groupVariantesRepository->findOneById($variantes[0]->getId());
+                    }
+
+                    $clone->addVariante($groupVariantes);
+                }
                 
                 $clone->createThread();
                 $em     ->persist($recette);
