@@ -35,23 +35,6 @@
             <!--featured member-->
             {% if recette_de_la_journee is not null %}
                 <div class="featured one-third wow fadeInLeft" data-wow-delay=".2s">
-
-                    <article class="entry">
-                        <dl class="basic">
-                            <dt>{{ 'recettes.preparation_time'|trans({},'messages') }}</dt>
-                            <dd>{{recette_de_la_journee.getTempsPreparation()}} min</dd>
-                            <dt>{{ 'recettes.coocking_time'|trans({},'messages') }}</dt>
-                            <dd>{{recette_de_la_journee.getTempsCuisson()}} min</dd>
-                            <dt>{{ 'recettes.difficulty'|trans({},'messages') }}</dt>
-                            <dd>{{recette_de_la_journee.getDifficulte()}}</dd>
-                            <dt>{{ 'recettes.serves'|trans({},'messages') }}</dt>
-                            <dd>{{recette_de_la_journee.getNbPersonne()}}</dd>
-                            <dt>{{ 'recettes.saison'|trans({},'messages') }}</dt>
-                            <dd>{{recette_de_la_journee.getSaison()}}</dd>
-                            <dt>{{ 'recettes.speciality'|trans({},'messages') }}</dt>
-                            <dd style="font-size: 13px;padding: 2px;">{{recette_de_la_journee.getSpecialite() |slice(0, 13)}}...</dd>
-                        </dl>
-                    </article>
                     {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_de_la_semaine, 'label': 'common.home.recetteofweek'|trans({},'messages'), 'week':true }) }}
                 </div>
             {% endif %}
