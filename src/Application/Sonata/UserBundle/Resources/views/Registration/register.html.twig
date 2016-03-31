@@ -22,9 +22,17 @@
                             <div class="f-row">
                                 {{ form_widget(form) }}
                             </div>
-
+                            <div id="pswd_info">
+                                <h4>Le mot de passe doit répondre au conditions suivantes :</h4>
+                                <ul>
+                                    <li id="letter" class="invalid">Au moins <strong>une lettre</strong></li>
+                                    <li id="capital" class="invalid">Au moins <strong>une lettre majuscule</strong></li>
+                                    <li id="number" class="invalid">Au moins <strong>un chiffre</strong></li>
+                                    <li id="length" class="invalid">Contenir au moins <strong>8 caractères</strong></li>
+                                </ul>
+                            </div>
                             <div class="f-row bwrap">
-                                <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-success pull-right" />
+                                <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-success pull-right" style="display : none"/>
                            </div>
                             <p>Vous avez déjà un compte ? <a href="{{ path('sonata_user_security_login') }}">{{ 'link_login'|trans({}, 'SonataUserBundle') }}</a></p>
                             
@@ -41,6 +49,50 @@
 {% endblock %}
 {% block script %}
    <script> new WOW().init(); </script>
+   <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sonata_user_registration_form_plainPassword_first').keyup(function() {
+                var pswd = $(this).val();
+                //validate the length
+                if ( pswd.length < 8 ) {
+                    $('#length').removeClass('valid').addClass('invalid');
+                } else {
+                    $('#length').removeClass('invalid').addClass('valid');
+                }
+                //validate letter
+                if ( pswd.match(/[A-z]/) ) {
+                    $('#letter').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#letter').removeClass('valid').addClass('invalid');
+                }
+
+                //validate capital letter
+                if ( pswd.match(/[A-Z]/) ) {
+                    $('#capital').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#capital').removeClass('valid').addClass('invalid');
+                }
+
+                //validate number
+                if ( pswd.match(/\d/) ) {
+                    $('#number').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#number').removeClass('valid').addClass('invalid');
+                }
+
+                if ( pswd.length > 7 && pswd.match(/[A-z]/) && pswd.match(/[A-Z]/) && pswd.match(/\d/)){
+                    $('input[type=submit]').show();
+                } else{
+                    $('input[type=submit]').hide();
+                }
+
+            }).focus(function() {
+                $('#pswd_info').show();
+            }).blur(function() {
+                $('#pswd_info').hide();
+            });
+        });
+   </script>
 {% endblock %}
 
 
