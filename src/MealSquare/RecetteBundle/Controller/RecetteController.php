@@ -163,17 +163,24 @@ class RecetteController extends Controller {
         
         $user= $this->get('security.context')->getToken()->getUser();
         
-        if(is_null($recette) || $user->getId()!==$recette->getAuteur()->getId()){
+        if ( is_null($recette) || $user->getId()!==$recette->getAuteur()->getId() ) {
                 throw new NotFoundHttpException("Désolé, la page que vous avez demandée semble introuvable !");
-        }else{
-            
+        } else {
+
+            if ( $recette->hasVersion() && $recette->isRecetteMere() ) {
+                $versions = $recette->getVersions();
+                $groupVersionsRepository = $em->getRepository("MealSquareRecetteBundle:GroupVersions");
+                $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
+
+                $groupVersions->setRecetteMere();
+                $em->persist($groupVersions);
+            }
+        
             $em->remove($recette);
             $em->flush();
 
             return $this->redirect( $this->generateUrl('fos_user_profile_show') );
         }
-        
-        
         
     }
     
