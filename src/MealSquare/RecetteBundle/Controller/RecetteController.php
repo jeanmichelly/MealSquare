@@ -57,6 +57,8 @@ class RecetteController extends Controller {
         $repository     = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Recette");
         $likeRepository = $this->getDoctrine()->getRepository('MealSquareRecetteBundle:Like\Like');
         $rateRepository = $this->getDoctrine()->getRepository('MealSquareRecetteBundle:Note\Rate');
+        $groupVersionsRepository = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:GroupVersions");
+
         $recette        = $repository->findOneById($id);
         $user           = $this->get('security.context')->getToken()->getUser();
         
@@ -82,6 +84,11 @@ class RecetteController extends Controller {
             $isFavoris  = ($user instanceof \Application\Sonata\UserBundle\Entity\User && $user->getRecettesFavoris()->contains($recette));
             // On vérifie si le user a déjà noter la recette
             $isRater    = (!is_null($rateRepository->findOneBy(array('thread' => $recette->getLike(), 'rater'=>  $user))))?true:false;
+
+            $versions           = $recette->getVersions();
+            $groupVersions      = $groupVersionsRepository->findOneById($versions[0]->getId());
+
+            $isRecetteMere      = (!is_null($groupVersions->getRecetteMere()) && $groupVersions->getRecetteMere()->getId() == $recette->getId()) ? true:false;
             
             return $this->render('MealSquareRecetteBundle:Recette:show.html.twig', array(
                 'recette' => $recette,
@@ -89,6 +96,7 @@ class RecetteController extends Controller {
                 'likers'=>$likers,
                 'isFavoris'=>$isFavoris,
                 'isRater'=>$isRater,
+                'isRecetteMere'=>$isRecetteMere,
                 'recetteisVisible' => $recetteisVisible
             ));
         }
@@ -348,13 +356,8 @@ class RecetteController extends Controller {
 
             }
 
-            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array('form' => $form->createView(),'isVersion'=>$isVersion));
-
-            
+            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array('form' => $form->createView(),'isVersion'=>$isVersion));            
         }
-
-
-        
     }
 
 }

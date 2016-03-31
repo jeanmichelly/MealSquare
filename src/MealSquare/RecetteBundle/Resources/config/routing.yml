@@ -73,6 +73,11 @@ meal_square_ajax_favoris_recette:
     path:     /asynchrone/recette/favoris/
     defaults: { _controller: MealSquareRecetteBundle:Asynchrone:favoris }
     condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
+
+meal_square_ajax_recette_mere_version:
+    path:     /asynchrone/version/recette-mere/
+    defaults: { _controller: MealSquareRecetteBundle:Asynchrone:recetteMere }
+    condition: "request.headers.get('X-Requested-With') == 'XMLHttpRequest'"
     
 meal_square_member_profil:
     path:     /profile/membre-{id}

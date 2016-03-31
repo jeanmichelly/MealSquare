@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use MealSquare\RecetteBundle\Entity\Like\Like;
 use MealSquare\RecetteBundle\Entity\Note\Rate;
+use MealSquare\RecetteBundle\Entity\GroupVersions;
 
 class AsynchroneController extends Controller
 {
@@ -120,6 +121,42 @@ class AsynchroneController extends Controller
             return $response;
 
             
+        }
+    }
+
+    public function recetteMereAction()
+    {
+        
+        $request    = $this->get('request');
+        $em         = $this->getDoctrine()->getManager();
+        $id         = $request->request->get('id');
+
+        $repository = $em->getRepository("MealSquareRecetteBundle:Recette");
+
+        $recette = $repository->findOneById($id);
+
+        if ( is_null($recette) ) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("Cette recette n'existe pas");
+        } else {
+            $groupVersionsRepository = $em->getRepository("MealSquareRecetteBundle:GroupVersions");
+
+            $versions = $recette->getVersions();
+            
+            $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
+
+            if ( is_null($groupVersions->getRecetteMere()) || $groupVersions->getRecetteMere()->getId() != $id) {
+                $groupVersions->setRecetteMere($recette);
+            } else {
+                $groupVersions->setRecetteMere(); 
+            }
+
+            $em->persist($groupVersions);
+            $em->flush();
+
+            $response = new Response();
+            $response->setContent(json_encode(array("success"=>true)));
+            $response -> headers -> set('Content-Type', 'application/json');
+            return $response;
         }
     }
 }

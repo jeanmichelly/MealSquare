@@ -176,15 +176,6 @@
                             </div>
                         {% endif %}
                     {% endif %}
-                    {% if recette.recetteMere is not null%}
-                        <div class="widget">
-                            <h3>{{ 'recettes.mother'|trans({},'messages') }}</h3>
-                            <ul class="variantes-versions">
-                                    <li><a href="{{ path('meal_square_recette_show',{'id':recette.recetteMere.id}) }}">{% thumbnail recette.recetteMere.image,'small' with {'width':'36px'} %}
-                                    <span>{{recette.recetteMere.titre}}</span></a><div class="clearfix"></div></li>
-                            </ul>
-                        </div>
-                    {% endif %}
                     {% if recette.variantes is not null%}
                         <div class="widget">
                             <h3>{{ 'recettes.variantes'|trans({},'messages') }}</h3>
@@ -238,6 +229,14 @@
                                 {% set favorisButtonTitle = 'recettes.add_favourite'|trans({},'messages') %}
                             {% endif %}
                             <li class="dark"><a href="#" id="favoris-recette" class="{% if isFavoris is defined and isFavoris %}isFavoris{% endif %}"  title="{{ favorisButtonTitle }}"><i class="fa fa-3x fa-star"></i> <span>{{ favorisButtonTitle }}</span></a></li>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                                    {% if isRecetteMere is defined and isRecetteMere %}
+                                        {% set recetteMereButtonTitle = 'form.version.not_recette_mere'|trans({},'messages') %}
+                                    {% else %}
+                                        {% set recetteMereButtonTitle = 'form.version.recette_mere'|trans({},'messages') %}
+                                    {% endif %}
+                                    <li class="dark" id="define_recette_mere"><a href="#" id="recette_mere" class="{% if isRecetteMere is defined and isRecetteMere %}isRecetteMere{% endif %}"  title="{{ recetteMereButtonTitle }}"><i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ recetteMereButtonTitle }}</span></a></li>
+                                {% endif %}
                         </ul>
                     </div>
                     {% endif %}
@@ -363,32 +362,58 @@
                     }
                 });
             {% endif %}
-        });
-        
-            
+        }); 
     </script>
     
     <script>
-    $('#favoris-recette').click(function(event){
-        event.preventDefault();
-        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            alert("{{ 'recettes.connect_to_favourise'|trans({},'messages') }}");
-        {% else %}
+        $('#favoris-recette').click(function(event){
+            event.preventDefault();
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                alert("{{ 'recettes.connect_to_favourise'|trans({},'messages') }}");
+            {% else %}
+                button = $(this);
+                button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
+                $.ajax({
+                    url: "{{ path('meal_square_ajax_favoris_recette') }}",
+                    dataType: "json",
+                    data : { id: "{{ recette.id }}" },
+                    type: 'POST',
+                    success: function (data)
+                    {
+                        button.toggleClass("isFavoris");
+                        if(button.hasClass("isFavoris")){
+                            button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.remove_favourite'|trans({},'messages') }}</span>');
+                        }else{
+                            button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.add_favourite'|trans({},'messages') }}</span>');
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+                {% endif %}
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#recette_mere').click(function(event){
+            event.preventDefault();
             button = $(this);
+            
             button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
             $.ajax({
-                url: "{{ path('meal_square_ajax_favoris_recette') }}",
+                url: "{{ path('meal_square_ajax_recette_mere_version') }}",
                 dataType: "json",
                 data : { id: "{{ recette.id }}" },
                 type: 'POST',
                 success: function (data)
                 {
-                    console.log(data);
-                    button.toggleClass("isFavoris");
-                    if(button.hasClass("isFavoris")){
-                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.remove_favourite'|trans({},'messages') }}</span>');
+                    button.toggleClass("isRecetteMere");
+                    if(button.hasClass("isRecetteMere")){
+                        button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.not_recette_mere'|trans({},'messages') }}</span>');
                     }else{
-                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.add_favourite'|trans({},'messages') }}</span>');
+                        button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.recette_mere'|trans({},'messages') }}</span>');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -396,7 +421,6 @@
                     console.log(textStatus, errorThrown);
                 }
             });
-            {% endif %}
-    });
-</script>
+        });
+    </script>
 {% endblock %}

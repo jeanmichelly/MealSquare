@@ -229,12 +229,6 @@ class Recette
      * @ORM\JoinColumn(nullable=true)
      */
     private $like;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Recette")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $recetteMere;
 
     /**
      * @ORM\ManyToMany(targetEntity="GroupVariantes", inversedBy="variantes")
@@ -909,30 +903,6 @@ class Recette
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set recetteMere
-     *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $recetteMere
-     *
-     * @return Recette
-     */
-    public function setRecetteMere(\MealSquare\RecetteBundle\Entity\Recette $recetteMere = null)
-    {
-        $this->recetteMere = $recetteMere;
-
-        return $this;
-    }
-
-    /**
-     * Get recetteMere
-     *
-     * @return \MealSquare\RecetteBundle\Entity\Recette
-     */
-    public function getRecetteMere()
-    {
-        return $this->recetteMere;
     }
 
     /**

@@ -112,6 +112,8 @@ form:
     version:
         title: Version de recette
         action: Créer une autre version de cette recette
+        recette_mere: Définir comme recette mère
+        not_recette_mere: Recette mère
         
     variante:
         title: Variante de recette

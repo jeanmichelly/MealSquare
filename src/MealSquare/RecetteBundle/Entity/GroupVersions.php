@@ -26,6 +26,12 @@ class GroupVersions
      */
     private $versions;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Recette")
+     * @ORM\JoinColumn(name="recetteMere_id", referencedColumnName="id", nullable=true)
+     */
+    private $recetteMere;
+
     public function __construct() {
         $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -87,5 +93,29 @@ class GroupVersions
     public function getVersions()
     {
         return $this->versions;
+    }
+
+    /**
+     * Set recetteMere
+     *
+     * @param \MealSquare\RecetteBundle\Entity\Recette $recetteMere
+     *
+     * @return GroupVersions
+     */
+    public function setRecetteMere(\MealSquare\RecetteBundle\Entity\Recette $recetteMere = null)
+    {
+        $this->recetteMere = $recetteMere;
+
+        return $this;
+    }
+
+    /**
+     * Get recetteMere
+     *
+     * @return \MealSquare\RecetteBundle\Entity\Recette
+     */
+    public function getRecetteMere()
+    {
+        return $this->recetteMere;
     }
 }

@@ -38,7 +38,7 @@ li.link-not-activated a{pointer-events: none;cursor: default;background-color: w
 a.link-not-activated{pointer-events: none;cursor: default;background-color: whitesmoke !important; color: rgb(200, 200, 200);}
 .ingredient-non-formatted a{pointer-events: none;cursor: default;background-color: whitesmoke !important; color: #000;}
 
-a.isLiker, a.isFavoris{background: rgb(40, 173, 97) !important}
+a.isLiker, a.isFavoris, a.isRecetteMere{background: rgb(40, 173, 97) !important}
 
 ul.note-recette{}
 ul.note-recette li{background-color:#2C71A3;float: left;color: white;width: 20%;border-left: 1px solid whitesmoke;font-weight: bold;}
