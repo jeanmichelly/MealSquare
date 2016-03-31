@@ -473,6 +473,7 @@ dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 .widget button, .widget input[type="button"],.widget input[type="reset"],.widget input[type="submit"] {float:right;}
 .widget ul 		{padding:0;margin:0;}
 .widget ul li 		{border-top:1px solid #ddd;padding:9px 20px;}
+.widget ul li.versionIsRecetteMere 		{border:1px solid #28AD61;padding:9px 20px;}
 .widget ul li:before {display:none;}
 
 .widget .boxed {float:left;}

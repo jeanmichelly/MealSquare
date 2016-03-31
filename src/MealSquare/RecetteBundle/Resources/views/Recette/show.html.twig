@@ -168,8 +168,13 @@
                                 <ul class="variantes-versions">
                                     {% for groupVersion in recette.versions %}
                                         {% for version in groupVersion.versions %}
-                                            <li><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
-                                            <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                            {% if groupVersion.recetteMere is not null and version.id == groupVersion.recetteMere.id %}
+                                                <li id="id_version{{ version.id }}" class="versionIsRecetteMere"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                            {% else %}
+                                                <li id="id_version{{ version.id }}"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                            {% endif %}
                                         {% endfor %}
                                     {% endfor %}
                                 </ul>
@@ -412,8 +417,11 @@
                     button.toggleClass("isRecetteMere");
                     if(button.hasClass("isRecetteMere")){
                         button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.not_recette_mere'|trans({},'messages') }}</span>');
+                        $(".versionIsRecetteMere").removeClass();
+                        $("#id_version{{ recette.id }}").addClass("versionIsRecetteMere");
                     }else{
                         button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.recette_mere'|trans({},'messages') }}</span>');
+                        $(".versionIsRecetteMere").removeClass();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
