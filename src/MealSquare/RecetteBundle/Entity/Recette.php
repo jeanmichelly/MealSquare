@@ -974,6 +974,14 @@ class Recette
     }
 
     /**
+     * @return boolean
+     */
+    public function hasVersion()
+    {
+        return (count($this->getVersions()) != 0)?true:false;
+    }
+
+    /**
      * Set like
      *
      * @param \MealSquare\RecetteBundle\Entity\Like\LikeThread $like
@@ -1117,12 +1125,14 @@ class Recette
         return $attributValue;
     }
     
-    public function getSpecialiteSaisonDifficulteIndex  (){
+    public function getSpecialiteSaisonDifficulteIndex(){
         $this->setDifficulte($this->getAttributIndex('difficulte', $this->getDifficulte()));
         $this->setSaison($this->getAttributIndex('saison', $this->getSaison()));
         $this->setSpecialite($this->getAttributIndex('specialite', $this->getSpecialite()));
     }
     
-
+    public function isRecetteMere() {
+        return (!is_null($this->getVersions()[0]->getRecetteMere()) && $this->getVersions()[0]->getRecetteMere()->getId() == $this->id) ? true:false;
+    }
 
 }

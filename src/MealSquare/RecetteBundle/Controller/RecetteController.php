@@ -85,19 +85,23 @@ class RecetteController extends Controller {
             // On vérifie si le user a déjà noter la recette
             $isRater    = (!is_null($rateRepository->findOneBy(array('thread' => $recette->getLike(), 'rater'=>  $user))))?true:false;
 
-            $versions           = $recette->getVersions();
-            $groupVersions      = $groupVersionsRepository->findOneById($versions[0]->getId());
-
-            $isRecetteMere      = (!is_null($groupVersions->getRecetteMere()) && $groupVersions->getRecetteMere()->getId() == $recette->getId()) ? true:false;
+            if ( $recette->hasVersion() ) {
+                $versions = $recette->getVersions();
+                $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
+                $isRecetteMere = (!is_null($groupVersions->getRecetteMere()) && $groupVersions->getRecetteMere()->getId() == $recette->getId()) ? true:false;
+            } else {
+                $isRecetteMere = null;
+            }
             
             return $this->render('MealSquareRecetteBundle:Recette:show.html.twig', array(
-                'recette' => $recette,
-                'isLiker'=>$isLiker,
-                'likers'=>$likers,
-                'isFavoris'=>$isFavoris,
-                'isRater'=>$isRater,
-                'isRecetteMere'=>$isRecetteMere,
-                'recetteisVisible' => $recetteisVisible
+                'recette'           => $recette,
+                'isLiker'           => $isLiker,
+                'likers'            => $likers,
+                'isFavoris'         => $isFavoris,
+                'isRater'           => $isRater,
+                'hasVersion'        => $recette->hasVersion(),
+                'isRecetteMere'     => $isRecetteMere,
+                'recetteisVisible'  => $recetteisVisible
             ));
         }
         
@@ -189,6 +193,14 @@ class RecetteController extends Controller {
             $recette->getSpecialiteSaisonDifficulteIndex();
             $form = $this->createForm(new RecetteEditType(), $recette);
 
+            if ( $recette->hasVersion() ) {
+                $isVersion = true;
+                $isRecetteMere = $recette->isRecetteMere();
+            } else {
+                $isVersion = false;
+                $isRecetteMere = null;
+            }
+
             $form->handleRequest($this->getRequest());
 
             if ($form->isValid()) {
@@ -202,18 +214,18 @@ class RecetteController extends Controller {
                 $em->persist($recette);
                 $em->flush();  
 
-                if(!$recette->getArchive() && $recette->getVisibilite())
-                    return $this->redirect( $this->generateUrl( 'meal_square_recette_show', array('id' => $recette->getId()) ));
-                else
-                    return $this->redirect( $this->generateUrl('fos_user_profile_show'));
+ 
+                return $this->redirect( $this->generateUrl( 'meal_square_recette_show', array('id' => $recette->getId()) ));
             }
 
-            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array('form' => $form->createView(), 'edit' => true));
-
-            
+            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array(
+                    'form'          => $form->createView(), 
+                    'edit'          => true,
+                    'isVersion'     => $isVersion,
+                    'isRecetteMere' => $isRecetteMere
+                )
+            );
         }
-
-
         
     }
     
@@ -316,6 +328,7 @@ class RecetteController extends Controller {
                 if($isVersion) {
                     if ( count($recette->getVersions()) == 0 ) {
                         $groupVersions = new GroupVersions();
+                        $recette->setVisibilite(false);
                         $groupVersions->addVersion($recette);
                         $groupVersions->addVersion($clone);
                         $em->persist($groupVersions);

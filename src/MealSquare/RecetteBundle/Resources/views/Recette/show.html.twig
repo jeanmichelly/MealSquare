@@ -229,7 +229,7 @@
                                 {% set favorisButtonTitle = 'recettes.add_favourite'|trans({},'messages') %}
                             {% endif %}
                             <li class="dark"><a href="#" id="favoris-recette" class="{% if isFavoris is defined and isFavoris %}isFavoris{% endif %}"  title="{{ favorisButtonTitle }}"><i class="fa fa-3x fa-star"></i> <span>{{ favorisButtonTitle }}</span></a></li>
-                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id and hasVersion  %}
                                     {% if isRecetteMere is defined and isRecetteMere %}
                                         {% set recetteMereButtonTitle = 'form.version.not_recette_mere'|trans({},'messages') %}
                                     {% else %}

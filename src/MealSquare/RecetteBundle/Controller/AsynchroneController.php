@@ -144,9 +144,14 @@ class AsynchroneController extends Controller
             
             $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
 
+            if (!is_null($groupVersions->getRecetteMere())) {
+                $groupVersions->getRecetteMere()->setVisibilite(false);
+            }            
+
             if ( is_null($groupVersions->getRecetteMere()) || $groupVersions->getRecetteMere()->getId() != $id) {
                 $groupVersions->setRecetteMere($recette);
             } else {
+                $recette->setVisibilite(false);
                 $groupVersions->setRecetteMere(); 
             }
 

@@ -141,13 +141,25 @@
                                     </div>
                                 </section>	
 
-                                <section>
-                                    <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
-                                    <div class="f-row full">
-                                            {{ form_widget(form.visibilite) }}
-                                            <label>{{ 'form.add.public'|trans({},'messages') }}</label>
-                                    </div>
-                                </section>
+                                {% if isVersion is defined %}
+                                    {% if isVersion and isRecetteMere is defined and isRecetteMere or not isVersion %}
+                                    <section>
+                                        <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
+                                        <div class="f-row full">
+                                                {{ form_widget(form.visibilite) }}
+                                                <label>{{ 'form.add.public'|trans({},'messages') }}</label>
+                                        </div>
+                                    </section>
+                                    {% endif %}
+                                {% else %}
+                                    <section>
+                                        <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
+                                        <div class="f-row full">
+                                                {{ form_widget(form.visibilite) }}
+                                                <label>{{ 'form.add.public'|trans({},'messages') }}</label>
+                                        </div>
+                                    </section>
+                                {% endif %}
 
                                  
                                 <div class="f-row full">
