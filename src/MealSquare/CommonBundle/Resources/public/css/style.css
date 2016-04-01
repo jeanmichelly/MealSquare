@@ -1053,12 +1053,40 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 .quicklinks .button {width:90%;margin:0 0 15px;}
 }
 
+/*PASSWORD*/
 .invalid {
     color:#ec3f41;
 }   
 .valid {
     color:#3a7d34;
 }
+
+.register_info {
+	display: none;
+    position:absolute;
+    bottom: -115px\9; /* IE Specific */
+    right:-320px;
+    width:250px;
+    padding:15px;
+    background:#fefefe;
+    font-size:.875em;
+    border-radius:5px;
+    box-shadow:0 1px 3px #ccc;
+    border:1px solid #ddd;
+}
+
+#username_info {
+	bottom:81px;
+}
+
+#validation_email_info {
+    bottom:72px;
+}
+
 #pswd_info {
-    display:none;
+    bottom:0px;
+}
+
+#confirm_pswd_info {
+    bottom:64px;
 }
