@@ -223,7 +223,15 @@
                         <ul class="boxed">
                             {% if recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                                 <li class="light"><a href="{{ path('meal_square_recette_edit',{ 'id':recette.id }) }}"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
-                                <li class="medium"><a href="{{ path('meal_square_recette_delete',{ 'id':recette.id }) }}"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+
+
+
+                                <li class="medium btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><a title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+
+
+
+
+
                             {% else %}
                                 <li class="light link-not-activated"><a href="#"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
                                 <li class="medium link-not-activated"><a href="#"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
@@ -430,5 +438,29 @@
                 }
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        document.querySelector('.sweet-14').onclick = function(){
+            swal({
+                title: "Êtes vous sure de vouloir supprimer ?",
+                text: "Vous ne pourrez plus revenir en arrière",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: 'btn-danger',
+                cancelButtonText: 'Annuler',
+                confirmButtonText: 'Supprimer'
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "{{ path('meal_square_recette_delete',{ 'id':recette.id }) }}",
+                        success: function(data) {
+                            window.location.replace("{{ path('fos_user_profile_show') }}");
+                        }
+                    }); 
+                }
+            });
+        };
     </script>
 {% endblock %}
