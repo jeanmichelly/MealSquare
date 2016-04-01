@@ -166,32 +166,30 @@
                             <div class="widget">
                                 <h3>{{ 'recettes.versions'|trans({},'messages') }}</h3>
                                 <ul class="variantes-versions">
-                                    {% for version in recette.versions %}
-                                        <li><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
-                                        <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                    {% for groupVersion in recette.versions %}
+                                        {% for version in groupVersion.versions %}
+                                            {% if groupVersion.recetteMere is not null and version.id == groupVersion.recetteMere.id %}
+                                                <li id="id_version{{ version.id }}" class="versionIsRecetteMere"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                            {% else %}
+                                                <li id="id_version{{ version.id }}"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
                                 </ul>
                             </div>
                         {% endif %}
                     {% endif %}
-                    {% if recette.recetteMere is not null%}
-                        <div class="widget">
-                            <h3>{{ 'recettes.mother'|trans({},'messages') }}</h3>
-                            <ul class="variantes-versions">
-                                    <li><a href="{{ path('meal_square_recette_show',{'id':recette.recetteMere.id}) }}">{% thumbnail recette.recetteMere.image,'small' with {'width':'36px'} %}
-                                    <span>{{recette.recetteMere.titre}}</span></a><div class="clearfix"></div></li>
-                            </ul>
-                        </div>
-                    {% endif %}
                     {% if recette.variantes is not null%}
                         <div class="widget">
                             <h3>{{ 'recettes.variantes'|trans({},'messages') }}</h3>
                             <ul class="variantes-versions">
-                                {% for variante in recette.variantes %}
-                                    <li><a href="{{ path('meal_square_recette_show',{'id':variante.id}) }}">{% thumbnail variante.image,'small' with {'width':'32px'} %}
-                                    <span>{{variante.titre}}</span></a><div class="clearfix"></div></li>
-                                {% else %}
-                                    <li>Aucune variante</li>
+                                {% for groupVariante in recette.variantes %}
+                                    {% for variante in groupVariante.variantes %}
+                                        <li><a href="{{ path('meal_square_recette_show',{'id':variante.id}) }}">{% thumbnail variante.image,'small' with {'width':'32px'} %}
+                                        <span>{{variante.titre}}</span></a><div class="clearfix"></div></li>
+                                    {% endfor %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -225,7 +223,15 @@
                         <ul class="boxed">
                             {% if recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                                 <li class="light"><a href="{{ path('meal_square_recette_edit',{ 'id':recette.id }) }}"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
-                                <li class="medium"><a href="{{ path('meal_square_recette_delete',{ 'id':recette.id }) }}"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+
+
+
+                                <li class="medium btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><a title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
+
+
+
+
+
                             {% else %}
                                 <li class="light link-not-activated"><a href="#"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
                                 <li class="medium link-not-activated"><a href="#"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
@@ -236,6 +242,14 @@
                                 {% set favorisButtonTitle = 'recettes.add_favourite'|trans({},'messages') %}
                             {% endif %}
                             <li class="dark"><a href="#" id="favoris-recette" class="{% if isFavoris is defined and isFavoris %}isFavoris{% endif %}"  title="{{ favorisButtonTitle }}"><i class="fa fa-3x fa-star"></i> <span>{{ favorisButtonTitle }}</span></a></li>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id and hasVersion  %}
+                                    {% if isRecetteMere is defined and isRecetteMere %}
+                                        {% set recetteMereButtonTitle = 'form.version.not_recette_mere'|trans({},'messages') %}
+                                    {% else %}
+                                        {% set recetteMereButtonTitle = 'form.version.recette_mere'|trans({},'messages') %}
+                                    {% endif %}
+                                    <li class="dark" id="define_recette_mere"><a href="#" id="recette_mere" class="{% if isRecetteMere is defined and isRecetteMere %}isRecetteMere{% endif %}"  title="{{ recetteMereButtonTitle }}"><i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ recetteMereButtonTitle }}</span></a></li>
+                                {% endif %}
                         </ul>
                     </div>
                     {% endif %}
@@ -361,32 +375,61 @@
                     }
                 });
             {% endif %}
-        });
-        
-            
+        }); 
     </script>
     
     <script>
-    $('#favoris-recette').click(function(event){
-        event.preventDefault();
-        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            alert("{{ 'recettes.connect_to_favourise'|trans({},'messages') }}");
-        {% else %}
+        $('#favoris-recette').click(function(event){
+            event.preventDefault();
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                alert("{{ 'recettes.connect_to_favourise'|trans({},'messages') }}");
+            {% else %}
+                button = $(this);
+                button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
+                $.ajax({
+                    url: "{{ path('meal_square_ajax_favoris_recette') }}",
+                    dataType: "json",
+                    data : { id: "{{ recette.id }}" },
+                    type: 'POST',
+                    success: function (data)
+                    {
+                        button.toggleClass("isFavoris");
+                        if(button.hasClass("isFavoris")){
+                            button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.remove_favourite'|trans({},'messages') }}</span>');
+                        }else{
+                            button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.add_favourite'|trans({},'messages') }}</span>');
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+                {% endif %}
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#recette_mere').click(function(event){
+            event.preventDefault();
             button = $(this);
+            
             button.html('<i class="fa fa-spin fa-spinner fa-3x"></i> <span>{{ 'recettes.loading'|trans({},'messages') }}</span>');
             $.ajax({
-                url: "{{ path('meal_square_ajax_favoris_recette') }}",
+                url: "{{ path('meal_square_ajax_recette_mere_version') }}",
                 dataType: "json",
                 data : { id: "{{ recette.id }}" },
                 type: 'POST',
                 success: function (data)
                 {
-                    console.log(data);
-                    button.toggleClass("isFavoris");
-                    if(button.hasClass("isFavoris")){
-                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.remove_favourite'|trans({},'messages') }}</span>');
+                    button.toggleClass("isRecetteMere");
+                    if(button.hasClass("isRecetteMere")){
+                        button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.not_recette_mere'|trans({},'messages') }}</span>');
+                        $(".versionIsRecetteMere").removeClass();
+                        $("#id_version{{ recette.id }}").addClass("versionIsRecetteMere");
                     }else{
-                        button.html('<i class="fa fa-3x fa-star"></i> <span>{{ 'recettes.add_favourite'|trans({},'messages') }}</span>');
+                        button.html('<i class="fa fa-3x fa-thumbs-o-up"></i> <span>{{ 'form.version.recette_mere'|trans({},'messages') }}</span>');
+                        $(".versionIsRecetteMere").removeClass();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -394,7 +437,30 @@
                     console.log(textStatus, errorThrown);
                 }
             });
-            {% endif %}
-    });
-</script>
+        });
+    </script>
+
+    <script type="text/javascript">
+        document.querySelector('.sweet-14').onclick = function(){
+            swal({
+                title: "Êtes vous sure de vouloir supprimer ?",
+                text: "Vous ne pourrez plus revenir en arrière",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: 'btn-danger',
+                cancelButtonText: 'Annuler',
+                confirmButtonText: 'Supprimer'
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "{{ path('meal_square_recette_delete',{ 'id':recette.id }) }}",
+                        success: function(data) {
+                            window.location.replace("{{ path('fos_user_profile_show') }}");
+                        }
+                    }); 
+                }
+            });
+        };
+    </script>
 {% endblock %}

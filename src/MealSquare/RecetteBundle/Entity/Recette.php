@@ -229,28 +229,16 @@ class Recette
      * @ORM\JoinColumn(nullable=true)
      */
     private $like;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Recette")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $recetteMere;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Recette", inversedBy="recetteMere")
-     * @ORM\JoinTable(name="variantes",
-     *      joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="variante_recette_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="GroupVariantes", inversedBy="variantes")
+     * @ORM\JoinTable(name="variantes")
      */
     private $variantes;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="Recette", inversedBy="recetteMere")
-     * @ORM\JoinTable(name="versions",
-     *      joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="version_recette_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="GroupVersions", inversedBy="versions")
+     * @ORM\JoinTable(name="versions")
      */
     private $versions;
     
@@ -322,7 +310,6 @@ class Recette
     {
         return $this->image;
     }
-
 
     /**
      * Get id
@@ -919,43 +906,15 @@ class Recette
     }
 
     /**
-     * Set recetteMere
+     * Add Variante
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $recetteMere
-     *
-     * @return Recette
-     */
-    public function setRecetteMere(\MealSquare\RecetteBundle\Entity\Recette $recetteMere = null)
-    {
-        $this->recetteMere = $recetteMere;
-
-        return $this;
-    }
-
-    /**
-     * Get recetteMere
-     *
-     * @return \MealSquare\RecetteBundle\Entity\Recette
-     */
-    public function getRecetteMere()
-    {
-        return $this->recetteMere;
-    }
-
-    /**
-     * Add variante
-     *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $variante
+     * @param \MealSquare\RecetteBundle\Entity\GroupVariantes $variante
      *
      * @return Recette
      */
-    public function addVariante(\MealSquare\RecetteBundle\Entity\Recette $variante)
+    public function addVariante(\MealSquare\RecetteBundle\Entity\GroupVariantes $variante)
     {
-        if (!$this->variantes->contains($variante)) {
-            $variante->setRecetteMere($this);
-            $this->variantes[] = $variante;
-        }
-        
+        $this->variantes[] = $variante;
 
         return $this;
     }
@@ -963,15 +922,11 @@ class Recette
     /**
      * Remove variante
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $variante
+     * @param \MealSquare\RecetteBundle\Entity\GroupVariantes $variante
      */
-    public function removeVariante(\MealSquare\RecetteBundle\Entity\Recette $variante)
+    public function removeVariante(\MealSquare\RecetteBundle\Entity\GroupVariantes $variante)
     {
-        if ($this->variantes->contains($variante)) {
-            $variante->setRecetteMere(null);
-            $this->variantes->removeElement($variante);
-        }
-        
+        $this->variantes->removeElement($variante);
     }
 
     /**
@@ -987,16 +942,13 @@ class Recette
     /**
      * Add version
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $version
+     * @param \MealSquare\RecetteBundle\Entity\GroupVersions $version
      *
      * @return Recette
      */
-    public function addVersion(\MealSquare\RecetteBundle\Entity\Recette $version)
+    public function addVersion(\MealSquare\RecetteBundle\Entity\GroupVersions $version)
     {
-        if (!$this->versions->contains($version)) {
-            $version->setRecetteMere($this);
-            $this->versions[] = $version;
-        }
+        $this->versions[] = $version;
 
         return $this;
     }
@@ -1004,14 +956,11 @@ class Recette
     /**
      * Remove version
      *
-     * @param \MealSquare\RecetteBundle\Entity\Recette $version
+     * @param \MealSquare\RecetteBundle\Entity\GroupVersions $version
      */
-    public function removeVersion(\MealSquare\RecetteBundle\Entity\Recette $version)
+    public function removeVersion(\MealSquare\RecetteBundle\Entity\GroupVersions $version)
     {
-        if ($this->versions->contains($version)) {
-            $version->setRecetteMere(null);
-            $this->versions->removeElement($version);
-        }
+        $this->versions->removeElement($version);
     }
 
     /**
@@ -1022,6 +971,14 @@ class Recette
     public function getVersions()
     {
         return $this->versions;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasVersion()
+    {
+        return (count($this->getVersions()) != 0)?true:false;
     }
 
     /**
@@ -1168,12 +1125,14 @@ class Recette
         return $attributValue;
     }
     
-    public function getSpecialiteSaisonDifficulteIndex  (){
+    public function getSpecialiteSaisonDifficulteIndex(){
         $this->setDifficulte($this->getAttributIndex('difficulte', $this->getDifficulte()));
         $this->setSaison($this->getAttributIndex('saison', $this->getSaison()));
         $this->setSpecialite($this->getAttributIndex('specialite', $this->getSpecialite()));
     }
     
-
+    public function isRecetteMere() {
+        return (!is_null($this->getVersions()[0]->getRecetteMere()) && $this->getVersions()[0]->getRecetteMere()->getId() == $this->id) ? true:false;
+    }
 
 }
