@@ -1,7 +1,6 @@
 {# empty Twig template #}
 {% extends "MealSquareCommonBundle::layout.html.twig" %}
 
-
 {% block title %}
     {{recette.titre}}  - {{ parent() }}
 {% endblock %}
@@ -163,17 +162,34 @@
                 <aside class="sidebar one-fourth wow fadeInRight">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                         {% if recette.versions is not null%}
-                            <div class="widget">
-                                <h3>{{ 'recettes.versions'|trans({},'messages') }}</h3>
+                            <div id="versions" class="widget">
+                                <h3>
+                                    {{ 'recettes.versions'|trans({},'messages') }} 
+                                    <span id="remove_versions" style="color: rgb(219, 126, 121); float:right"><a title="{{ 'recettes.remove_versions'|trans({},'messages') }}"><i class="fa fa-1x fa-trash button" style="min-width: 0px; margin-top:-5px"></i></a></span>
+                                </h3>
                                 <ul class="variantes-versions">
                                     {% for groupVersion in recette.versions %}
                                         {% for version in groupVersion.versions %}
                                             {% if groupVersion.recetteMere is not null and version.id == groupVersion.recetteMere.id %}
-                                                <li id="id_version{{ version.id }}" class="versionIsRecetteMere"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
-                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                                <li id="id_version{{ version.id }}" class="versionIsRecetteMere version">
+                                                    <a class="show_version" href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                        <span>{{version.titre}}</span>
+                                                    </a>
+                                                    <span class="remove_version" style="display:none;float:right">
+                                                        <input class="check_remove_version" type="checkbox"></input>
+                                                    </span>
+                                                    <div class="clearfix"></div>
+                                                </li>
                                             {% else %}
-                                                <li id="id_version{{ version.id }}"><a href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
-                                                <span>{{version.titre}}</span></a><div class="clearfix"></div></li>
+                                                <li id="id_version{{ version.id }}" class="version">
+                                                    <a class="show_version" href="{{ path('meal_square_recette_show',{'id':version.id}) }}">{% thumbnail version.image,'small' with {'width':'32px'} %}
+                                                        <span>{{version.titre}}</span>
+                                                    </a>
+                                                    <span class="remove_version" style="display:none;float:right">
+                                                        <input class="check_remove_version" type="checkbox"></input>
+                                                    </span>
+                                                    <div class="clearfix"></div>
+                                                </li>
                                             {% endif %}
                                         {% endfor %}
                                     {% endfor %}
@@ -223,15 +239,7 @@
                         <ul class="boxed">
                             {% if recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                                 <li class="light"><a href="{{ path('meal_square_recette_edit',{ 'id':recette.id }) }}"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
-
-
-
                                 <li class="medium btn btn-lg btn-danger sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Danger']);"><a title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
-
-
-
-
-
                             {% else %}
                                 <li class="light link-not-activated"><a href="#"  title="{{ 'recettes.edit'|trans({},'messages') }}"><i class="fa fa-3x fa-edit" ></i> <span>{{ 'recettes.edit'|trans({},'messages') }}</span></a></li>
                                 <li class="medium link-not-activated"><a href="#"  title="{{ 'recettes.remove'|trans({},'messages') }}"><i class="fa fa-3x fa-trash"></i> <span>{{ 'recettes.remove'|trans({},'messages') }}</span></a></li>
@@ -462,5 +470,42 @@
                 }
             });
         };
+    </script>
+
+    <script type="text/javascript">
+        $('#remove_versions').click(function(event){
+            if ( $('#versions').hasClass("selectable") ) {
+                $(this).find("i").removeClass("fa-check").addClass("fa-trash");
+                $('#versions').removeClass("selectable");
+                $('.show_version').removeClass("link-not-activated");
+                $('.remove_version').hide();
+                var versionsToRemove = $('.check_remove_version:checked');
+                var idVersionsToRemove = [];
+                var currentRecetteToRemove = false;
+
+                for ( var i=0; i<versionsToRemove.length; i++ ) {
+                    var idVersionToRemove = $(versionsToRemove[i]).closest(".version")[0].id.replace("id_version", "");
+                    idVersionsToRemove.push(idVersionToRemove);
+                    if ( idVersionToRemove == {{ recette.id }} ) {
+                        currentRecetteToRemove = true;
+                    }
+                    $(versionsToRemove[i]).closest(".version")[0].remove();
+                }
+                $.ajax({
+                    data: "idVersionsToRemove="+idVersionsToRemove+"&currentRecetteToRemove="+currentRecetteToRemove,
+                    url: "{{ path('meal_square_recette_versions_delete') }}",
+                    success: function(data) {
+                        if ( data.currentRecetteToRemove == "true" ) {
+                            window.location.replace("{{ path('fos_user_profile_show') }}");
+                        } 
+                    }
+                }); 
+            } else {
+                $(this).find("i").removeClass("fa-trash").addClass("fa-check");
+                $('#versions').addClass("selectable");
+                $('.show_version').addClass("link-not-activated");
+                $('.remove_version').show();
+            }
+        });
     </script>
 {% endblock %}

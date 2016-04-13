@@ -47,6 +47,7 @@ recettes:
     who_liked: Les membres qui ont aimé cette recette
     variantes: Variantes de la recette
     versions: Versions de la recette
+    remove_versions: Supprimer des versions
     mother: Recette Mère
     rate_recipe: Noter la recette
     rate_display: Cette recette a obtenu une note de 
@@ -114,6 +115,7 @@ form:
         action: Créer une autre version de cette recette
         recette_mere: Définir comme recette mère
         not_recette_mere: Recette mère
+        remove: Supprimer les versions
         
     variante:
         title: Variante de recette

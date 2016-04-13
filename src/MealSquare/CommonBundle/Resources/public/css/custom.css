@@ -26,6 +26,7 @@ and open the template in the editor.
 .variantes-versions li a:hover{color: #2C71A3;}
 .variantes-versions li a span{vertical-align: -webkit-baseline-middle}
 .variantes-versions img{display: inline-block;vertical-align: middle;float: left;margin-right: 5px;}
+.selectable {border: 3px solid #2C71A3;}
 
 .ingredient-non-formatted{  width: 100%;margin: 0 0 30px;background: #fff;}
 .ingredient-non-formatted li{border-bottom: 1px solid whitesmoke; padding: 9px 20px;font-size: 13px;}
