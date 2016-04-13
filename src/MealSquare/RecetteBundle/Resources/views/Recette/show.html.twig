@@ -139,9 +139,14 @@
                                     </div>
                                 {% endif %}
                                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
-                                    <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id}) }}">{{ 'form.version.action'|trans({},'messages') }}</a>
-                                {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED")%}
-                                    <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id}) }}">{{ 'form.variante.action'|trans({},'messages') }}</a>
+                                    <div class="widget">
+                                        <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id, 'isVersion':1}) }}">{{ 'form.version.action'|trans({},'messages') }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED")%}
+                                    <div class="widget">
+                                        <a class="button" href="{{ path('meal_square_recette_clone',{'id':recette.id, 'isVersion':0}) }}">{{ 'form.variante.action'|trans({},'messages') }}</a>
+                                    </div>
                                 {% endif %}
                             </article>
                             <!--//one-third-->

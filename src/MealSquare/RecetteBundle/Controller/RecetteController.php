@@ -327,7 +327,7 @@ class RecetteController extends Controller {
         return (isset($tab[$position]))? $tab[$position]: $position;
     }
     
-    public function cloneAction($id) {
+    public function cloneAction($id, $isVersion) {
         
         $em         = $this->getDoctrine()->getManager();
         $usr        = $this->get('security.context')->getToken()->getUser();
@@ -337,8 +337,7 @@ class RecetteController extends Controller {
         if(is_null($recette)){
                 throw new NotFoundHttpException("Désolé, la page que vous avez demandée semble introuvable !");
         }else{
-            
-            $isVersion  = (!is_null($recette->getAuteur()) && $usr->getId() == $recette->getAuteur()->getId());
+            $isVersion  = $isVersion == "1";
             $clone      = $recette->copy();
             
             if($isVersion) $clone->setImage($recette->getImage());

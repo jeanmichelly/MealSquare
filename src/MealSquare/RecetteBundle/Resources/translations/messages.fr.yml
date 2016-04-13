@@ -115,7 +115,6 @@ form:
         action: Créer une autre version de cette recette
         recette_mere: Définir comme recette mère
         not_recette_mere: Recette mère
-        remove: Supprimer les versions
         
     variante:
         title: Variante de recette

@@ -47,7 +47,7 @@ meal_square_recette_add:
     defaults: { _controller: MealSquareRecetteBundle:Recette:add }
     
 meal_square_recette_clone:
-    path:     /recette/clone/{id}
+    path:     /recette/clone/{id}/{isVersion}
     defaults: { _controller: MealSquareRecetteBundle:Recette:clone }
     
 meal_square_recette_raccourci:
