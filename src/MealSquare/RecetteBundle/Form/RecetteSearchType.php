@@ -1,6 +1,5 @@
 <?php
 namespace MealSquare\RecetteBundle\Form;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormBuilder;
@@ -11,7 +10,6 @@ use Doctrine\ORM\EntityRepository;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * Description of RecetteSearchType
  *
@@ -42,7 +40,7 @@ class RecetteSearchType extends AbstractType{
             ))
             ->add('type', 'choice', array(
                 'choices'   => array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade'),
-                'required'  => False,
+                'required'  => false,
                 'empty_value' => 'Type',
             ))
             ->add('pays',"genemu_jqueryselect2_country", array(
@@ -53,30 +51,31 @@ class RecetteSearchType extends AbstractType{
                 'required' => false
             ))
             ->add('categorie', 'entity', array(
-				'class' => 'Application\Sonata\ClassificationBundle\Entity\Category',
-					'query_builder' => function(EntityRepository $er ) {
-						return $er->createQueryBuilder('c')
-							->join('c.context','co')
-							->where('co.name  = :context')
-							->setParameter('context', 'recette')
-							->orderBy('c.name', 'ASC');
-					},
+                'class' => 'Application\Sonata\ClassificationBundle\Entity\Category',
+                'query_builder' => function(EntityRepository $er ) {
+                    return $er->createQueryBuilder('c')
+                              ->join('c.context','co')
+                              ->where('co.name  = :context')
+                              ->setParameter('context', 'recette')
+                              ->orderBy('c.name', 'ASC');
+                    },
                 'empty_value' => 'Catégorie',
                 'required'  => False,
             ))
             ->add('ingredients', 'collection', array(
-                'type' => 'text',
+                'type' => 'entity',
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'options'  => array(
+                    'class' => 'MealSquare\RecetteBundle\Entity\Ingredient',
+                    'query_builder' => function(EntityRepository $er ) {
+                        return $er->createQueryBuilder('c')
+                                 ->orderBy('c.libelle', 'ASC');
+                    },
                     'required'  => true,
-					'label'      => false,
-					'attr' => array(
-						'placeholder' => 'Ingredient',
-						'data-id' => 'libelle'
-						)
+                    'empty_value' => 'Ingrédient',
                 )
             ))
             ->setMethod('GET')
@@ -97,6 +96,5 @@ class RecetteSearchType extends AbstractType{
     public function getName() {
         return 'recipe_search';
     }
-
 //put your code here
 }

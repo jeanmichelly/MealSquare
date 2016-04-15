@@ -32,7 +32,11 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
             $query->leftJoin('a.ingredients', 'iLine');
             $query->leftJoin('iLine.ingredient', 'i');
             $i = 0;
-            foreach ($data['ingredients'] as $ing){
+            foreach ($data['ingredients'] as $ing) {
+                $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
+                $ingredient = $repository->findOneById($ing);
+                $ing = $ingredient->getLibelle();
+
                 $query->andWhere(
                     $query->expr()->orX(
                         $query->expr()->like('i.libelle', ':libelle'.$i),
