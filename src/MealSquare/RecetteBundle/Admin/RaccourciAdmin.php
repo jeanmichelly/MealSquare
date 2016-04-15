@@ -58,7 +58,8 @@ class RaccourciAdmin extends Admin
                     'ingredient' => 'Ingrédient' ,
                     'categorie' => 'Catégorie' ,
                     'pays' => 'Pays' ,
-                    'specialite' => 'Spécialité'), 
+                    'specialite' => 'Spécialité' ,
+                    'type' => 'Type'), 
                 'required'  => true,
                 'empty_value' => 'Type de raccourci',
             ))

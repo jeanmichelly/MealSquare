@@ -24,6 +24,7 @@ recettes:
     saison: Saison
     pays: Pays
     speciality: Spécialité
+    type: Type
     autor: Auteur
     source: Source
     add: Ajouter une recette
@@ -97,6 +98,7 @@ form:
         country: Pays
         season: Saison
         speciality: Spécialité
+        type: Type
         publication: Publication
         publication_text: Voulez-vous publier cette recette ou envisagez-vous encore de la modifier plus tard?
         public: Rendre publique cette recette

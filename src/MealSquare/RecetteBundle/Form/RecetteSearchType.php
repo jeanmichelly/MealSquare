@@ -40,6 +40,11 @@ class RecetteSearchType extends AbstractType{
                 'required'  => False,
                 'empty_value' => 'Spécialité',
             ))
+            ->add('type', 'choice', array(
+                'choices'   => array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade'),
+                'required'  => False,
+                'empty_value' => 'Type',
+            ))
             ->add('pays',"genemu_jqueryselect2_country", array(
                 'empty_value' => 'Pays',
                 'required' => false

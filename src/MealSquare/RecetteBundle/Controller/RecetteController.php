@@ -225,7 +225,7 @@ class RecetteController extends Controller {
                 throw new NotFoundHttpException("Désolé, la page que vous avez demandée semble introuvable !");
         }else{
             
-            $recette->getSpecialiteSaisonDifficulteIndex();
+            $recette->getSpecialiteSaisonDifficulteTypeIndex();
             $form = $this->createForm(new RecetteEditType(), $recette);
 
             if ( $recette->hasVersion() ) {
@@ -245,6 +245,7 @@ class RecetteController extends Controller {
                 $recette->setDifficulte($this->manageAttribut('difficulte',$recette->getDifficulte()));
                 $recette->setSaison($this->manageAttribut('saison',$recette->getSaison()));
                 $recette->setSpecialite($this->manageAttribut('specialite',$recette->getSpecialite()));
+                $recette->setType($this->manageAttribut('type',$recette->getType()));
             
                 $em->persist($recette);
                 $em->flush();  
@@ -279,6 +280,7 @@ class RecetteController extends Controller {
             $recette->setDifficulte($this->manageAttribut('difficulte',$recette->getDifficulte()));
             $recette->setSaison($this->manageAttribut('saison',$recette->getSaison()));
             $recette->setSpecialite($this->manageAttribut('specialite',$recette->getSpecialite()));
+            $recette->setType($this->manageAttribut('type',$recette->getType()));
             // On recupere le current user
             $usr     = $this->get('security.context')->getToken()->getUser();
             $recette->setAuteur($usr);
@@ -322,6 +324,8 @@ class RecetteController extends Controller {
         
         $tabs['specialite'] = array('0' => 'Saint-Valentin' , '1' => 'Recettes anglo-saxonne' , '2' => 'Chic et facile' , '3' => 'Recettes méditerranéennes' , '4' => 'Spécialités antillaises' , '5' => 'Exotique' , '6' => 'Recettes de Chef' , '7' => 'Pâques' , '8' => 'Provence' , '9' => 'Orientale' , '10' => 'Repas de fête' , '11' => 'Cuisine légère' , '12' => 'Cuisine rapide' , '13' => 'Mardi Gras' , '14' => 'Asie' , '15' => 'Nordique' , '16' => 'Bretagne' , '17' => 'Sud-ouest' , '18' => 'Spécialités ibériques' , '19' => 'Normandie' , '20' => 'Thanksgiving' , '21' => 'Auvergne' , '22' => 'Halloween' , '23' => 'Recettes américaines' , '24' => 'Pentecôte');
 
+        $tabs['type'] = array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade');
+
         $tab = $tabs[$type];
         
         return (isset($tab[$position]))? $tab[$position]: $position;
@@ -341,7 +345,7 @@ class RecetteController extends Controller {
             $clone      = $recette->copy();
             
             if($isVersion) $clone->setImage($recette->getImage());
-            $clone->getSpecialiteSaisonDifficulteIndex();
+            $clone->getSpecialiteSaisonDifficulteTypeIndex();
             $form = $this->createForm(new RecetteEditType(), $clone);
 
             $form->handleRequest($this->getRequest());
@@ -354,6 +358,7 @@ class RecetteController extends Controller {
                 $clone->setDifficulte($this->manageAttribut('difficulte',$clone->getDifficulte()));
                 $clone->setSaison($this->manageAttribut('saison',$clone->getSaison()));
                 $clone->setSpecialite($this->manageAttribut('specialite',$clone->getSpecialite()));
+                $clone->setType($this->manageAttribut('type',$clone->getType()));
                 $clone->setAuteur($usr);
                 
                 $em     ->persist($clone);

@@ -36,6 +36,7 @@
                                         <li>{{ 'recettes.serves'|trans({},'messages') }} : {{recette.getNbPersonne()}}</li>
                                         <li>{{ 'recettes.saison'|trans({},'messages') }} : {{recette.getSaison()}}</li>
                                         <li>{{ 'recettes.speciality'|trans({},'messages') }} : {{recette.getSpecialite() |slice(0, 13)}}...</li>
+                                        <li>{{ 'recettes.type'|trans({},'messages') }} : {{recette.getType() |slice(0, 13)}}...</li>
                                         <li>{{ 'recettes.category'|trans({},'messages') }} : {{recette.getCategorie()}}</li>
                                         <li>{{ 'recettes.source'|trans({},'messages') }} : {{recette.getSource()}}</li>
                                     </ul>

@@ -46,6 +46,13 @@ class Recette
     private $specialite;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="nbPersonne", type="integer")
@@ -259,6 +266,7 @@ class Recette
         $copy->setTitre($this->titre);
         $copy->setSource($this->source);
         $copy->setSpecialite($this->specialite);
+        $copy->setType($this->type);
         $copy->setNbPersonne($this->nbPersonne);
         $copy->setVisibilite($this->visibilite);
         $copy->setDifficulte($this->difficulte);
@@ -882,6 +890,30 @@ class Recette
     }
 
     /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Recette
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -1111,7 +1143,9 @@ class Recette
 
                         );
         
-        $tabs['specialite'] = array('0' => 'Saint-Valentin' , '1' => 'Recettes anglo-saxonne' , '2' => 'Chic et facile' , '3' => 'Recettes méditerranéennes' , '4' => 'Spécialités antillaises' , '5' => 'Exotique' , '6' => 'Recettes de Chef' , '7' => 'Pâques' , '8' => 'Provence' , '9' => 'Orientale' , '10' => 'Repas de fête' , '11' => 'Cuisine légère' , '12' => 'Cuisine rapide' , '13' => 'Mardi Gras' , '14' => 'Asie' , '15' => 'Nordique' , '16' => 'Bretagne' , '17' => 'Sud-ouest' , '18' => 'Spécialités ibériques' , '19' => 'Normandie' , '20' => 'Thanksgiving' , '21' => 'Auvergne' , '22' => 'Halloween' , '23' => 'Recettes américaines' , '24' => 'Pentecôte');
+        $tabs['specialite'] = array('0' => 'Saint-Valentin' , '1' => 'Recettes anglo-saxonne' , '2' => 'Chic et facile' , '3' => 'Recettes méditerranéennes' , '4' => 'Spécialités antillaises' , '5' => 'Exotique' , '6' => 'Recettes de Chef' , '7' => 'Pâques' , '8' => 'Provence' , '9' => 'Orientale' , '10' => 'Repas de fête' , '11' => 'Cuisine légère' , '12' => 'Cuisine rapide' , '13' => 'Mardi Gras' , '14' => 'Asie' , '15' => 'Nordique' , '16' => 'Bretagne' , '17' => 'Sud-ouest' , '18' => 'Spécialités ibériques' , '19' => 'Normandie' , '20' => 'Thanksgiving' , '21' => 'Auvergne' , '22' => 'Halloween' , '23' => 'Recettes américaines' , '24' => 'Pentecôte'); 
+
+        $tabs['type'] = array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade');
 
         if(isset($tabs[$type]))
         {
@@ -1125,10 +1159,11 @@ class Recette
         return $attributValue;
     }
     
-    public function getSpecialiteSaisonDifficulteIndex(){
+    public function getSpecialiteSaisonDifficulteTypeIndex(){
         $this->setDifficulte($this->getAttributIndex('difficulte', $this->getDifficulte()));
         $this->setSaison($this->getAttributIndex('saison', $this->getSaison()));
         $this->setSpecialite($this->getAttributIndex('specialite', $this->getSpecialite()));
+        $this->setType($this->getAttributIndex('type', $this->getType()));
     }
     
     public function isRecetteMere() {

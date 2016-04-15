@@ -21,6 +21,8 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
 
 
         $specialites = array('0' => 'Saint-Valentin' , '1' => 'Recettes anglo-saxonne' , '2' => 'Chic et facile' , '3' => 'Recettes méditerranéennes' , '4' => 'Spécialités antillaises' , '5' => 'Exotique' , '6' => 'Recettes de Chef' , '7' => 'Pâques' , '8' => 'Provence' , '9' => 'Orientale' , '10' => 'Repas de fête' , '11' => 'Cuisine légère' , '12' => 'Cuisine rapide' , '13' => 'Mardi Gras' , '14' => 'Asie' , '15' => 'Nordique' , '16' => 'Bretagne' , '17' => 'Sud-ouest' , '18' => 'Spécialités ibériques' , '19' => 'Normandie' , '20' => 'Thanksgiving' , '21' => 'Auvergne' , '22' => 'Halloween' , '23' => 'Recettes américaines' , '24' => 'Pentecôte');
+
+        $types = array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade');
      
         $query = $this->createQueryBuilder('a');
         $query->where('a.titre LIKE  :titre ');
@@ -56,6 +58,12 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
             $specialite = $specialites[$data['specialite']];
             $query->andWhere('a.specialite = :specialite');
             $query->setParameter('specialite',$specialite);
+        }             
+
+        if ($data['type'] != null) {
+            $type = $types[$data['type']];
+            $query->andWhere('a.type = :type');
+            $query->setParameter('type',$type);
         }              
         
         if ($data['categorie'] != null) {
@@ -70,6 +78,9 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
     public function findRecipesByRaccourci($data) {
 
         $specialites = array('0' => 'Saint-Valentin' , '1' => 'Recettes anglo-saxonne' , '2' => 'Chic et facile' , '3' => 'Recettes méditerranéennes' , '4' => 'Spécialités antillaises' , '5' => 'Exotique' , '6' => 'Recettes de Chef' , '7' => 'Pâques' , '8' => 'Provence' , '9' => 'Orientale' , '10' => 'Repas de fête' , '11' => 'Cuisine légère' , '12' => 'Cuisine rapide' , '13' => 'Mardi Gras' , '14' => 'Asie' , '15' => 'Nordique' , '16' => 'Bretagne' , '17' => 'Sud-ouest' , '18' => 'Spécialités ibériques' , '19' => 'Normandie' , '20' => 'Thanksgiving' , '21' => 'Auvergne' , '22' => 'Halloween' , '23' => 'Recettes américaines' , '24' => 'Pentecôte');
+
+        $types = array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade');
+
         $query       = $this->createQueryBuilder('a');
         
         if(isset($data['ingredient'])){
@@ -88,6 +99,10 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
             $specialite = $specialites[$data['specialite']];
             $query->where('a.specialite = :specialite');
             $query->setParameter('specialite',$specialite);
+        }elseif(isset($data['type']) && isset($types[$data['type']])) {
+            $type = $types[$data['type']];
+            $query->where('a.type = :type');
+            $query->setParameter('type',$type);
         }elseif(isset($data['categorie'])) {
             $query->leftJoin('a.categorie', 'cat');
             $query->andWhere('cat.slug = :categorie');

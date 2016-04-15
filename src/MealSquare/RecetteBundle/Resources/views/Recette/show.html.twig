@@ -96,6 +96,12 @@
                                     <dd>{{recette.getPays()}}</dd>
                                     <dt>{{ 'recettes.speciality'|trans({},'messages') }}</dt>
                                     <dd style="font-size: 11px;padding: 2px;">{{recette.getSpecialite() |slice(0, 13)}}...</dd>
+                                    <dt>{{ 'recettes.type'|trans({},'messages') }}</dt>
+                                    {% if recette.getType() is null %}
+                                        <dd>{{recette.getType()}}</dd>
+                                    {% else %}
+                                        <dd style="font-size: 11px;padding: 2px;">{{recette.getType() |slice(0, 13)}}...</dd>
+                                    {% endif %}
                                 </dl>
 
                                 <dl class="user">

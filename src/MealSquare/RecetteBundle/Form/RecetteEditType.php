@@ -23,6 +23,11 @@ class RecetteEditType extends AbstractType
                 'required'  => true,
                 'empty_value' => 'Spécialité',
             ))
+            ->add('type', 'choice', array(
+                'choices'   => array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade'),
+                'required'  => true,
+                'empty_value' => 'Type',
+            ))
             ->add('nbPersonne')
             ->add('description')
             ->add('visibilite', 'checkbox', array(

@@ -23,6 +23,7 @@ class RecetteAdmin extends Admin
                     ->add('nbPersonne')
                     ->add('saison')
                     ->add('specialite')
+                    ->add('type')
                     ->add('pays')
                     ->add('image', 'sonata_type_model_list', array('required' => false), array(
                         'link_parameters' => array(
