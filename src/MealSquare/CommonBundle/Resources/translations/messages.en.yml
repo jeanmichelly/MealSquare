@@ -1,0 +1,142 @@
+
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
+common:
+
+    # Header menu
+    menu:
+        home: Home
+        recipes: Recipes
+        forums: Forum
+        search: Search
+        more: More
+        connexion: Connexion
+        ingredients: Ingredients
+        recettes: Recipes
+        contacts: Contact us
+        submit_recipes: Submit a recipe
+        account: My account
+        search_recipes: Search a recipe
+        news: News
+        connect: Login
+
+    # User account box
+    user:
+        # Users types
+        types:
+            user: User
+            visitor: Visitor
+
+        # User menu
+        menu:
+            account: My account
+            emails: E-mails
+            logout: Logout
+            connect: Login
+            register: Register
+            help: Help
+            admin: Administration
+            members: Members
+            
+        profile:
+            about: About me
+            recipes: My recipes
+            favourite: My favourites
+            badges: My badges
+
+        # Sex
+        sex:
+            male: Male
+            female: Female
+            
+        #User information
+        information:
+            username: Username
+            fistname: Firstname
+            lastname: Lastname
+            email: Email
+
+    # Contact
+    contact:
+        message: Your message
+        name: Your name
+        email: Your email
+        send: Send the message
+        message: Your message
+        title: Contact - us ?
+        
+    pagination:
+        previous: Previous
+        next: Next
+        
+
+    
+
+    
+
+    # Footer
+    footer:
+        # Links
+        legalities: Legalities
+        help_us: Help us
+        change_locale: Change locale
+        desktop_version: Desktop version
+        mobile_version: Mobile version
+        help: Need help ?
+        help_text: Contact us for further informations about the website.
+        follow: Follow us
+        about: About MealSquare
+        about_text: Mealsquare is a cooking recipes website.
+        
+
+        # Authors and version
+        text: "Realised by Nanocreatives<br />Propulsed by Symfony 2"
+        mobile_text: "Realised by Nanocreatives"
+        version: Version
+        
+        #Copyrights
+        copyrights: Copyright © 2015 MealSquare. All rights reserved
+
+
+    home:
+        bienvenu: Welcome to MealSquare !
+        les_chiffres : The figures about MealSquare
+        ingredients : Ingredients
+        recettes : Recipes
+        utilisateurs : Users
+        postes : Posts
+        media: Medias
+        intro : is a community encyclopedia centered around cooking recipes.
+        intro_part2 : Now, forget all of your cooking books and opt for this online cooking librairy.
+        mealsquare : MealSquare 
+        nous_rejoindre : Join us !
+        deja_membre : Already member ? Clic 
+        ici : here
+        pour_connecter : to login
+        membre: Members
+        profil : Consult your profile
+        recette_de_la_journee : Recipe of the day
+        plus_de_recette : More recipes
+        haut : Back to the top
+        last_articles : Last articles
+        more_articles : More articles
+        no_article : No article available
+        no_user : No user
+        no_recette : No recipe available
+        no_recetteofweek : Sorry, we haven't selected our recipe of the week yet.
+        no_recetteofmonth : Sorry, we haven't selected our recipe of the month yet.
+        no_recetteselectionne : Sorry, we haven't selected our recipe yet.
+        voir_article : See article
+        see_also : See also
+        our_members : Our members
+        newest : Newest
+        recetteofweek : Recipe of the week
+        recetteofmonth : Recipe of the month
+        recetteselection : Our selection
+        recetteclassic : The great classic
+        no_recetteclassic : Sorry, we haven't selected our great classic yet.
+        recetterate : The most rated
+        shortcut: Which type of recipe are you looking for?
+        
+    profile:
+        setting: Edit my informations
