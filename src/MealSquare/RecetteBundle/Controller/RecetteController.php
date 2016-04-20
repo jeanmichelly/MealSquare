@@ -33,6 +33,26 @@ class RecetteController extends Controller {
             'raccourcis' => $raccourcis
         ));
     }
+
+    public function listFilterableAction(Request $request) {
+        $em         = $this->get('doctrine.orm.entity_manager');
+        $dql        = "SELECT a FROM MealSquareRecetteBundle:Recette a WHERE a.visibilite = true AND a.archive =false ORDER BY a.dateCreation DESC";
+        $query      = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $request->query->get('page', 1)/* page number */, 20/* limit per page */
+        );
+        $ingredients = $em->getRepository('MealSquareRecetteBundle:Ingredient')->findAll();
+        $raccourcis = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Raccourci")->findBy(array('actif'=>true));
+
+        // parameters to template
+        return $this->render('MealSquareRecetteBundle:Recette:listFilterable.html.twig', array(
+            'pagination' => $pagination,
+            'ingredients' => $ingredients,
+            'raccourcis' => $raccourcis
+        ));
+    }
     
     public function raccourciAction($id, $slug) {
         $raccourci     = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Raccourci")->find($id);

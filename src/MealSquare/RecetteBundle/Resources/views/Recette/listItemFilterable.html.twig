@@ -1,0 +1,22 @@
+<li class="mix {{ recette.Difficulte | lower | replace({'è': 'e', 'é': 'e', ' ': '_'}) }} entry one-fourth fadeInLeft" temps-preparation={{ recette.tempsPreparation }} temps-cuisson={{ recette.tempsCuisson }} ingredients="{% for item in recette.ingredients %}{{item.ingredient.libelle}}{% if not loop.last %},{% endif %}{% endfor %}" style="float:none; padding:0">
+    <figure style="min-height: 270px;">
+        {% thumbnail recette.image, 'square' with {'width':'100%','height':'auto'} %}
+        <figcaption><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}"><i class="ico i-view"></i> <span>{{ 'recettes.detail'|trans({}, 'messages') }}</span></a></figcaption>
+    </figure>
+    <div class="container">
+        <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}" class="recette_title">{{recette.Titre | slice (0, 20)}}</a></h2> 
+        <div class="actions">
+            <div>
+            <div><i class="ico i-preparation"></i>{{ recette.tempsPreparation }}min</div>
+                <div><i class="ico i-cuisson"></i>{{ recette.tempsCuisson }}min</div>
+                <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
+                <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
+                <div class="difficulty"><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                    <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</li>

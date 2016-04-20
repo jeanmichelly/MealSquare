@@ -70,7 +70,10 @@ recettes:
     search:
         nbResults: résultat(s) trouvé(s)
     print: Imprimer la recette
-    
+    filter:
+        title: Filtres
+        by_publication_date: Date de publication
+
 form:
     add:
         basics: Informations Générales

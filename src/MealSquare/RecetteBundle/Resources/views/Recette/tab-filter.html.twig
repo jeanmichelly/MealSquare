@@ -1,0 +1,18 @@
+<div class="cd-tab-filter-wrapper">
+    <div class="cd-tab-filter">
+        <ul class="cd-filters">
+            <li class="placeholder"> 
+                <a data-type="all" href="#0">All</a> <!-- selected option on mobile -->
+            </li> 
+            <li class="filter"><a class="selected" href="{{ path('meal_square_recette_list') }}" data-type="publication-date">{{ 'recettes.filter.by_publication_date'|trans({},'messages') }}</a></li>
+            <li id="filter-title" class="filter">
+                {{ knp_pagination_sortable(pagination, 'Titre', 'a.titre') }}
+                {% if pagination.isSorted('a.titre') and pagination.getDirection() == "desc" %} 
+                    <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                {% else %}
+                    <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                {% endif %} 
+            </li>
+        </ul>
+    </div>
+</div>

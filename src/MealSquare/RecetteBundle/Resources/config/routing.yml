@@ -13,6 +13,10 @@ meal_square_recette_ingredient_show:
 meal_square_recette_list:
     path:     /recette/list/
     defaults: { _controller: MealSquareRecetteBundle:Recette:list }
+
+meal_square_recette_list_filterable:
+    path:     /recette/list-filterable/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:listFilterable }
     
 meal_square_recette_show:
     path:     /recette/{id}

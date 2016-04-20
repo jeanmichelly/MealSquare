@@ -1,0 +1,81 @@
+<div id="cd-filter" class="cd-filter">
+    <form>
+        <div class="cd-filter-block">
+            <h4>Titre</h4>
+            
+            <div class="cd-filter-content">
+                <input type="search" placeholder="Rechercher">
+            </div>
+        </div>
+
+        <div class="cd-filter-block">
+            <h4>Difficulté</h4>
+
+            <ul class="cd-filter-content cd-filters list">
+                <li>
+                    <input class="filter" data-filter="" type="radio" name="radioButton" id="Tous" checked>
+                    Tous
+                </li>
+                <li>
+                    <input class="filter" data-filter=".tres_facile" type="radio" name="radioButton" id="tres_facile">
+                    Très Facile
+                </li>
+                <li>
+                    <input class="filter" data-filter=".facile" type="radio" name="radioButton" id="facile">
+                    Facile
+                </li>
+                <li>
+                    <input class="filter" data-filter=".moyen" type="radio" name="radioButton" id="moyen">
+                    Moyen
+                </li>
+                <li>
+                    <input class="filter" data-filter=".difficile" type="radio" name="radioButton" id="difficile">
+                    Difficile
+                </li>
+                <li>
+                    <input class="filter" data-filter=".delicat" type="radio" name="radioButton" id="delicat">
+                    Délicat
+                </li>
+            </ul>
+        </div>
+
+        <div class="cd-filter-block">
+            <h4>Temps de préparation</h4>
+
+            <div class="cd-filter-content">
+                <i class="ico i-preparation"></i> <span id="temps_preration_min" class="leftLabel"></span>min - <span id="temps_preration_max" class="rightLabel"></span>min
+                <div class="nstSlider" data-range_min="1" data-range_max="100" data-cur_min="1" data-cur_max="100">
+                    <div class="bar"></div>
+                    <div class="leftGrip"></div>
+                    <div class="rightGrip"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cd-filter-block">
+            <h4>Temps de cuisson</h4>
+
+            <div class="cd-filter-content">
+                <i class="ico i-cuisson"></i> <span id="temps_cuisson_min" class="leftLabel"></span>min - <span id="temps_cuisson_max" class="rightLabel"></span>min
+                <div class="nstSlider" data-range_min="1" data-range_max="100" data-cur_min="1" data-cur_max="100">
+                    <div class="bar"></div>
+                    <div class="leftGrip"></div>
+                    <div class="rightGrip"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cd-filter-block">
+            <h4>Ingrédients</h4>
+            <div id="content_filter_ingredients" class="cd-filter-content">
+                <div id="placeHolder"></div>
+                <ul id="container">
+                    <li data-ingredients="{{ingredients | join(', ') }}" ></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <a href="#0" class="cd-close"><i class="fa fa-times" aria-hidden="true"></i></a>
+</div>
+<a href="#0" class="cd-filter-trigger">{{ 'recettes.filter.title'|trans({},'messages') }}</a>

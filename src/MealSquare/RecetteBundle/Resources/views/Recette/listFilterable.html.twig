@@ -44,47 +44,36 @@
                             {{ 'common.menu.recettes'|trans }}
                         {%endif%}
                     </h2>
-                    <div class="row tri">
-                        <span>
-                            {{ 'recettes.sortby'|trans({},'messages') }} 
-                            {% if pagination.isSorted('a.Titre') %} {% endif %} 
-                            {{ knp_pagination_sortable(pagination, 'Titre', 'a.titre') }}
-                        </span>
-                    </div>
-                </header>  
+                    <main class="cd-main-content">
+                        {{ include( 'MealSquareRecetteBundle:Recette:tab-filter.html.twig' ) }}
+                        <section class="cd-gallery content full-width wow fadeInUp">
+                            <ul class="entries row">
+                                {% for article in pagination %}
+                                        {{ include( 'MealSquareRecetteBundle:Recette:listItemFilterable.html.twig', { 'recette': article } ) }}
+                                {% else %}
+                                    <p></p>
+                                {% endfor %}
+                                <li class="gap"></li>
+                                <li class="gap"></li>
+                                <li class="gap"></li>
+{#                          <a href="javascript:void(0)" class="button scroll-to-top">Back to top</a>#}
+                            </ul>
+                        </section>
 
-                <!--content-->
-                <section class="content full-width wow fadeInUp">
-                    <!--entries-->
-                    <div class="entries row">
-                        {% for article in pagination %}
-                            <!--item-->
-                            <div class="entry one-fourth wow fadeInLeft">
-                                {{ include( 'MealSquareRecetteBundle:Recette:listItem.html.twig', { 'recette': article } ) }}
-                            </div>
-                            <!--item-->
-                        {% else %}
-                            <p></p>
-                        {% endfor %}
-                        <div class="quicklinks">
-                            {{ knp_pagination_render(pagination) }}
-                        </div>
-{#                            <a href="javascript:void(0)" class="button scroll-to-top">Back to top</a>#}
-
-                    </div>
-                    <!--//entries-->
-                </section>
-                <!--//content-->
+                        {{ include( 'MealSquareRecetteBundle:Recette:filter.html.twig' ) }}
+                    </main>
+                </header>
+                <div class="quicklinks">{{ knp_pagination_render(pagination) }}</div>
             </div>
-            <!--//row-->
         </div>
-        <!--//wrap-->
     </main>
-    <!--//main-->
 {% endblock %}
 {% block script %}
     <script> new WOW().init();</script>
+    {% if pagination.isSorted('a.titre') %} 
+        <script>
+            $(".selected").removeClass("selected");
+            $("a[title=Titre]").addClass("selected");
+        </script>
+    {% endif %}
 {% endblock %}
-
-
-
