@@ -39,8 +39,9 @@
                                     </ul>
                                 </div>
 
-                                {{ form_label(form.plainPassword.first, "Mot de passe") }}
+                                {{ form_label(form.plainPassword.first, "Mot de passe") }} <a id="reveal_password_link" href="#"><i id="reveal_password" class="fa fa-eye" aria-hidden="true"></i></a>
                                 {{ form_widget(form.plainPassword.first) }}
+
                                 <div id="pswd_info" class="register_info">
                                     <h4>Conditions du mot de passe pour la sécurité :</h4>
                                     <ul>
@@ -79,4 +80,18 @@
 {% endblock %}
 {% block script %}
    <script> new WOW().init(); </script>
+   <script type="text/javascript">
+        $('#reveal_password_link').click(function(event){
+            event.preventDefault();
+        });
+        $("#reveal_password").mousedown(function() {
+            $("#sonata_user_registration_form_plainPassword_first").replaceWith($('#sonata_user_registration_form_plainPassword_first').clone().attr('type', 'text'));
+        })
+        .mouseup(function() {
+            $("#sonata_user_registration_form_plainPassword_first").replaceWith($('#sonata_user_registration_form_plainPassword_first').clone().attr('type', 'password'));
+        })
+        .mouseout(function() {
+            $("#sonata_user_registration_form_plainPassword_first").replaceWith($('#sonata_user_registration_form_plainPassword_first').clone().attr('type', 'password'));
+        });
+   </script>
 {% endblock %}
