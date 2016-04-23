@@ -1,0 +1,9 @@
+<li class="mix  {{ ingredient.type | lower | replace({' ': '_'}) }} entry one-fourth fadeInLeft" style="float:none; padding:0;min-height:220px !important">
+    <figure>
+        {% thumbnail ingredient.image, 'big' %}
+        <figcaption><a href="{{ path('meal_square_recette_ingredient_show',{'id':ingredient.id}) }}"><i class="ico i-view"></i> <span>{{ 'ingredients.detail'|trans({}, 'messages') }}</span></a></figcaption>
+    </figure>
+    <div class="container">
+        <h2><a href="{{ path('meal_square_recette_ingredient_show',{'id':ingredient.id}) }}" class="ingredient_title">{{ingredient.libelle}}</a></h2>
+    </div>
+</li>

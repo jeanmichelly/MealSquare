@@ -7,22 +7,15 @@
 {% endblock %}
 
 {% block main %}
-    <!--main-->
     <main class="main" role="main">
-        <!--wrap-->
         <div class="wrap clearfix">
-            <!--breadcrumbs-->
             <nav class="breadcrumbs">
                 <ul>
                     <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
                     <li>{{ 'common.menu.recettes'|trans }}</li>
                 </ul>
             </nav>
-            <!--//breadcrumbs-->
-
-            <!--row-->
             <div class="row">
-
                 <aside class="above-sidebar full-width  wow fadeInDown">
                     <ul class="boxed">
                     {% for raccourci in raccourcis%}
@@ -47,9 +40,9 @@
                     <main class="cd-main-content">
                         {{ include( 'MealSquareRecetteBundle:Recette:tab-filter.html.twig' ) }}
                         <section class="cd-gallery content full-width wow fadeInUp">
-                            <ul class="entries row">
+                            <ul id="list_recettes" class="entries row">
                                 {% for article in pagination %}
-                                        {{ include( 'MealSquareRecetteBundle:Recette:listItemFilterable.html.twig', { 'recette': article } ) }}
+                                    {{ include( 'MealSquareRecetteBundle:Recette:listItemFilterable.html.twig', { 'recette': article } ) }}
                                 {% else %}
                                     <p></p>
                                 {% endfor %}
@@ -59,7 +52,6 @@
 {#                          <a href="javascript:void(0)" class="button scroll-to-top">Back to top</a>#}
                             </ul>
                         </section>
-
                         {{ include( 'MealSquareRecetteBundle:Recette:filter.html.twig' ) }}
                     </main>
                 </header>
