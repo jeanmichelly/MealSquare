@@ -1089,3 +1089,31 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 #confirm_pswd_info {
     bottom:64px;
 }
+
+#account_manager { 
+	width: 350px;
+	border: 1px solid rgba(0,0,0,.15);
+	background-color:#FFF;  
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	display: none;
+}
+#navbar_content {
+	margin: 15px 0 0 25px;
+}
+#navbar_content_right {
+	margin-left: 150px;
+}
+#link_change_avatar {
+	margin-left: 12px;
+}
+#navbar-footer-content {
+	background-color:#DDD;
+	padding:15px 15px 15px 15px;
+}
+.text-muted {
+	color: #999;
+}
+.navbar_button {
+	padding: 5px 10px;
+}

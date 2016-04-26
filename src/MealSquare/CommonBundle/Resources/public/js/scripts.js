@@ -79,3 +79,6 @@ $(window).load(function(){
 	$('.preloader').fadeOut();
 });
 
+$("#account_button").click(function() {
+    $("#account_manager").toggle();
+});

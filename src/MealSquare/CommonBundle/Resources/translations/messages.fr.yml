@@ -16,6 +16,7 @@ common:
         contacts: Contactez nous
         submit_recipes: Ajouter une recette
         account: Mon compte
+        profil: Voir mon profil
         search_recipes: Rechercher
         news: Actualités
         connect: Se Connecter

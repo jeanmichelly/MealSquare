@@ -19,16 +19,43 @@
         </nav>
 
         <nav class="user-nav" role="navigation">
-                <ul>
-                        <li class="light"><a href="{{ path('meal_square_recette_search') }}" title="{{ 'common.menu.search_recipes'|trans }}"><i class="ico i-search"></i> <span>{{ 'common.menu.search_recipes'|trans }}</span></a></li>
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <li class="medium"><a href="{{ path('sonata_user_profile_show') }}" title="{{ 'common.menu.account'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.account'|trans }}</span></a></li>
-                    {%else%}
-                        <li class="medium"><a href="{{ path('sonata_user_profile_show') }}" title="{{ 'common.menu.connect'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.connect'|trans }}</span></a></li>
-                    {% endif %}
-                        <li class="dark"><a href="{{ path('meal_square_recette_add') }}" title="{{ 'common.menu.submit_recipes'|trans }}"><i class="ico i-submitrecipe"></i> <span>{{ 'common.menu.submit_recipes'|trans }}</span></a></li>
-                </ul>
+            <ul>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li id="account_button" class="medium"><a href="#" title="{{ 'common.menu.account'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.account'|trans }}</span></a></li>
+                {%else%}
+                    <li class="medium"><a href="{{ path('sonata_user_profile_show') }}" title="{{ 'common.menu.connect'|trans }}"><i class="ico i-account"></i> <span>{{ 'common.menu.connect'|trans }}</span></a></li>
+                {% endif %}
+                    <li class="light"><a href="{{ path('meal_square_recette_search') }}" title="{{ 'common.menu.search_recipes'|trans }}"><i class="ico i-search"></i> <span>{{ 'common.menu.search_recipes'|trans }}</span></a></li>
+                    <li class="dark"><a href="{{ path('meal_square_recette_add') }}" title="{{ 'common.menu.submit_recipes'|trans }}"><i class="ico i-submitrecipe"></i> <span>{{ 'common.menu.submit_recipes'|trans }}</span></a></li>
+            </ul>
+            {% if app.user is not null %}
+                <div id="account_manager" class="pull-right">
+                    <div id="navbar_content" class="row">
+                        <div id="navbar_content_left" class="left">
+                            {% if app.user.avatar is not null %}
+                                {% thumbnail app.user.avatar, 'square' %}
+                            {% else %}
+                                {% image '@MealSquareCommonBundle/Resources/public/images/avatar.jpg'  output="images/avatar.jpg" %}
+                                <img src="{{ asset_url }}" alt="MealSquare User" width="120" height="120">
+                                {% endimage %}
+                            {% endif %}
+                            <p class="text-center small">
+                                <a id="link_change_avatar" href="{{path('meal_square_user_avatar')}}">Changer Photo</a></p>
+                        </div>
+                        <div id="navbar_content_right">
+                            <span>{{ app.user.username }}</span>
+                            <p class="text-muted small">{{ app.user.email}}</p>
+                            <a href="{{ path('sonata_user_profile_show') }}" class="button navbar_button">{{ 'common.menu.profil'|trans }}</a>
+                        </div>
+                    </div>
+                    <div id="navbar-footer-content">
+                        <div class="row">
+                            <a href="{{path('fos_user_profile_edit')}}" class="button navbar_button" style="margin-left:15px">Changer mot de passe</a>
+                            <a href="{{ path('fos_user_security_logout') }}" class="button navbar_button right" style="margin-right:15px">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </nav>
-
     </div>
 </header>
