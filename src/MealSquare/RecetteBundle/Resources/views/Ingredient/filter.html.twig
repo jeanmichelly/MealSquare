@@ -1,0 +1,70 @@
+<div id="cd-filter" class="cd-filter">
+    <form>
+        <div class="cd-filter-block">
+            <h4>Titre</h4>
+            
+            <div class="cd-filter-content">
+                <input type="search" placeholder="Rechercher">
+            </div>
+        </div>
+
+        <div class="cd-filter-block">
+            <h4>Type</h4>
+
+            <ul class="cd-filter-content cd-filters list">
+                <li>
+                    <input class="filter" data-filter="" type="radio" name="radioButton" id="Tous" checked>
+                    Tous
+                </li>
+                <li>
+                    <input class="filter" data-filter=".autres" type="radio" name="radioButton" id="autres">Autres
+                </li>
+                <li>
+                    <input class="filter" data-filter=".boisson" type="radio" name="radioButton" id="boisson">Boisson
+                </li>
+                <li>
+                    <input class="filter" data-filter=".cereale" type="radio" name="radioButton" id="cereale">Cereale
+                </li>
+                <li>
+                    <input class="filter" data-filter=".champignon" type="radio" name="radioButton" id="champignon">Champignon
+                </li>
+                <li>
+                    <input class="filter" data-filter=".charcuterie" type="radio" name="radioButton" id="charcuterie">Charcuterie
+                </li>
+                <li>
+                    <input class="filter" data-filter=".epice" type="radio" name="radioButton" id="epice">Epice
+                </li>
+                <li>
+                    <input class="filter" data-filter=".fleur" type="radio" name="radioButton" id="fleur">Fleur
+                </li>
+                <li>
+                    <input class="filter" data-filter=".fruit" type="radio" name="radioButton" id="fruit">Fruit
+                </li>
+                <li>
+                    <input class="filter" data-filter=".fruit_de_mer" type="radio" name="radioButton" id="fruit_de_mer">Fruit de mer
+                </li>
+                <li>
+                    <input class="filter" data-filter=".legume" type="radio" name="radioButton" id="legume">Legume
+                </li>
+                <li>
+                    <input class="filter" data-filter=".plante" type="radio" name="radioButton" id="plante">Plante
+                </li>
+                <li>
+                    <input class="filter" data-filter=".poisson" type="radio" name="radioButton" id="poisson">Poisson
+                </li>
+                <li>
+                    <input class="filter" data-filter=".produit_laitier" type="radio" name="radioButton" id="produit_laitier">Produit laitier
+                </li>
+                <li>
+                    <input class="filter" data-filter=".sauce" type="radio" name="radioButton" id="sauce">Sauce
+                </li>
+                <li>
+                    <input class="filter" data-filter=".viande" type="radio" name="radioButton" id="viande">Viande
+                </li>
+            </ul>
+        </div>
+    </form>
+
+    <a href="#0" class="cd-close"><i class="fa fa-times" aria-hidden="true"></i></a>
+</div>
+<a href="#0" class="cd-filter-trigger">{{ 'recettes.filter.title'|trans({},'messages') }}</a>

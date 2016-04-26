@@ -53,6 +53,12 @@ class Ingredient
      */
     private $galerie;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
 
     /**
      * Get id
@@ -182,6 +188,30 @@ class Ingredient
     public function getGalerie()
     {
         return $this->galerie;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Ingredient
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
     
     public function __toString() {

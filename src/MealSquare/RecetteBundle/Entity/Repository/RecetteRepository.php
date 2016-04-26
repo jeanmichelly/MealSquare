@@ -75,6 +75,12 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
             $query->andWhere('a.categorie = :categorie');
             $query->setParameter('categorie',$categorie);
         } 
+
+        if ($data['auteur'] != null) {
+            $auteur = $data['auteur'];
+            $query->andWhere('a.auteur = :auteur');
+            $query->setParameter('auteur',$auteur);
+        } 
         
         return $query->getQuery()->getResult();
     }

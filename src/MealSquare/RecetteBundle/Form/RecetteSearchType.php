@@ -78,6 +78,15 @@ class RecetteSearchType extends AbstractType{
                     'empty_value' => 'Ingrédient',
                 )
             ))
+            ->add('auteur', 'entity', array(
+                'class' => 'Application\Sonata\UserBundle\Entity\User',
+                'query_builder' => function(EntityRepository $er ) {
+                    return $er->createQueryBuilder('c')
+                              ->orderBy('c.username', 'ASC');
+                    },
+                'empty_value' => 'Auteur',
+                'required'  => False,
+            ))
             ->setMethod('GET')
         ;
    }

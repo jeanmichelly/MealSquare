@@ -1,0 +1,127 @@
+## YAML Template.
+---
+ingredients:
+    detail: Detail of the ingredient
+    sortby: Sort by
+    no: There is no ingredient available
+    videos: Technics in video
+    recettes: Recipes with 
+    no_techniques: No technics in video for this ingredient
+    video_detail: Play video
+
+recettes:
+    ingredients : Ingredients list of the recipe
+    ingredient_small_title : Ingredients of the recipe
+    detail: Detail of the recipe
+    sortby: Sort by
+    not_visible: This recipe is not visible for the other users. Edit it to change this.
+    no: There is no recipe available
+    preparation_time: Preparation time
+    coocking_time: Cooking time
+    difficulty: Difficulty
+    serves: Number of persons
+    category: Category
+    saison: Season
+    pays: Country
+    speciality: Speciality
+    type: Type
+    autor: Autor
+    source: Source
+    add: Add a recipe
+    add_title: Add a new recipe
+    #add_favourite: Ajouter à mes favoris
+    add_favourite: Absent of my favourites
+    remove_favourite: In my favourites
+    edit: Edit the recipe
+    remove: Delete the recipe
+    share_facebook: On Facebook
+    share_twitter: On Twitter
+    dislike: I like this recipe
+    like: I don't like this recipe
+    connect_to_like: You must be logged in to like this recipe
+    connect_to_rate: You must be logged in to rate this recipe
+    connect_to_favourise: You must be logged in to add this recipe to your favourites
+    loading: ...
+    no_description: ANo description available for this recipe
+    share: Shared space
+    edition: Recipe management
+    who_liked: Members who liked this recipe
+    variantes: Variants of this recipe
+    versions: Versions of this recipe
+    remove_versions: Delete the versions
+    mother: Mother recipe
+    rate_recipe: Rate the recipe
+    rate_display: This recipe has got the rate of 
+    likes_display: people liked this recipe 
+    like_display: people liked this recipe
+    no_like: No one liked this recipe yet. Be the first.
+    no_rate: No one evaluated this recipe yet. Be the first.
+    no_result: No result found
+    rechercherecette: Search a recipe
+    paramrecherche: Settings of the search
+    recherchebyingredients : Search by ingredients
+    home_intro_instruction : All you need to do is to enter an ingredient, a dish or a keyword.
+    home_intro_instruction_categorie : You can also chose a specific category, a season, a speciality.
+    home_intro_instruction_pub : You will surely find a recipe to try.
+    home_commencer_plat : Find a recipe
+    no_recette_of_day : The recipe of the day is not available yet.
+    last_recette : Last recipes
+    search_ingredients_instruction: Clic on ‘-’ to remove an ingredient, or add one with the button above.
+    search:
+        nbResults: Result(s) found
+    print: Print the recipe
+    filter:
+        title: Filters
+        by_publication_date: Date of the publication
+
+form:
+    add:
+        basics: General inforamtions
+        required: All fields are mandatory
+        title: Recipe title
+        preparation: Preparation time (in minutes)
+        cooking: Cooking time (in minutes)
+        nbpeople: For how many people ?
+        difficulty: Difficulty
+        category: Choise a category
+        description: Description
+        description_text: Description of the recipe
+        ingredients: Ingredients
+        ingredient: Ingredient
+        quantity: Quantity
+        unitMeasurement: Unit measurement
+        add_ingredient: Add an ingredient
+        step: Steps
+        step_text: Enter the instructions of the recipe, step by step
+        step_description: Step to realize
+        add_step: Add a step
+        photo: Photo
+        choose_file: Chose a photo
+        other: Other informations
+        country: Country
+        season: Season
+        speciality: Speciality
+        type: Type
+        publication: Publication
+        publication_text: Would you publish this recipe or would you modify it later?
+        public: Publish this recipe
+        publish: Save this recipe
+        source: Source of the recipe
+        tags: Add tags to your recipe
+        
+    user:
+        avatar: Modify your profile photo
+        
+    edit:
+        title: Edit a recipe
+
+    version:
+        title: Recipe version
+        action: Create another version of the recipe
+        recette_mere: Define as mother recipe
+        not_recette_mere: Mother recipe
+        
+    variante:
+        title: Recipe variant
+        action: Create a variant of this recipe          
+        

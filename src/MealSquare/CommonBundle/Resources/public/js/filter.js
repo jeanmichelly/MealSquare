@@ -107,11 +107,22 @@ jQuery(document).ready(function($){
               var $this = $(this);
 
               // add item to be filtered out if input text matches items inside the title   
-              if($this.find(".recette_title").html().toLowerCase().match(inputText)) {
-                  $matching = $matching.add(this);
-              } else {
-                  // removes any previously matched item
-                  $matching = $matching.not(this);
+              if ( $("#list_recettes").length > 0 ) {
+                  if($this.find(".recette_title").html().toLowerCase().match(inputText)) {
+                      $matching = $matching.add(this);
+                  } else {
+                      // removes any previously matched item
+                      $matching = $matching.not(this);
+                  }
+              }
+
+              if ( $("#list_ingredients").length > 0  ) {
+                  if($this.find(".ingredient_title").html().toLowerCase().match(inputText)) {
+                      $matching = $matching.add(this);
+                  } else {
+                      // removes any previously matched item
+                      $matching = $matching.not(this);
+                  }
               }
             });
             $('.cd-gallery ul').mixItUp('filter', $matching);

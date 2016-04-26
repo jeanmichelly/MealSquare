@@ -2,9 +2,9 @@ meal_square_recette_homepage:
     path:     /hello/{name}
     defaults: { _controller: MealSquareRecetteBundle:Default:index }
     
-meal_square_recette_ingredient_list:
-    path:     /ingredient/list/
-    defaults: { _controller: MealSquareRecetteBundle:Ingredient:list }
+meal_square_recette_ingredient_list_filterable:
+    path:     /ingredient/list-filterable/{sorted}
+    defaults: { _controller: MealSquareRecetteBundle:Ingredient:listFilterable }
     
 meal_square_recette_ingredient_show:
     path:     /ingredient/{id}
