@@ -161,6 +161,8 @@ sonata_block:
         sonata.block.service.text:
         sonata.news.block.recent_posts:
         # Your other blocks
+        sonata.block.service.user:
+        sonata.block.service.recipe:
         
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
