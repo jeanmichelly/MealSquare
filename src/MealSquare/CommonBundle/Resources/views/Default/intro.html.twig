@@ -5,6 +5,11 @@
         <img src="{{ asset_url }}" alt="MealSquare logo">
         {% endimage %}
     </figure>
+    <div class="locale" style="position:absolute;top:90px;color:white">
+        Changer de langue : 
+        <a href="{{ path('meal_square_common_setlocale', {'language': 'fr'}) }}">FR</a>
+        <a href="{{ path('meal_square_common_setlocale', {'language': 'en'}) }}">EN</a>
+    </div>
 
     <!--wrap-->
     <div class="wrap clearfix">
@@ -13,7 +18,7 @@
             <article class="three-fourth text wow zoomIn animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; -webkit-animation-delay: 0.2s; animation-name: zoomIn; -webkit-animation-name: zoomIn;">
                 <h1>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        Bonjour {{ app.user.username }} !<br>
+                        {{ 'common.home.bonjour'|trans }} {{ app.user.username }} !<br>
                     {% endif %}
                     {{ 'common.home.bienvenu'|trans }}
                 </h1>

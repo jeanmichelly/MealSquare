@@ -101,6 +101,7 @@ common:
 
     home:
         bienvenu: Bienvenue sur MealSquare !
+        bonjour: Bonjour
         les_chiffres : Les chiffres de MealSquare
         ingredients : Ingrédients
         recettes : Recettes
