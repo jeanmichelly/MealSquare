@@ -117,6 +117,13 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
         } 
         return $query->getQuery()->getResult();
     }
+
+    public function findRecipesByCountry($slug) {
+        $query       = $this->createQueryBuilder('a');
+        $query->where('a.pays = :pays');
+        $query->setParameter('pays',$slug);
+        return $query->getQuery()->getResult();
+    }
     
     public function findByIngredient($ingredient) {
         

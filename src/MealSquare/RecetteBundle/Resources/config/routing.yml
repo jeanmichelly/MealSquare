@@ -60,7 +60,11 @@ meal_square_recette_raccourci:
     
 meal_square_recette_search:
     path:     /search/
-    defaults: { _controller: MealSquareRecetteBundle:Recherche:find }    
+    defaults: { _controller: MealSquareRecetteBundle:Recherche:find }
+
+meal_square_recette_country_list:
+    path:     /recette/countrylist/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:countryList}    
     
 meal_square_ajax_ingredient:
     path:     /asynchrone/ingredient
