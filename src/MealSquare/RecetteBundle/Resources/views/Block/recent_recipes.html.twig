@@ -1,0 +1,25 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+
+    <div class="sonata-block-recent-users box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i class="fa fa-cutlery"></i> {{ settings.title }}
+            </h3>
+        </div>
+
+        <div class="box-body">
+            {% sonata_template_box 'This is the recent recipes block.' %}
+
+            <div class="sonata-user-container list-group">
+                {% for recipe in recipes %}
+                    <a class="list-group-item" href="http://localhost/MealSquare/web/app_dev.php/admin/mealsquare/recette/recette/{{ recipe.id }}/edit">{{ recipe.titre }} - créé le {{ recipe.dateCreation|date('Y-m-d H:i:s') }} par {{ recipe.auteur }}</a>
+                {% else %}
+                    <a class="list-group-item" href="#">no recipe found</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

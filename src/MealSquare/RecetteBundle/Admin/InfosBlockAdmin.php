@@ -17,7 +17,6 @@ class InfosBlockAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('titre')
             ->add('description')
             ->add('lien')
         ;
@@ -30,7 +29,6 @@ class InfosBlockAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('titre')
             ->add('description')
             ->add('lien')
             ->add('_action', 'actions', array(
@@ -49,7 +47,6 @@ class InfosBlockAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('titre')
             ->add('description')
             ->add('lien')
             ->add('image', 'sonata_type_model_list', array('required' => false), array(
@@ -68,7 +65,6 @@ class InfosBlockAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('titre')
             ->add('description')
             ->add('lien')
         ;

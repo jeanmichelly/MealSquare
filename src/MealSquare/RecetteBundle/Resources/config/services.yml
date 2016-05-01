@@ -5,4 +5,9 @@ services:
         tags:
             - { name: form.type, alias: ingredient_recette_type }
 
+    sonata.block.service.recipe:
+        class: MealSquare\RecetteBundle\Block\RecentRecipesBlockService
+        arguments: [ "sonata.block.service.user",@templating , @doctrine.orm.entity_manager ]
+        tags:
+            - { name: sonata.block }
 

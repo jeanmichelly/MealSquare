@@ -9,3 +9,9 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [ApplicationSonataUserBundle]]
+
+    sonata.block.service.user:
+        class: Application\Sonata\UserBundle\Block\RecentUsersBlockService
+        arguments: [ "sonata.block.service.user",@templating , @doctrine.orm.entity_manager ]
+        tags:
+            - { name: sonata.block }
