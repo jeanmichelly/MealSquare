@@ -73,7 +73,7 @@
                                     <ol>
                                         {% for block in recette.getRecetteBlocks() %}
                                             <li>{{ block.description | raw }}</li>
-                                            {% endfor %}    
+                                        {% endfor %}    
                                     </ol>
                                 </div>
                             </article>
@@ -161,9 +161,9 @@
                     <!--//recipe-->
 
                     <!--comments-->
-                    <div class="comments wow fadeInUp" id="comments">
+                    <div >
                         <h2 style="text-align: center">Vous avez ou comptez tester cette recette ? Dites ce que vous en pensez.</h2>
-                        {{ include( 'MealSquareRecetteBundle:Disqus:comment.html.twig', { 'recette': recette } ) }}
+                        {{ include( 'MealSquareRecetteBundle:Recette:listComments.html.twig' ) }}
                     </div>
                     <!--//comments-->
                 </section>
@@ -519,4 +519,16 @@
             }
         });
     </script>
+    <script type="text/javascript">
+        $('#post_comment').click(function(event){
+            $.ajax({
+                data: "idRecette={{recette.id}}&comment="+$("#comment").val(),
+                url: "{{ path('meal_square_recette_add_comment') }}",
+                success: function(data) {
+                    $("#panel_content").append(data);
+                    $("#nb_comments").html(parseInt($("#nb_comments").html())+1);
+                }
+            }); 
+        });
+    </script> 
 {% endblock %}

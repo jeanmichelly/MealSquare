@@ -13,6 +13,7 @@ use MealSquare\RecetteBundle\Form\RecetteEditType;
 use Doctrine\Common\Util\Debug;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\UserBundle\Model\UserInterface;
+use Application\Sonata\NewsBundle\Entity\Post;
 
 class RecetteController extends Controller {
 
@@ -454,6 +455,45 @@ class RecetteController extends Controller {
         }
         $response = new Response();
         $response->setContent(json_encode(array("success"=>true, "numberOfRecipesByCountryArray"=>$numberOfRecipesByCountryArray)));
+		$response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    public function addCommentAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        
+        $repository     = $em->getRepository("MealSquareRecetteBundle:Recette");
+        $recette        = $repository->findOneById($this->container->get('request')->get('idRecette'));
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $comment = new Post();
+
+        $comment->setRecette($recette);
+        $comment->setAuthor($user);
+        $comment->setImage($user->getAvatar());
+        $comment->setTitle("");
+        $comment->setAbstract("");
+        $comment->setContent($this->container->get('request')->get('comment'));
+        $comment->setRawContent("");
+        $comment->setContentFormatter("");
+        $comment->setEnabled(true);
+        $comment->setCommentsDefaultStatus("");
+
+        $recette->addComment($comment);
+
+        $em->persist($comment);
+        $em->persist($recette);
+        $em->flush();  
+
+        $rendered = $this->renderView(
+            'MealSquareRecetteBundle:Recette:comment.html.twig', 
+            array( 'comment' => $comment )
+        );
+        
+        $response = new Response();
+        $response->setContent(json_encode($rendered));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }

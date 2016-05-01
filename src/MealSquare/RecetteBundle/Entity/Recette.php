@@ -248,6 +248,14 @@ class Recette
      * @ORM\JoinTable(name="versions")
      */
     private $versions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Application\Sonata\NewsBundle\Entity\Post", mappedBy="recette", cascade={"remove","persist"})
+     *      
+     */     
+    protected $comments;
     
     function __construct() {
         $this->dateCreation = new \DateTime();
@@ -257,6 +265,7 @@ class Recette
         $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
         $this->variantes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function copy(){
@@ -757,8 +766,6 @@ class Recette
         return $this->note;
     }
 
-    
-
     /**
      * Add recetteBlock
      *
@@ -1107,6 +1114,30 @@ class Recette
     public function getRecetteDeLaSemaine()
     {
         return $this->recetteDeLaSemaine;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \Application\Sonata\NewsBundle\Entity\Post $comment
+     *
+     * @return Recette
+     */
+    public function addComment(\Application\Sonata\NewsBundle\Entity\Post $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
     
     function setTags($tags) {

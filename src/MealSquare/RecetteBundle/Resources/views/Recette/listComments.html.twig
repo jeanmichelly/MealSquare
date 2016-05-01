@@ -1,0 +1,20 @@
+<span id="nb_comments">{{ recette.getComments() | length }}</span> commentaires
+<div class="container row panel-google-plus">
+    <div id="panel_content">
+        {% for comment in recette.getComments() %}
+            {{ include( 'MealSquareRecetteBundle:Recette:comment.html.twig', { 'comment': comment }  ) }}
+        {% endfor %}    
+    </div>
+    <div class="panel-footer">
+        <div class="input-placeholder input-placeholder-comment">Ajouter un commentaire</div>
+    </div>
+    <div class="panel-google-plus-comment">
+        <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+        <div class="panel-google-plus-textarea">
+            <textarea id="comment" rows="4"></textarea>
+            <button id="post_comment" type="submit">Publier le commentaire</button>
+            <button type="reset">Annuler</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

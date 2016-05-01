@@ -1,0 +1,18 @@
+<div class="panel-heading row">
+    <div>
+		{% if comment.author.avatar is not null %}
+            {% thumbnail comment.author.avatar, 'square' with {'width':'46','height':'46', 'class': 'img-circle pull-left'} %}
+        {% else %}
+            {% image '@MealSquareCommonBundle/Resources/public/images/avatar.jpg'  output="images/avatar.jpg" %}
+            <img class="img-circle pull-left" height="46" width="46" src="{{ asset_url }}" alt="MealSquare User">
+            {% endimage %}
+        {% endif %}
+   </div>
+    <div id="info_user">
+        <h3 style="padding:0">{{ comment.author.username }}</h3>
+        <h5 style="padding:0px 0 19px"><span>{{ comment.createdAt | date("m/d/Y") }}</span> </h5>
+    </div>
+</div>
+<div class="panel-body">
+    <p>{{ comment.content }}</p>
+</div>
