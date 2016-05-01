@@ -49,6 +49,10 @@ meal_square_recette_edit:
 meal_square_recette_add:
     path:     /recette/add/
     defaults: { _controller: MealSquareRecetteBundle:Recette:add }
+
+meal_square_recette_add_comment:
+    path:     /recette/add-comment/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:addComment }
     
 meal_square_recette_clone:
     path:     /recette/clone/{id}/{isVersion}
