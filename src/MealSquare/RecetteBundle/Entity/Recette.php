@@ -34,14 +34,14 @@ class Recette
     /**
      * @var string
      *
-     * @ORM\Column(name="source", type="string", length=255)
+     * @ORM\Column(name="source", type="string", length=255, nullable=true)
      */
     private $source;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="specialite", type="string", length=255)
+     * @ORM\Column(name="specialite", type="string", length=255, nullable=true)
      */
     private $specialite;
 
@@ -80,7 +80,7 @@ class Recette
     /**
      * @var integer
      *
-     * @ORM\Column(name="tempsCuisson", type="integer")
+     * @ORM\Column(name="tempsCuisson", type="integer", nullable=true)
      * @Assert\Range(
      *      min = 1,
      *      minMessage = "Le temps de cuisson doit être supérieur à 0"
