@@ -5,16 +5,28 @@
             {{ include( 'MealSquareRecetteBundle:Recette:comment.html.twig', { 'comment': comment }  ) }}
         {% endfor %}    
     </div>
-    <div class="panel-footer">
-        <div class="input-placeholder input-placeholder-comment">Ajouter un commentaire</div>
-    </div>
-    <div class="panel-google-plus-comment">
-        <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
-        <div class="panel-google-plus-textarea">
-            <textarea id="comment" rows="4"></textarea>
-            <button id="post_comment" type="submit">Publier le commentaire</button>
-            <button type="reset">Annuler</button>
+    {% if app.user is not null %}
+        <div class="panel-footer">
+            <div class="input-placeholder input-placeholder-comment">Ajouter un commentaire</div>
         </div>
-        <div class="clearfix"></div>
-    </div>
+        <div class="panel-google-plus-comment">
+            {% if app.user is not null and app.user.avatar is not null %}
+                {% thumbnail app.user.avatar, 'square' with {'width':'46','height':'46', 'class': 'img-circle pull-left'} %}
+            {% else %}
+                {% image '@MealSquareCommonBundle/Resources/public/images/avatar.jpg'  output="images/avatar.jpg" %}
+                <img class="img-circle pull-left" height="46" width="46" src="{{ asset_url }}" alt="MealSquare User">
+                {% endimage %}
+            {% endif %}
+            <div class="panel-google-plus-textarea">
+                <textarea id="comment" rows="4"></textarea>
+                <button id="post_comment" type="submit">Publier le commentaire</button>
+                <button type="reset">Annuler</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    {% else %}
+        <div class="panel-footer">
+            Pour ajouter un commentaire, connectez-vous !
+        </div>
+    {% endif %}
 </div>
