@@ -27,14 +27,20 @@
                     <ul class="boxed">
                     {% for raccourci in raccourcis%}
                         <li class="{% if current_raccourci is defined and current_raccourci.slug == raccourci.slug  %} gold{%elseif loop.index is odd %}light{%else%} medium{%endif%}">
-                            <a class="{{raccourci.slug}}" href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
-                                <i class="{{raccourci.icone}}"></i> 
-                                <span>{{raccourci.nom}}</span>
-                            </a>
+                            {% if raccourci.id == 0 %}
+                                <a class="ajax-popup-link {{raccourci.slug}}" href="{{path('meal_square_recette_vmap')}}" title="{{raccourci.description}}">
+                                    <i class="{{raccourci.icone}}"></i> 
+                                    <span>{{raccourci.nom}}</span>
+                                </a>
+                            {% else %}
+                                <a class="{{raccourci.slug}}" href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
+                                    <i class="{{raccourci.icone}}"></i> 
+                                    <span>{{raccourci.nom}}</span>
+                                </a>
+                            {% endif %}
                         </li>
                     {% endfor %}
                     </ul>
-                    <div id="vmap" style="width: 600px; height: 400px; display:none;"></div>
                 </aside>
 
 
@@ -86,46 +92,14 @@
 {% endblock %}
 {% block script %}
     <script> 
-        
         new WOW().init();
-
-        var numberOfRecipesByCountry;
-
-        $.ajax({
-            dataType: "json",
-            type: 'post',
-            url: "{{ path('meal_square_recette_country_list') }}",
-            success: function(data) {
-                numberOfRecipesByCountry = data.numberOfRecipesByCountryArray;
-                jQuery('#vmap').vectorMap({
-                    map: 'world_en',
-                    backgroundColor: null,
-                    color: '#ffffff',
-                    hoverOpacity: 0.7,
-                    selectedColor: '#666666',
-                    enableZoom: true,
-                    showTooltip: true,
-                    scaleColors: ['#C8EEFF', '#006491'],
-                    values: numberOfRecipesByCountry,
-                    normalizeFunction: 'polynomial',
-                    onRegionClick: function(element, code, region)
-                    {
-                        var url = '{{path("meal_square_recette_raccourci", {'id':'raccourci.id','slug':'raccourci.slug'})}}';
-                        url = url.replace("raccourci.id",0);
-                        url = url.replace("raccourci.slug",code.toUpperCase());
-                        document.location.href=url;
-                    }
-                });
-            }
-        }); 
-        
-
-        $('.pays').removeAttr('href');
-        $('.pays').click(function(){
-            $('#vmap').slideToggle();
-        });
-
-
+    </script>
+    <script>
+        $('.ajax-popup-link').magnificPopup({
+            closeBtnInside:true,
+            midClick: true,
+            type: 'ajax'
+          });
     </script>
 {% endblock %}
 

@@ -62,6 +62,10 @@ meal_square_recette_raccourci:
     path:     /recette/raccourci/{id}-{slug}
     defaults: { _controller: MealSquareRecetteBundle:Recette:raccourci }
     
+meal_square_recette_vmap:
+    path:     /recette/vmap/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:vmap }
+    
 meal_square_recette_search:
     path:     /search/
     defaults: { _controller: MealSquareRecetteBundle:Recherche:find }

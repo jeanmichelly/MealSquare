@@ -1,0 +1,39 @@
+<main class="main" role="main">
+    <div class="wrap clearfix">
+        <section class="content row" style="float:none;padding: 20px;  background: #DECEB9 url(../../bundles/mealsquarecommon/images/bgr/body.jpg) 0 0 repeat;">
+           <div id="vmap" style="width: 1200px; height: 800px;"></div>
+        </section>  
+    </div>
+</main>
+
+<script type="text/javascript">
+	var numberOfRecipesByCountry;
+
+    $.ajax({
+        dataType: "json",
+        type: 'post',
+        url: "{{ path('meal_square_recette_country_list') }}",
+        success: function(data) {
+            numberOfRecipesByCountry = data.numberOfRecipesByCountryArray;
+            jQuery('#vmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#666666',
+                enableZoom: true,
+                showTooltip: true,
+                scaleColors: ['#C8EEFF', '#006491'],
+                values: numberOfRecipesByCountry,
+                normalizeFunction: 'polynomial',
+                onRegionClick: function(element, code, region)
+                {
+                    var url = '{{path("meal_square_recette_raccourci", {'id':'raccourci.id','slug':'raccourci.slug'})}}';
+                    url = url.replace("raccourci.id",0);
+                    url = url.replace("raccourci.slug",code.toUpperCase());
+                    document.location.href=url;
+                }
+            });
+        }
+    });
+</script>

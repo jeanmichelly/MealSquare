@@ -80,6 +80,10 @@ class RecetteController extends Controller {
         }
     }
 
+    public function vmapAction() {       
+        return $this->render('MealSquareRecetteBundle:Recette:vmap.html.twig');
+    }
+
     public function showAction($id) {
         $repository     = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Recette");
         $likeRepository = $this->getDoctrine()->getRepository('MealSquareRecetteBundle:Like\Like');
