@@ -1,0 +1,32 @@
+<div id="inbox" class="tab-pane">
+    <div id="option_checkall" class="option">
+        <label class="button_option_message"><input id="checkall" type="checkbox"/> Tous</label>
+    </div>
+    <div class="option">
+        <a id="btn_remove_inbox" class="button_option_message" href="#"><i class="button_option_message fa fa-trash-o"></i></a>
+    </div>
+    <table class="table-message table-inbox table-bordered">
+        <tbody>
+            {% for message in messages %}
+                {% if message.receiverState == '1' %}
+                    <tr id="{{message.id}}" class="unread">
+                        <td class="small-cells"><input type="checkbox"></td>
+                        <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
+                        <td>{{message.user.username}}</td>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.content}}<span class="date_message">{{message.date|date("m/d/Y")}}</span></td>
+                    </tr>
+                {% endif %}    
+                {% if message.receiverState == '2' %}
+                    <tr id="{{message.id}}" class="read">
+                        <td class="small-cells"><input type="checkbox"></td>
+                        <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
+                        <td>{{message.user.username}}</td>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.content}}<span class="date_message">{{message.date|date("m/d/Y")}}</span></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

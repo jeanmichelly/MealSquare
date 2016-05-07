@@ -1195,3 +1195,57 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 #alert_message {
 	display:none;
 }
+
+.table-inbox, .table-sent-box, .table-trash-box {
+    margin-top:20px;
+}
+.table-inbox tr, .table-sent-box tr, .table-trash-box tr {
+    background-color: #447EA8;
+}
+.table-inbox tr td, .table-sent-box tr td, .table-trash-box tr td {
+    padding: 5px !important;
+
+}
+.read .fa-tag {
+    color: #f78a09;
+}
+.fa-tag {
+    color: #fff;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: orange;
+}
+.table-inbox tr.unread td {
+    font-weight: 600;
+}
+#option_checkall, #option_checkall_sent, #option_checkall_trash {
+    height:33px;
+}
+#btn_remove_inbox, #btn_remove_sent, #btn_remove_trash {
+    text-decoration: none;
+    color: black;
+}
+.option {
+    border: 1px solid #A4A4A4;
+    border-radius: 5px !important;
+    background-color: #447EA8;
+    display: inline-block;
+    padding: 5px 10px;
+}
+.button_option_message {
+	color:#fff;
+}
+.small-cells {
+	width: 2px;
+}
+.table-message {
+	border-collapse: collapse;
+	border: 1px solid #d3d3d3;
+}
+.table-message tbody tr td {
+	border:none;
+	border-top:1px solid #ddd;
+	padding:12px 0 12px 12px !important;
+}
+.date_message {
+	float:right;
+}

@@ -15,9 +15,9 @@
                             <a id="button_compose_message" class="button popup" href="#message_compose_main"><i class="fa fa-pencil" aria-hidden="true"></i> Nouveau message</a>
                             {{ include( 'MealSquareCommonBundle:message:compose.html.twig' ) }}
                             <div class="widget" style="margin-top:40px">
-                                <a class="button_nav_left button_nav_left_light" href=""><i class="fa fa-inbox"></i> Boite de réception</a>
-                                <a class="button_nav_left button_nav_left_dark" href=""><i class="fa fa-envelope-o"></i> Messages envoyés</a>
-                                <a class="button_nav_left button_nav_left_light" href=""><i class=" fa fa-trash-o"></i> Corbeille</a>
+                                <a id="to_inbox" class="button_nav_left button_nav_left_light" href="#"><i class="fa fa-inbox"></i> Boite de réception</a>
+                                <a id="to_sended_message" class="button_nav_left button_nav_left_dark" href="#"><i class="fa fa-envelope-o"></i> Messages envoyés</a>
+                                <a id="to_trash" class="button_nav_left button_nav_left_light" href="#"><i class=" fa fa-trash-o"></i> Corbeille</a>
                             </div>
                         </div>
 
@@ -27,6 +27,7 @@
                                     <button class="close">x</button>
                                     <div id="content_alert_message"></div>
                                 </div>
+                                {{ include( 'MealSquareCommonBundle:message:inbox.html.twig' ) }}
                             </div>
                         </div>
                     </div>
@@ -57,6 +58,7 @@
         });
     </script>
     <script type="text/javascript">
+    // Send message
     $(document).ready(function () {
         $('#compose_message_form').submit(function(){
             var action = $(this).attr('action');
@@ -100,6 +102,7 @@
     });
     </script>
     <script>
+        // Send message - Multi users
         $(function(){
             var peopleData = {};
             var i=0;
@@ -131,6 +134,68 @@
                 fieldWidth: '39em', 
                 suggestMaxWidth: '70em', 
                 sortedOutput: true
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Nav bar left
+        $( ".button_nav_left" ).click(function() {
+            $(".tab-pane").hide();
+            $("#"+$(this).attr('id').replace("to_", "")).show();
+        });
+    </script>
+    <script type="text/javascript">
+        // Read/unread message inbox
+        $(".read_tag").click(function () {
+            var receiverState = '0';
+            if ( $(this).parent()[0].className == 'unread' ) {
+                $(this).parent()[0].className = 'read';
+                receiverState = '2';
+            } else {
+                $(this).parent()[0].className = 'unread';
+                receiverState = '1';
+            }
+
+            var params = "id="+$(this).parent()[0].id+"&receiverState="+receiverState;
+
+            $.ajax({
+                url: "{{ path('meal_square_common_message_update_receiver_state') }}",
+                data: params,
+                type: "POST",
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Select message inbox
+        $(document).ready(function(){
+            $("#checkall").click(function () {
+                if ($("#checkall").is(':checked')) {
+                    $(".table-inbox input[type=checkbox]").each(function () {
+                        $(this).parent().addClass("checked");                        
+                    });
+                } else {
+                    $(".table-inbox input[type=checkbox]").each(function () {
+                        $(this).parent().removeClass("checked");                       
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Remove message inbox
+        $("#btn_remove_inbox").click(function(){
+            $(".table-inbox input[type=checkbox]").each(function () {
+                if ($(this).parent().hasClass('checked')) {
+                    var e = $(this).closest('tr');
+                    $(this).closest('tr').remove();
+
+                    var params = "id="+e[0].id+"&receiverState=3";
+                    $.ajax({
+                        url: "{{ path('meal_square_common_message_update_receiver_state') }}",
+                        data: params,
+                        type: "POST",
+                    });  
+                }
             });
         });
     </script>

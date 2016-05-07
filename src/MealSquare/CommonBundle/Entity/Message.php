@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Message
  *
  * @ORM\Table("message")
- * @ORM\Entity(repositoryClass="MealSquare\CommonBundle\Entity\Repository\MessageRepository")
+ * @ORM\Entity
  */
 class Message
 {
@@ -43,6 +43,20 @@ class Message
     private $date;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="sender_state", type="string", length=1, options={"fixed" = true})
+     */
+    private $senderState = "1";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="receiver_state", type="string", length=1, options={"fixed" = true})
+     */
+    private $receiverState = "1";
+
+    /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -70,6 +84,26 @@ class Message
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * Set subject
+     *
+     * @param string $subject
+     * @return Message
+     */
+    public function setSubject($subject) {
+        $this->subject = $subject;
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string 
+     */
+    public function getSubject() {
+        return $this->subject;
     }
 
     /**
@@ -110,6 +144,46 @@ class Message
      */
     public function getDate() {
         return $this->date;
+    }
+
+    /**
+     * Set senderState
+     *
+     * @param string $senderState
+     * @return Message
+     */
+    public function setSenderState($senderState) {
+        $this->senderState = $senderState;
+        return $this;
+    }
+
+    /**
+     * Get senderState
+     *
+     * @return string 
+     */
+    public function getSenderState() {
+        return $this->senderState;
+    }
+
+    /**
+     * Set receiverState
+     *
+     * @param string $receiverState
+     * @return Message
+     */
+    public function setReceiverState($receiverState) {
+        $this->receiverState = $receiverState;
+        return $this;
+    }
+
+    /**
+     * Get receiverState
+     *
+     * @return string 
+     */
+    public function getReceiverState() {
+        return $this->receiverState;
     }
 
     /**
