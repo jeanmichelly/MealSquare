@@ -1196,15 +1196,17 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 	display:none;
 }
 
-.table-inbox, .table-sent-box, .table-trash-box {
+#sentbox, #trashbox {
+   	display:none;
+}
+.table-inbox, .table-sentbox, .table-trashbox {
     margin-top:20px;
 }
-.table-inbox tr, .table-sent-box tr, .table-trash-box tr {
+.table-inbox tr, .table-sentbox tr, .table-trashbox tr {
     background-color: #447EA8;
 }
-.table-inbox tr td, .table-sent-box tr td, .table-trash-box tr td {
+.table-inbox tr td, .table-sentbox tr td, .table-trashbox tr td {
     padding: 5px !important;
-
 }
 .read .fa-tag {
     color: #f78a09;
@@ -1217,10 +1219,10 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 .table-inbox tr.unread td {
     font-weight: 600;
 }
-#option_checkall, #option_checkall_sent, #option_checkall_trash {
+#option_checkall, #option_checkall_sentbox, #option_checkall_trashbox {
     height:33px;
 }
-#btn_remove_inbox, #btn_remove_sent, #btn_remove_trash {
+#btn_remove_inbox, #btn_remove_sentbox, #btn_remove_trashbox {
     text-decoration: none;
     color: black;
 }
@@ -1247,5 +1249,5 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 	padding:12px 0 12px 12px !important;
 }
 .date_message {
-	float:right;
+	text-align: right;
 }

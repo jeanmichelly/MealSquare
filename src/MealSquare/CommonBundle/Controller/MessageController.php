@@ -30,24 +30,48 @@ class MessageController extends Controller {
                 ->getQuery()
                 ->getResult(); 
 
+            $messagesSent = $messageRepository->createQueryBuilder('m')
+                ->where('m.user = :user')
+                ->setParameter('user', $user)
+                ->orderBy('m.date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
             return $this->render('MealSquareCommonBundle:Message:layout.html.twig',array(
                 'users' => $users,
-                'messages' => $messages
+                'messages' => $messages,
+                'messagesSent' => $messagesSent
             ));
         } else {
         	$relatedUsers = $_POST['relatedUsers'];
         	$subject     = $_POST['subject'];
             $content     = $_POST['content'];
 
+            $messagesToArray = array();
+
             foreach ($relatedUsers as $idRelatedUser){
                 $relatedUser = $userRepository->findOneById(intval($idRelatedUser));
                 $message = new Message($user, $relatedUser, $subject, $content);
                 $em->persist($message);
                 $em->flush();
+                array_push($messagesToArray, array(
+                    "id"            => $message->getId(),
+                    "relatedUser"   => $relatedUser->getUsername(),
+                ));
             }
+            array_push($messagesToArray, array(
+                "subject"           => $message->getSubject(),
+                "content"           => $message->getContent(),
+                "date"              => date_format($message->getDate(), 'm/d/Y'),
+            ));      
 
-            echo '<div class="info_message">Votre message a bien été envoyé</div>';
-            exit();
+            $response = new Response();
+            $response->setContent(json_encode($messagesToArray));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+
+            // echo '<div class="info_message">Votre message a bien été envoyé</div>';
+            // exit();
         }
     }
 
@@ -58,6 +82,21 @@ class MessageController extends Controller {
         
         $message = $em->getRepository("MealSquareCommonBundle:Message")->findOneById(intval($id));
         $message->setReceiverState($receiverState);
+        $em->flush();
+
+        $response = new Response();
+        $response->setContent(json_encode(array("success"=>true)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    public function updateSenderStateAction() {
+        $em = $this->getDoctrine()->getManager();
+        $id = $this->container->get('request')->get('id');
+        $senderState = $this->container->get('request')->get('senderState');
+        
+        $message = $em->getRepository("MealSquareCommonBundle:Message")->findOneById(intval($id));
+        $message->setSenderState($senderState);
         $em->flush();
 
         $response = new Response();

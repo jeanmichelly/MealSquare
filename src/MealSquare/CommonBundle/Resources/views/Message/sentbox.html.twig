@@ -1,0 +1,23 @@
+<div id="sentbox" class="tab-pane">
+    <div id="option_checkall_sentbox" class="option">
+        <label class="button_option_message"><input id="checkall_sentbox" type="checkbox"/> Tous</label>
+    </div>
+    <div class="option">
+        <a id="btn_remove_sentbox" class="button_option_message" href="#"><i class="button_option_message fa fa-trash-o"></i></a>
+    </div>
+    <table id="table-sentbox" class="table-message table-sentbox table-bordered">
+        <tbody>
+            {% for messageSent in messagesSent %}
+                {% if messageSent.senderState == '1' %}
+                    <tr id="{{messageSent.id}}">
+                        <td class="small-cells"><input type="checkbox"></td>
+                        <td>{{messageSent.relatedUser.username}}</td>
+                        <td>{{messageSent.subject}}</td>
+                        <td>{{messageSent.content}}</td>
+                        <td class="date_message">{{messageSent.date|date("m/d/Y")}}</td>
+                    </tr>
+                {% endif %}    
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

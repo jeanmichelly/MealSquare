@@ -14,7 +14,8 @@
                         <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
                         <td>{{message.user.username}}</td>
                         <td>{{message.subject}}</td>
-                        <td>{{message.content}}<span class="date_message">{{message.date|date("m/d/Y")}}</span></td>
+                        <td>{{message.content}}</td>
+                        <td class="date_message">{{message.date|date("m/d/Y")}}</td>
                     </tr>
                 {% endif %}    
                 {% if message.receiverState == '2' %}
@@ -23,7 +24,8 @@
                         <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
                         <td>{{message.user.username}}</td>
                         <td>{{message.subject}}</td>
-                        <td>{{message.content}}<span class="date_message">{{message.date|date("m/d/Y")}}</span></td>
+                        <td>{{message.content}}</td>
+                        <td class="date_message">{{message.date|date("m/d/Y")}}</td>
                     </tr>
                 {% endif %}
             {% endfor %}

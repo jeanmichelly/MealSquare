@@ -10,6 +10,10 @@ meal_square_common_message_update_receiver_state:
     path:     /message/update/receiver-state
     defaults: { _controller: MealSquareCommonBundle:Message:updateReceiverState }
 
+meal_square_common_message_update_sender_state:
+    path:     /message/update/sender-state
+    defaults: { _controller: MealSquareCommonBundle:Message:updateSenderState }
+
 meal_square_common_setlocale:
     path: /setlocale/{language}
     defaults: {_controller: MealSquareCommonBundle:Locale:setlocale}

@@ -16,7 +16,7 @@
                             {{ include( 'MealSquareCommonBundle:message:compose.html.twig' ) }}
                             <div class="widget" style="margin-top:40px">
                                 <a id="to_inbox" class="button_nav_left button_nav_left_light" href="#"><i class="fa fa-inbox"></i> Boite de réception</a>
-                                <a id="to_sended_message" class="button_nav_left button_nav_left_dark" href="#"><i class="fa fa-envelope-o"></i> Messages envoyés</a>
+                                <a id="to_sentbox" class="button_nav_left button_nav_left_dark" href="#"><i class="fa fa-envelope-o"></i> Messages envoyés</a>
                                 <a id="to_trash" class="button_nav_left button_nav_left_light" href="#"><i class=" fa fa-trash-o"></i> Corbeille</a>
                             </div>
                         </div>
@@ -28,6 +28,7 @@
                                     <div id="content_alert_message"></div>
                                 </div>
                                 {{ include( 'MealSquareCommonBundle:message:inbox.html.twig' ) }}
+                                {{ include( 'MealSquareCommonBundle:message:sentbox.html.twig' ) }}
                             </div>
                         </div>
                     </div>
@@ -87,10 +88,15 @@
                         relatedUsers: relatedUsers,
                         subject: subject,
                         content: content,
-                    }, function(data){
+                    }, function success(data){
+                        for ( var i=0; i<data.length-1; i++ ) {
+                            $("#table-sentbox > tbody").prepend(
+                                $('<tr id="'+data[i].id+'"><td class="small-cells"><div class="checker"><span class=""><input type="checkbox"></span></div></td><td>'+data[i].relatedUser+'</td><td>'+data[data.length-1].subject+'</td><td>'+data[data.length-1].content+'</td><td class="date_message">'+data[data.length-1].date+'</td></tr>')
+                            );   
+                        }
                         $("#alert_message").removeClass("alert-danger");
                         $("#alert_message").addClass("alert-success");
-                        $("#content_alert_message").html(data);
+                        $("#content_alert_message").html("<div class=\"info_message\">Votre message a bien été envoyé</div>");
                         $('#alert_message').slideDown('slow');
                         $('#compose_message_form img.loader').fadeOut('slow',function(){$(this).remove()});
                         $('#submit').removeAttr('disabled'); 
@@ -192,6 +198,40 @@
                     var params = "id="+e[0].id+"&receiverState=3";
                     $.ajax({
                         url: "{{ path('meal_square_common_message_update_receiver_state') }}",
+                        data: params,
+                        type: "POST",
+                    });  
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Select message sentbox
+        $(document).ready(function(){
+            $("#checkall_sentbox").click(function () {
+                if ($("#checkall_sentbox").is(':checked')) {
+                    $(".table-sentbox input[type=checkbox]").each(function () {
+                        $(this).parent().addClass("checked");                        
+                    });
+                } else {
+                    $(".table-sentbox input[type=checkbox]").each(function () {
+                        $(this).parent().removeClass("checked");                       
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Remove message sentbox
+        $("#btn_remove_sentbox").click(function(){
+            $(".table-sentbox input[type=checkbox]").each(function () {
+                if ($(this).parent().hasClass('checked')) {
+                    var e = $(this).closest('tr');
+                    $(this).closest('tr').remove();
+
+                    var params = "id="+e[0].id+"&senderState=2";
+                    $.ajax({
+                        url: "{{ path('meal_square_common_message_update_sender_state') }}",
                         data: params,
                         type: "POST",
                     });  
