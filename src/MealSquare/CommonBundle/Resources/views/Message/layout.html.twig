@@ -1,0 +1,137 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+{% block title %}
+    Messagerie - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <main class="main" role="main">
+        <div class="wrap clearfix">
+            <div class="row">
+                <section class="content" style="float:none">
+                    <div class="row">
+                        <div class="one-fourth wow fadeInLeft">
+                            <a id="button_compose_message" class="button popup" href="#message_compose_main"><i class="fa fa-pencil" aria-hidden="true"></i> Nouveau message</a>
+                            {{ include( 'MealSquareCommonBundle:message:compose.html.twig' ) }}
+                            <div class="widget" style="margin-top:40px">
+                                <a class="button_nav_left button_nav_left_light" href=""><i class="fa fa-inbox"></i> Boite de réception</a>
+                                <a class="button_nav_left button_nav_left_dark" href=""><i class="fa fa-envelope-o"></i> Messages envoyés</a>
+                                <a class="button_nav_left button_nav_left_light" href=""><i class=" fa fa-trash-o"></i> Corbeille</a>
+                            </div>
+                        </div>
+
+                        <div class="three-fourth wow fadeInRight">
+                            <div id="content-message" class="modal container">
+                                <div id="alert_message" class="alert" role="alert">
+                                    <button class="close">x</button>
+                                    <div id="content_alert_message"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block script %}
+   <script> new WOW().init(); </script>
+    <script>
+        $(document).ready(function() {
+            $('.popup').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+                
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#compose_message_form').submit(function(){
+            var action = $(this).attr('action');
+            var relatedUsers = $('#relatedUsers_compose_message').val();
+            var subject = $('#subject_compose_message').val();
+            var content = $('#content_compose_message').val();
+            
+            $("#subject_compose_message").val("");
+            $("#content_compose_message").val("");
+            $.magnificPopup.close();
+
+            if ( relatedUsers == null ) {
+                $("#alert_message").removeClass("alert-success");
+                $("#alert_message").addClass("alert-danger");
+                $("#content_alert_message").html('<div class="error_message">Vous devez indiquer au moins un destinataire.</div>')
+                $('#alert_message').slideDown('slow');
+                $('#compose_message_form img.loader').fadeOut('slow',function(){$(this).remove()});
+                $('#submit').removeAttr('disabled'); 
+            } else {
+                $("#alert_message").show(400,function() {                
+                    $('#submit')
+                        .after('<img src="images/contact-ajax-loader.gif" class="loader" />')
+                        .attr('disabled','disabled');
+                    
+                    $.post(action, { 
+                        relatedUsers: relatedUsers,
+                        subject: subject,
+                        content: content,
+                    }, function(data){
+                        $("#alert_message").removeClass("alert-danger");
+                        $("#alert_message").addClass("alert-success");
+                        $("#content_alert_message").html(data);
+                        $('#alert_message').slideDown('slow');
+                        $('#compose_message_form img.loader').fadeOut('slow',function(){$(this).remove()});
+                        $('#submit').removeAttr('disabled'); 
+                    });
+                });
+            }
+            return false; 
+        });
+    });
+    </script>
+    <script>
+        $(function(){
+            var peopleData = {};
+            var i=0;
+            {% for user in users %}
+                peopleData["{{user.id}}"] = 
+                   {
+                        "id": "{{user.id}}",
+                        "selected": "true",
+                        "level": "0",
+                        "hidden": "{{user.email}}",
+                        "suggestion": "{% if user.avatar is null %}&lt;img src=\"{{ asset('bundles/mealsquarecommon/images/avatar.jpg') }}\" style=\"float:left\" height=\"20\" width=\"20\" \/>{% else %} &lt;img src=\"{{ asset('bundles/mealsquarecommon/images/avatar.jpg') }}\" style=\"float:left\" height=\"20\" width=\"20\" \/> {% endif %} {{user.username}} &lt;span class=\"extra\">{{user.email}}&lt;\/span>",
+                        "key": "{{user.username}}",
+                        "suggestable": "true",
+                        "sort": 0
+                    }
+                ;
+                i++;
+            {% endfor %}
+
+            $('#relatedUsers_compose_message').tagger({
+                availableTags: peopleData, 
+                baseURL: "{{ asset('bundles/mealsquarecommon/images/') }}", 
+                placeholder: 'À', 
+                caseSensitive: true, 
+                displayHierarchy: true, 
+                indentMultiplier: 2, 
+                tabindexOffset: 100, 
+                noSuggestText: 'No People Match', 
+                fieldWidth: '39em', 
+                suggestMaxWidth: '70em', 
+                sortedOutput: true
+            });
+        });
+    </script>
+{% endblock %}

@@ -2,9 +2,9 @@ meal_square_common_homepage:
     path:     /
     defaults: { _controller: MealSquareCommonBundle:Default:index }
     
-meal_square_common_contact:
-    path:     /contacts
-    defaults: { _controller: MealSquareCommonBundle:Default:contact }
+meal_square_common_message:
+    path:     /message
+    defaults: { _controller: MealSquareCommonBundle:Message:index }
 
 meal_square_common_setlocale:
     path: /setlocale/{language}

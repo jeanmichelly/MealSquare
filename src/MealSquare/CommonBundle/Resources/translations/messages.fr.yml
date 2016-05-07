@@ -57,24 +57,18 @@ common:
             lastname: Nom
             email: Adresse email
 
-    # Contact
-    contact:
-        message: Votre message
-        name: Votre nom
-        email: Votre adresse electronique
-        send: Envoyez le message
-        message: Votre message
-        title: Contactez - nous ?
+    # Message
+    message:
+        compose:
+            title: Contactez-nous
+            subject: Objet
+            content : Votre message
+            send: Envoyez le message
         
     pagination:
         previous: Précédent
         next: Suivant
         
-
-    
-
-    
-
     # Footer
     footer:
         # Links

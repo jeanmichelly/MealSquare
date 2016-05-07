@@ -1,0 +1,25 @@
+<main id="message_compose_main" class="main zoom-anim-dialog mfp-hide" role="main">
+    <div class="wrap clearfix">
+        <div class="row">
+            <section class="content center full-width wow fadeInUp">
+                <div class="modal container">
+                    <form method="post" action="#" name="compose_message_form" id="compose_message_form">
+                        <h3>{{ 'common.message.compose.title'|trans }}</h3>
+                        <div class="f-row">
+                            <select name="relatedUsers_compose_message" id="relatedUsers_compose_message" size="11" multiple=""></select>
+                        </div>
+                        <div class="f-row">
+                            <input type="text" placeholder="{{ 'common.message.compose.subject'|trans }}" id="subject_compose_message" />
+                        </div>
+                        <div class="f-row">
+                            <textarea placeholder="{{ 'common.message.compose.content'|trans }}" id="content_compose_message"></textarea>
+                        </div>
+                        <div class="f-row bwrap">
+                            <input type="submit" value="{{ 'common.message.compose.send'|trans }}" class="" />
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

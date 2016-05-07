@@ -70,6 +70,7 @@ doctrine:
                 mappings:
                     SonataUserBundle: ~
                     MealSquareRecetteBundle: ~
+                    MealSquareCommonBundle: ~
                     FOSUserBundle: ~
                     ApplicationSonataUserBundle: ~
                     ApplicationSonataMediaBundle: ~

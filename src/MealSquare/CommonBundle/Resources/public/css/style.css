@@ -196,6 +196,11 @@ tr:nth-child(2n+1) td{background:#f6f6f6;}
 .button 			{border:none;display:inline-block;text-decoration:none !important;position:relative;background:#3876A3;color:#fff !important;text-align:center;font-size:13px;font-weight:700;padding:11px 14px;min-width:80px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;text-transform:uppercase;}
 .button:hover, 
 .button:focus 	{background:#2C71A3;-webkit-box-shadow:inset 0 0 30px rgba(0,0,0,.2);-moz-box-shadow:inset 0 0 30px rgba(0,0,0,.2);box-shadow:inset 0 0 30px rgba(0,0,0,.2);}
+#button_compose_message {background-color:#d9534f;border-color:#d43f3a}
+.button_nav_left {border:none;display:inline-block;text-decoration:none !important;position:relative;color:#fff;font-size:13px;font-weight:700;padding:11px 14px;min-width:80px;-webkit-border-radius:0px;-moz-border-radius:0px;border-radius:0px;text-transform:uppercase;width:100%;}
+.button_nav_left_dark {background:#3876A3;}
+.button_nav_left_light {background:#447EA8;}
+.button_nav_left:hover {background:#fff;color:#2C71A3;}
 
 .white	 		{color:#2C71A3 !important;background:#fff !important;}
 .white:hover,
@@ -554,7 +559,7 @@ button.btn-danger					{background:#D02929}
 input[type="checkbox"], input[type="radio"] { box-sizing: border-box; width:100%;height:100%;}
 input[type="search"] { -webkit-appearance: textfield;}
 input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
-input[type="search"],input[type="email"],input[type="text"],input[type="number"],input[type="password"],textarea {width:100% !important;border:1px solid #ddd;color:#666;font-size:13px;font-weight:400;padding:9px 10px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+input[type="search"],input[type="email"],input[type="text"]:not([class="intxt"]),input[type="number"],input[type="password"],textarea {width:100% !important;border:1px solid #ddd;color:#666;font-size:13px;font-weight:400;padding:9px 10px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 textarea	{resize: none;height:80px;}
 select {height:37px;font-size:13px;line-height:1;font-weight:600;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;border:1px solid #ddd;color:#666;}
 input[type="text"]:focus,
@@ -1181,4 +1186,12 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 }
 #info_user {
 	margin-left: 70px;
+}
+
+#content-message {
+	width:100%;
+	margin:0px;
+}
+#alert_message {
+	display:none;
 }

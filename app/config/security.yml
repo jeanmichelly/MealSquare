@@ -68,3 +68,6 @@ security:
         - { path: ^/recette/add/, role: ROLE_USER }
         - { path: ^/recette/edit/, role: ROLE_USER }
         - { path: ^/recette/favoris/, role: ROLE_USER }
+
+        # Common
+        - { path: ^/message, role: ROLE_USER }
