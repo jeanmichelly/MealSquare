@@ -9,7 +9,7 @@
         <tbody>
             {% for messageSent in messagesSent %}
                 {% if messageSent.senderState == '1' %}
-                    <tr id="{{messageSent.id}}">
+                    <tr id="{{messageSent.id}}" class="sent">
                         <td class="small-cells"><input type="checkbox"></td>
                         <td>{{messageSent.relatedUser.username}}</td>
                         <td>{{messageSent.subject}}</td>

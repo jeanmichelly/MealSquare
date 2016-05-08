@@ -1,0 +1,34 @@
+<div id="trashbox" class="tab-pane">
+    <div id="option_checkall_trashbox" class="option">
+        <label class="button_option_message"><input id="checkall_trashbox" type="checkbox"/> Tous</label>
+    </div>
+    <div class="option">
+        <a id="btn_remove_trashbox" class="button_option_message" href="#"><i class="button_option_message fa fa-trash-o"></i></a>
+    </div>
+    <table id="table-trashbox" class="table-message table-trashbox table-bordered">
+        <tbody>
+            {% for message in messages %}
+                {% if message.receiverState == '3' %}
+                    <tr id="{{message.id}}" class="in">
+                        <td class="small-cells"><input type="checkbox"></td>
+                        <td><img src="{{ asset('bundles/mealsquarecommon/images/read_user.jpg') }}" style="float:left"></img>{{message.user.username}}</td>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.content}}</td>
+                        <td class="date_message">{{message.date|date("m/d/Y")}}</td>
+                    </tr>
+                {% endif %}    
+            {% endfor %}
+            {% for messageSent in messagesSent %}
+                {% if messageSent.senderState == '2' %}
+                    <tr id="{{messageSent.id}}" class="sent">
+                        <td class="small-cells"><input type="checkbox"></td>
+                        <td><img src="{{ asset('bundles/mealsquarecommon/images/edit_user.jpg') }}" style="float:left"></img>{{messageSent.relatedUser.username}}</td>
+                        <td>{{messageSent.subject}}</td>
+                        <td>{{messageSent.content}}</td>
+                        <td class="date_message">{{messageSent.date|date("m/d/Y")}}</td>
+                    </tr>
+                {% endif %}    
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

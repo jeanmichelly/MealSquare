@@ -9,7 +9,7 @@
         <tbody>
             {% for message in messages %}
                 {% if message.receiverState == '1' %}
-                    <tr id="{{message.id}}" class="unread">
+                    <tr id="{{message.id}}" class="in unread">
                         <td class="small-cells"><input type="checkbox"></td>
                         <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
                         <td>{{message.user.username}}</td>
@@ -19,7 +19,7 @@
                     </tr>
                 {% endif %}    
                 {% if message.receiverState == '2' %}
-                    <tr id="{{message.id}}" class="read">
+                    <tr id="{{message.id}}" class="in read">
                         <td class="small-cells"><input type="checkbox"></td>
                         <td class="small-cells read_tag"><i class="fa fa-tag"></i></td>
                         <td>{{message.user.username}}</td>

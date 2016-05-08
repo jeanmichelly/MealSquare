@@ -17,7 +17,7 @@
                             <div class="widget" style="margin-top:40px">
                                 <a id="to_inbox" class="button_nav_left button_nav_left_light" href="#"><i class="fa fa-inbox"></i> Boite de réception</a>
                                 <a id="to_sentbox" class="button_nav_left button_nav_left_dark" href="#"><i class="fa fa-envelope-o"></i> Messages envoyés</a>
-                                <a id="to_trash" class="button_nav_left button_nav_left_light" href="#"><i class=" fa fa-trash-o"></i> Corbeille</a>
+                                <a id="to_trashbox" class="button_nav_left button_nav_left_light" href="#"><i class=" fa fa-trash-o"></i> Corbeille</a>
                             </div>
                         </div>
 
@@ -29,6 +29,7 @@
                                 </div>
                                 {{ include( 'MealSquareCommonBundle:message:inbox.html.twig' ) }}
                                 {{ include( 'MealSquareCommonBundle:message:sentbox.html.twig' ) }}
+                                {{ include( 'MealSquareCommonBundle:message:trashbox.html.twig' ) }}
                             </div>
                         </div>
                     </div>
@@ -195,6 +196,11 @@
                     var e = $(this).closest('tr');
                     $(this).closest('tr').remove();
 
+                    e.children().remove(".read_tag");
+                    e.find('.checked').removeClass("checked");
+                    e.children()[1].innerHTML = "<img src=\"{{ asset('bundles/mealsquarecommon/images/read_user.jpg') }}\" style=\"float:left;\"></img>"+e.children()[1].innerHTML;
+                    $("#table-trashbox > tbody").prepend(e); 
+
                     var params = "id="+e[0].id+"&receiverState=3";
                     $.ajax({
                         url: "{{ path('meal_square_common_message_update_receiver_state') }}",
@@ -229,12 +235,59 @@
                     var e = $(this).closest('tr');
                     $(this).closest('tr').remove();
 
+                    e.find('.checked').removeClass("checked");
+                    e.children()[1].innerHTML = "<img src=\"{{ asset('bundles/mealsquarecommon/images/edit_user.jpg') }}\" style=\"float:left;\"></img>"+e.children()[1].innerHTML;
+                    $("#table-trashbox > tbody").prepend(e); 
+
                     var params = "id="+e[0].id+"&senderState=2";
                     $.ajax({
                         url: "{{ path('meal_square_common_message_update_sender_state') }}",
                         data: params,
                         type: "POST",
                     });  
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Select message trashbox
+        $(document).ready(function(){
+            $("#checkall_trashbox").click(function () {
+                if ($("#checkall_trashbox").is(':checked')) {
+                    $(".table-trashbox input[type=checkbox]").each(function () {
+                        $(this).parent().addClass("checked");                        
+                    });
+                } else {
+                    $(".table-trashbox input[type=checkbox]").each(function () {
+                        $(this).parent().removeClass("checked");                       
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // Remove message trashbox
+        $("#btn_remove_trashbox").click(function(){
+            $(".table-trashbox input[type=checkbox]").each(function () {
+                if ($(this).parent().hasClass('checked')) {
+                    var e = $(this).closest('tr');
+                    $(this).closest('tr').remove();
+
+                    if ( e.hasClass("in") ) {
+                        var params = "id="+e[0].id+"&receiverState=4";
+                        $.ajax({
+                            url: "{{ path('meal_square_common_message_update_receiver_state') }}",
+                            data: params,
+                            type: "POST",
+                        });  
+                    } else {
+                        var params = "id="+e[0].id+"&senderState=3";
+                        $.ajax({
+                            url: "{{ path('meal_square_common_message_update_sender_state') }}",
+                            data: params,
+                            type: "POST",
+                        });  
+                    }
                 }
             });
         });
