@@ -155,16 +155,30 @@
                                     <section>
                                         <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
                                         <div class="f-row full">
-                                                {{ form_widget(form.visibilite) }}
-                                                <label>{{ 'form.add.public'|trans({},'messages') }}</label>
+                                            {{ form_widget(form.visibilite) }}
+                                            <label>{{ 'form.add.public'|trans({},'messages') }}</label>
                                         </div>
                                     </section>
                                 {% endif %}
 
-                                 
-                                <div class="f-row full">
+                                {% if isVersion is defined %}
+                                    {% if isVersion %}
+                                        <div class="f-row full" style="display:none;">
+                                            {{ form_widget(form.isRecetteMere) }}
+                                        </div>
+                                        <div class="f-row full">
+                                            <input class="button btn btn-lg btn-info sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Info']);"  value="{{ 'form.add.publish'|trans({},'messages') }}"/>
+                                        </div>
+                                    {% else %}
+                                        <div class="f-row full">
+                                            <input type="submit" class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="f-row full">
                                         <input type="submit" class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
-                                </div>
+                                    </div>
+                                {% endif %}
                             </form>{#{{ form_end(form) }}#}
                         </div>
                     </section>
@@ -221,7 +235,6 @@
      <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script type="text/javascript">
-        
         var addSelector = $('#add-ingredient, #add-step');
         var removeSelector = '#remove-ingredient, #remove-step';
         
@@ -239,9 +252,27 @@
                 return false;
             });
         });
-        
     </script>
-    
+
+    <script type="text/javascript">
+        document.querySelector('.sweet-14').onclick = function(){
+            swal({
+                title: "Voulez vous définir cette version en tant que recette mère ?",
+                text: "Vous pourrez changer par la suite",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: 'btn-info',
+                cancelButtonText: 'non',
+                confirmButtonText: 'Oui'
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $("#recette_type_edit_isRecetteMere").val("1"); 
+                } 
+                $("form[name=recette_type_edit]").submit(); 
+            });
+        };
+    </script>
 {% endblock %}
 
 

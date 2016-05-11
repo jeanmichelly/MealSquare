@@ -408,7 +408,9 @@ class RecetteController extends Controller {
                         $groupVersionsRepository = $em->getRepository("MealSquareRecetteBundle:GroupVersions");
                         $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
                     }
-
+                    if ( $form->get("isRecetteMere")->getData() == "1" ) {
+                        $groupVersions->setRecetteMere($clone);
+                    }
                     $clone->addVersion($groupVersions);
                 }
                 else {

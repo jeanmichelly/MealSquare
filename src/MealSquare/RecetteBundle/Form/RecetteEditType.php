@@ -90,6 +90,9 @@ class RecetteEditType extends AbstractType
                               ->setParameter('context', 'recette')
                               ->orderBy('c.name', 'ASC');
                 }))
+            ->add('isRecetteMere', 'text', array(
+                'mapped'=>false
+            ))
             //->add('tags')
         ;
         $builder->get('image')->add('contentType', 'hidden');
