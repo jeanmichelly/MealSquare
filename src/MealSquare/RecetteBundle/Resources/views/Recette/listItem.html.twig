@@ -1,12 +1,13 @@
 <figure style="min-height: 270px;">
     {% thumbnail recette.image, 'square' with {'width':'100%','height':'auto'} %}
     <figcaption><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}"><i class="ico i-view"></i> <span>{{ 'recettes.detail'|trans({}, 'messages') }}</span></a></figcaption>
+    <figcaption id="recette_id_{{recette.id}}" class="to-removed"><a href="javascript: void(0)"><i class="fa fa-check fa-2x" aria-hidden="true"></i></a></figcaption>
 </figure>
 <div class="container">
     <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{{recette.Titre | slice (0, 20)}}</a></h2> 
     <div class="actions">
         <div>
-        <div><i class="ico i-preparation"></i>{{ recette.tempsPreparation }}min</div>
+            <div><i class="ico i-preparation"></i>{{ recette.tempsPreparation }}min</div>
             <div><i class="ico i-cuisson"></i>{{ recette.tempsCuisson }}min</div>
             <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
             <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
@@ -14,7 +15,6 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
                 <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
             {% endif %}
-            
         </div>
     </div>
 </div>

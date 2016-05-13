@@ -240,7 +240,32 @@ class RecetteController extends Controller {
         $response->setContent(json_encode(array("success"=>true, "currentRecetteToRemove"=>$currentRecetteToRemove)));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
 
+    public function recettesDeleteAction() {
+        $em                 = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("MealSquareRecetteBundle:Recette");
+        $idRecettesToRemove = split(',', $this->container->get('request')->get('idRecettesToRemove'));
+
+        foreach ( $idRecettesToRemove as $idRecetteToRemove ) {
+            $recette = $repository->findOneById(intval($idRecetteToRemove));
+
+            if ( $recette->hasVersion() && $recette->isRecetteMere() ) {
+                $versions = $recette->getVersions();
+                $groupVersionsRepository = $em->getRepository("MealSquareRecetteBundle:GroupVersions");
+                $groupVersions = $groupVersionsRepository->findOneById($versions[0]->getId());
+
+                $groupVersions->setRecetteMere();
+                $em->persist($groupVersions);
+            }
+            $em->remove($recette);
+        }
+        $em->flush();
+
+        $response = new Response();
+        $response->setContent(json_encode(array("success"=>true)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
     
     public function editAction($id) {

@@ -268,6 +268,11 @@ h2.large		{background-position:0 0;width:572px;height:58px;position:static;font-
 .entry .excerpt 				{border-top:1px solid #ddd;width:100%;float:left;padding:15px 0 20px;}
 .entry .excerpt p 			{padding:0;}
 
+figcaption.to-removed {display:none;}
+figcaption.to-removed .fa {margin: 40% 0 3px;}
+.entry figcaption.to-removed {background: #5cb98b !important;}
+.entry figure:hover figcaption.to-removed 	{opacity:0.8 !important;}
+
 .featured h2					{font-size:14px;font-weight:700;}
 blockquote					{position:relative;color:#666;border-top:1px solid #ddd;border-bottom:1px solid #ddd;width:100%;padding:18px 0 21px;margin:0 0 23px;}
 blockquote:before 			{content:"";background:url(../images/ico/icons.png) -297px -17px no-repeat;width:15px;height:14px;float:left;position:relative;top:0;left:0;margin:0 5px 0 0;}

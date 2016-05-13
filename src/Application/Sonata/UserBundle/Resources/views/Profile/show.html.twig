@@ -28,7 +28,6 @@
                         <!--profile left part-->
                         <div class="my_account one-fourth wow fadeInLeft">
                             <figure id="profile-picture">
-                                
                                 {% if app.user.avatar is not null %}
                                     {% thumbnail app.user.avatar, 'square' %}
                                 {% else %}
@@ -101,7 +100,11 @@
 
                             <!--my recipes-->
                             <div class="tab-content" id="recipes">
-                                <div class="entries row">
+                                <div class="widget" style="background: none">
+                                    <a id="recettes_selectable" class="button">Sélectionner</a>
+                                    <span id="remove_recettes" style="color: rgb(219, 126, 121);display:none"><a title="{{ 'recettes.remove_recettes'|trans({},'messages') }}"><i class="fa fa-1x fa-trash button" style="min-width: 0px; margin-top:-5px"></i></a></span>
+                                </div>
+                                <div class="entries row" style="margin-top:10px">
                                     {% for article in recettes %}
                                         <!--item-->
                                         <div class="entry one-third">
@@ -184,7 +187,47 @@
             }
           );
     </script>
+    <script type="text/javascript">
+        $("#recettes_selectable").click(function(e) {
+            e.preventDefault();
+            if ( $("#recettes_selectable").hasClass("active") ) {
+                $("#recettes_selectable").removeClass("active");
+                $("#recettes_selectable").css('background', '#3876A3');
+                $(".entry figure figcaption").show();
+                $(".to-removed").hide();
+                $("#remove_recettes").hide();
+            } else {
+                $("#recettes_selectable").addClass("active");
+                $("#recettes_selectable").css('background', '#5cb98b');
+                $(".entry figure figcaption").hide();
+                $(".to-removed").show();
+                $("#remove_recettes").show();
+            }
+        });
+        $(".to-removed").click(function() {
+            if($(this).hasClass("checked")) {
+                $(this).css('opacity', '0');
+                $(this).removeClass("checked");
+            } else {
+                $(this).css('opacity', '0.8');
+                $(this).addClass("checked");
+            }
+        });
+        $("#remove_recettes").click(function() {
+            var recettesToRemove = $('.to-removed.checked');
+            var idRecettesToRemove = [];
+
+            for ( var i=0; i<recettesToRemove.length; i++ ) {
+                idRecettesToRemove.push(recettesToRemove[i].id.replace("recette_id_", ""));
+            }
+
+            $.ajax({
+                data: "idRecettesToRemove="+idRecettesToRemove,
+                url: "{{ path('meal_square_recettes_delete') }}",
+                success: function(data) {
+                    window.location.replace("{{ path('fos_user_profile_show') }}");
+                }
+            }); 
+        });
+    </script>
 {% endblock %}
-
-
-

@@ -33,6 +33,10 @@ meal_square_recette_delete:
 meal_square_recette_versions_delete:
     path:     /recette/versions/delete
     defaults: { _controller: MealSquareRecetteBundle:Recette:versionsDelete }
+
+meal_square_recettes_delete:
+    path:     /recettes/delete
+    defaults: { _controller: MealSquareRecetteBundle:Recette:recettesDelete }
     
 meal_square_recette_favoris_delete:
     path:     /recette/favoris/delete/{id}
