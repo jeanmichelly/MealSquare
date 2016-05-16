@@ -14,7 +14,6 @@
     {% else %}
         {{ 'recettes.add'|trans({},'messages') }} - {{ parent() }}
     {% endif %}
-    
 {% endblock %}
 
 {% block main %}
@@ -107,7 +106,7 @@
                                         {{ form_errors(form.ingredients) }}
                                         <div id="ingredient-field-list" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
                                         {% for widget in form.ingredients.children %}
-                                                {{ _self.widget_prototype(widget, 'ingredient') }}
+                                            {{ _self.widget_prototype(widget, 'ingredient') }}
                                         {% endfor %}
                                         </div>
                                     </div>
@@ -118,13 +117,39 @@
 
                                 <section>
                                     <h2>{{ 'form.add.step'|trans({},'messages') }} <span>({{ 'form.add.step_text'|trans({},'messages') }})</span></h2>
-                                    <div id="step-field-list" data-prototype="{{ _self.widget_prototype(form.recetteBlocks, 'step')|escape }}">
-                                    {% for widget in form.recetteBlocks.children %}
-                                            {{ _self.widget_prototype(widget, 'step') }}
-                                    {% endfor %}
+                                    <div class='container-sortable'>
+                                        <ol id="section_step" class='sortable'>
+                                            {% if recette is defined %}
+                                                {% for block in recette.getRecetteBlocks() %}
+                                                    {% for descriptionToArray in block.getDescriptionToArray %}
+                                                        {% for sectionStep in descriptionToArray %}
+                                                            {% if sectionStep.sectionName is defined %}
+                                                                <li class="section" data-section-name="{{ sectionStep.sectionName }}"><input class="edit-section" type="text" style="width:500px !important;" value="{{ sectionStep.sectionName }}" title="Renommer la section"/> <a class="button remove-section">-</a>
+                                                                    <ol>
+                                                                        {% for children in sectionStep.children %}
+                                                                            {% for step in children %}
+                                                                                {% if step.stepName is defined %}
+                                                                                    <li class="step" data-step-name="{{ step.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ step.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% endfor %}
+                                                                    </ol>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="step" data-step-name="{{ sectionStep.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ sectionStep.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% endfor %}    
+                                            {% endif %}
+                                        </ol>
+                                    </div>
+                                    <div class="f-row full" style="display:none">
+                                        {{ form_widget(form.sectionStep) }}
                                     </div>
                                     <div class="f-row full">
-                                        <button  id="add-step" data-target="step-field-list" class="add">{{ 'form.add.add_step'|trans({},'messages') }}</button>
+                                        <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
+                                        <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
                                     </div>
                                 </section>
 
@@ -176,7 +201,7 @@
                                     {% endif %}
                                 {% else %}
                                     <div class="f-row full">
-                                        <input type="submit" class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
+                                        <input class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
                                     </div>
                                 {% endif %}
                             </form>{#{{ form_end(form) }}#}
@@ -208,40 +233,26 @@
             <div class="third">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages')} }) }}</div>
             <button  data-related="{{ name }}"  id="remove-ingredient" class="remove">-</button>
         </div>
-    {% else %}
-        <div class="f-row instruction"  data-content="{{ name }}">
-            <button  data-related="{{ name }}" id="remove-step" class="remove">-</button>
-            <div class="full">{{ form_widget(row.description, { 'attr': {'placeholder': 'form.add.step_description'|trans({},'messages')} }) }}</div>
-        </div>
-        
     {% endif %}
-    
-    
-    
 {% endmacro %}
 
 {% block script %}
     
     {#{% javascripts '@MealSquareCommonBundle/Resources/public/js/scripts.js'
      %}
-     <script type="text/javascript" src="{{ asset_url }}"></script>
-     {% endjavascripts %}#}
-    
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-     
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}#}     
     <script> new WOW().init();</script>
     {% javascripts '@MealSquareRecetteBundle/Resources/public/js/script.js'%}
      <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script type="text/javascript">
-        var addSelector = $('#add-ingredient, #add-step');
-        var removeSelector = '#remove-ingredient, #remove-step';
+        var addSelector = $('#add-ingredient');
+        var removeSelector = '#remove-ingredient';
         
         $(document).ready(function(){
             
-           {# addFormField($('#add-ingredient'));
-            addFormField($('#add-step'));#}
+           {# addFormField($('#add-ingredient')); #}
             
             addSelector.click(function(event) {
                 addFormField($(this));
@@ -251,6 +262,23 @@
                 removeFormField($(this));
                 return false;
             });
+        });
+
+        $("#add-section").click(function() {
+            $("#section_step").append($("<li class=\"section\" data-section-name=\"Nom de la section\"><input class=\"edit-section\" type=\"text\" style=\"width:500px !important;\" value=\"Nom de la section\" title=\"Renommer la section\"/> <a class=\"button remove-section\">-</a><ol></ol></li>"));
+        });
+        $("#add-step").click(function() {
+            $("#section_step").append($("<li class=\"step\" data-step-name=\"Nom de l'étape\"><input class=\"edit-step\" type=\"text\" style=\"width:500px !important;\" value=\"Nom de l'étape\" title=\"Renommer l'étape\"/> <a class=\"button remove-step\">-</a></li>"));
+        });
+
+        $(document).on("click", ".remove-step, .remove-section", function() {
+            $(this).parent().remove();
+        });
+        $(document).on("keypress", ".edit-section", function() {
+            $(this).parent().attr("data-section-name", $(this).val());
+        });
+        $(document).on("keypress", ".edit-step", function() {
+            $(this).parent().attr("data-step-name", $(this).val());
         });
     </script>
 
@@ -273,7 +301,16 @@
             });
         };
     </script>
+
+    <script type="text/javascript">
+        $("#submitRecipe").click(function() {
+            var group = $("ol.sortable");
+            var data = group.sortable("serialize").get();
+
+            var jsonString = JSON.stringify(data, null, ' ');
+
+            $('#recette_type_sectionStep').val(jsonString);
+            $("form[name=recette_type]").submit(); 
+        });
+    </script>
 {% endblock %}
-
-
-

@@ -47,13 +47,6 @@ class RecetteEditType extends AbstractType
             ))
             ->add('tempsCuisson', 'integer', array('attr' => array('min' => '1'), 'required'=>false))
             ->add('tempsPreparation', 'integer', array('attr' => array('min' => '1')))
-            ->add('recetteBlocks', 'collection', array(
-                'type' => new InfosBlockType(),
-                'prototype' => true,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false
-            ))
             ->add('ingredients', 'collection', array(
                     'type' => 'ingredient_recette_type',
                     'prototype' => true,
@@ -61,6 +54,7 @@ class RecetteEditType extends AbstractType
                     'allow_delete' => true,
                     'by_reference' => false
             ))
+            ->add('sectionStep', 'text', array('mapped'=>false))
             ->add('pays',"genemu_jqueryselect2_country", array(
                 'required'  => false,
                 'empty_value' => 'Pays' 

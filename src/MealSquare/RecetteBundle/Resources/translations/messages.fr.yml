@@ -96,6 +96,7 @@ form:
         step_text: Entrer les instructions de la recette, pas à pas
         step_description: Tâches à réaliser
         add_step: Ajouter une étape
+        add_section: Ajouter une section
         photo: Photo
         choose_file: Choisir une photo
         other: Autres Informations

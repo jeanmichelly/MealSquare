@@ -72,7 +72,26 @@
                                 <div class="instructions">
                                     <ol>
                                         {% for block in recette.getRecetteBlocks() %}
-                                            <li>{{ block.description | raw }}</li>
+                                            {% if ( block.type == "step" ) %}
+                                                <li>{{ block.description | raw }}</li>
+                                            {% else %}
+                                                {% for descriptionToArray in block.getDescriptionToArray %}
+                                                    {% for sectionStep in descriptionToArray %}
+                                                        {% if sectionStep.sectionName is defined %}
+                                                            <div class="section-show">{{ sectionStep.sectionName | raw }}</div>
+                                                            {% for children in sectionStep.children %}
+                                                                {% for step in children %}
+                                                                    {% if step.stepName is defined %}
+                                                                        <li>{{ step.stepName | raw }}</li>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <li>{{ sectionStep.stepName | raw }}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endif %}
                                         {% endfor %}    
                                     </ol>
                                 </div>

@@ -3,6 +3,7 @@
 namespace MealSquare\RecetteBundle\Controller;
 
 use MealSquare\RecetteBundle\Entity\Recette;
+use MealSquare\RecetteBundle\Entity\InfosBlock;
 use MealSquare\RecetteBundle\Entity\GroupVersions;
 use MealSquare\RecetteBundle\Entity\GroupVariantes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -312,6 +313,7 @@ class RecetteController extends Controller {
 
             return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array(
                     'form'          => $form->createView(), 
+                    'recette'       => $recette,
                     'edit'          => true,
                     'isVersion'     => $isVersion,
                     'isRecetteMere' => $isRecetteMere
@@ -340,6 +342,8 @@ class RecetteController extends Controller {
             // On recupere le current user
             $usr     = $this->get('security.context')->getToken()->getUser();
             $recette->setAuteur($usr);
+            // On recupere les sections et étapes
+            $recette->addRecetteBlock(new infosBlock($form->get("sectionStep")->getData()));
             
             $em->persist($recette);
             $em->flush();  
@@ -466,7 +470,11 @@ class RecetteController extends Controller {
 
             }
 
-            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array('form' => $form->createView(),'isVersion'=>$isVersion));            
+            return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array(
+                'form'          => $form->createView(),
+                'recette'       => $clone,
+                'isVersion'     => $isVersion
+            ));            
         }
     }
 

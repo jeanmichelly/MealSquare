@@ -380,6 +380,7 @@ section.cta h2 	{padding:0;line-height:48px;}
 .recipe .intro 	{width:100%;height:auto;margin:0 0 30px;background:#fff;padding:17px 20px;border:none;-webkit-box-shadow:0 0 1px rgba(0,0,0,.2);-moz-box-shadow:0 0 1px rgba(0,0,0,.2);box-shadow:0 0 1px rgba(0,0,0,.2);}
 .recipe .intro p {color:#666;padding:0 0 15px;}
 
+.section-show		{top:0;background: #447EA8;color:#fff;height:50px;line-height: 50px;text-align: center;font-size:33px;-webkit-text-shadow:0 1px 0 rgba(0,0,0,.15);-moz-text-shadow:0 1px 0 rgba(0,0,0,.15);text-shadow:0 1px 0 rgba(0,0,0,.15);}
 .instructions 		{float:left;width:100%;}
 .instructions ol 				{counter-reset: li;list-style: none;*list-style: decimal;padding: 0;margin:0;}
 .instructions li				{position: relative;display: block;background: #fff;color: #666;font-size:14px;padding:15px 20px 18px;min-height:50px;margin:0 0 30px 50px;-webkit-box-shadow:0 0 1px rgba(0,0,0,.2);-moz-box-shadow:0 0 1px rgba(0,0,0,.2);box-shadow:0 0 1px rgba(0,0,0,.2);}
@@ -423,6 +424,7 @@ dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 .submit_recipe .large					 	{width:50%;}
 .submit_recipe .small					 	{width:11.7%;}
 .submit_recipe .remove						{float:right;font-size:37px;padding:0;width:37px;height:37px;line-height:37px;}
+.submit_recipe .remove-step, .submit_recipe .remove-section	 	{float:right;font-size:37px;padding:0;width:37px !important; min-width:37px !important;height:37px;line-height:37px;}
 .submit_recipe .instruction .full			{width:95%;}
 .submit_recipe h2		{padding:0 0 18px;}
 .submit_recipe h2 span 	{font-size:13px;font-weight:400;display:inline-block;}
@@ -1256,4 +1258,70 @@ h2.large 		{background-size:100% 123px;font-size:24px;}
 }
 .date_message {
 	text-align: right;
+}
+
+/* SECTION SORTABLE */
+ol.sortable { 
+    padding: 0; 
+    margin: 0 0 9px 25px; 
+}
+ol.active {
+    border: 1px solid #333333;
+}
+ol.sortable ol { 
+    margin-bottom: 0; 
+    margin-top: 50px !important;
+}
+.dragged {
+    position: absolute;
+    top: 0;
+    opacity: 0.5;
+    z-index: 2000; 
+}
+ol.sortable {
+    margin: 0 0 9px 0;
+    min-height: 10px; 
+}
+ol.sortable li {
+    display: block;
+    margin: 5px;
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    color: #666;
+    min-height: 47px;
+}
+ol.sortable li.section li.step {
+	margin-left: 50px;
+}
+ol.sortable li.section ol.active {
+	margin-left: 60px;
+	width: 900px;
+}
+ol.sortable li.section ol.active li.step {
+	margin-left: 4px;
+}
+ol.sortable li:hover {
+    cursor: pointer;
+}
+ol.sortable li.placeholder {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none; 
+}
+ol.sortable li.placeholder:before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    margin-top: -5px;
+    left: -5px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left-color: #3876A3;
+    border-right: none; 
+}
+.edit-section, .edit-step {
+	color: #3876A3 !important;
 }
