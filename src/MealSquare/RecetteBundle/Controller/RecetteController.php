@@ -363,6 +363,64 @@ class RecetteController extends Controller {
 
         return $this->render('MealSquareRecetteBundle:Recette:add.html.twig', array('form' => $form->createView()));
     }
+
+    public function importShowAction() {
+        $repository     = $this->getDoctrine()->getRepository("MealSquareRecetteBundle:Recette");
+        $recettes       = $repository->findAll();
+        $ingredients    = $this->getDoctrine()->getRepository('MealSquareRecetteBundle:Ingredient')->findAll();
+        
+        if(is_null($recettes)){
+                throw new NotFoundHttpException("Désolé, la page que vous avez demandée semble introuvable !");
+        }else{
+            
+            return $this->render('MealSquareRecetteBundle:Recette:importRecette.html.twig', array(
+                'recettes' => $recettes,
+                'ingredients' => $ingredients
+            ));
+        }
+        
+    }
+
+    public function importAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $json = $request->getContent();
+
+        $array = json_decode($json, true); 
+
+        for ($i=0; $i < count($array); $i++) { 
+            $recette = new Recette();
+            //champs obligatoires
+            $recette->setTitre($array[$i]["titre"]);      
+            $recette->setNbPersonne($array[$i]["nbPersonne"]);
+            $recette->setDescription($array[$i]["description"]);
+            $recette->setDifficulte($array[$i]["difficulte"]);
+            $recette->setTempsPreparation($array[$i]["tempsPreparation"]);
+            //champs optionnels
+            $recette->setSource($array[$i]["source"]);
+            $recette->setSpecialite($array[$i]["specialite"]);
+            $recette->setTempsCuisson($array[$i]["tempsCuisson"]);
+            $recette->setPays($array[$i]["pays"]);
+            $recette->setSaison($array[$i]["saison"]);
+            $recette->setType($array[$i]["type"]);
+
+            $usr     = $this->get('security.context')->getToken()->getUser();
+            $recette->setAuteur($usr);
+
+            $em->persist($recette);
+            $em->flush();
+
+            $recette->createThread();
+            
+            $em->persist($recette);
+            $em->flush();
+        }
+
+        $response = new Response();
+        $response->setContent(json_encode(array("success"=>true, "recettes"=>"insertion des recettes réussie")));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
     
     public function manageAttribut  ($type, $position ){
         $tabs = array();

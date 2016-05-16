@@ -1,0 +1,140 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+
+{% block title %}
+    {{ 'common.menu.recettes'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <main class="main" role="main">
+        <div class="wrap clearfix">
+            <nav class="breadcrumbs">
+                <ul>
+                    <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
+                    <li>{{ 'common.menu.recettes'|trans }}</li>
+                </ul>
+            </nav>
+	        <div class="row">
+	        	<header class="s-title">
+	                <h2 class="ribbon bright">
+	                    {{ 'recettes.import'|trans }}
+	                </h2>
+	                <main class="cd-main-content">
+		                <h2 class="ribbon bright">
+		                    {{ 'recettes.import_recipe_detail'|trans }}
+		                </h2>
+	                    <div id="jsGrid-recette"></div>
+	                	<div id="insertion" class="button white medium">{{ 'recettes.import_insertion'|trans }}</div>
+	                </main>
+	            </header>
+	        </div>
+	    </div>
+    </main>
+{% endblock %}
+{% block script %}
+    <script charset="UTF-8"> 
+        new WOW().init();
+
+        var recettes = [];
+
+	    var saisons = [
+	    	{ Name: "Printemps"},
+	    	{ Name: "Été"},
+	    	{ Name: "Automne"},
+	    	{ Name: "Hiver"}
+	    ];
+
+	    var difficultes = [
+	    	{ Name: "Très facile"},
+	    	{ Name: "Facile"},
+	    	{ Name: "Moyen"},
+	    	{ Name: "Difficile"},
+	    	{ Name: "Délicat"}
+	    ];
+
+	    var specialite = [
+	    	{Name: 'Saint-Valentin'},
+	    	{Name: 'Recettes anglo-saxonne'},
+	    	{Name: 'Chic et facile'},
+	    	{Name: 'Recettes méditerranéennes'},
+	    	{Name: 'Spécialités antillaises'},
+	    	{Name: 'Exotique'},
+	    	{Name: 'Recettes de Chef'},
+	    	{Name: 'Pâques'},
+	    	{Name: 'Provence'},
+	    	{Name: 'Orientale'},
+	    	{Name: 'Repas de fête'},
+	    	{Name: 'Cuisine légère'},
+	    	{Name: 'Cuisine rapide'},
+	    	{Name: 'Mardi Gras'},
+	    	{Name: 'Asie'},
+	    	{Name: 'Nordique'},
+	    	{Name: 'Bretagne'},
+	    	{Name: 'Sud-ouest'},
+	    	{Name: 'Spécialités ibériques'},
+	    	{Name: 'Normandie'},
+	    	{Name: 'Thanksgiving'},
+	    	{Name: 'Auvergne'},
+	    	{Name: 'Halloween'},
+	    	{Name: 'Recettes américaines'},
+	    	{Name: 'Pentecôte'}
+	    ];
+
+	    var type = [
+	    	{Name: 'Dessert'},
+	    	{Name: 'Végétarien'},
+	    	{Name: 'Enfant'},
+	    	{Name: 'Salade'}
+	    ];
+	 
+	    $("#jsGrid-recette").jsGrid({
+	        width: "100%",
+	        height: "auto",
+	 
+	        inserting: true,
+	        editing: true,
+	        sorting: true,
+	        paging: true,
+	 		
+	        editButton:true,
+
+	        data: recettes,
+	 
+	        fields: [
+	            { name: "image_id", type: "text", width: 100},
+	            { name: "titre", type: "text", width: 200, validate: "required"},
+	            { name: "source", type: "text", width: 150},
+	            { name: "specialite", type: "select", items: specialite, valueField: "Name", textField: "Name" , width: 200},
+	            { name: "nbPersonne", type: "number", width: 150, validate: { validator: "range", param: [1, 50]}},
+	            { name: "difficulte", type: "select", width: 150, items: difficultes, valueField: "Name", textField: "Name", validate: "required"},
+	            { name: "tempsCuisson", type: "number", width: 150, validate: { validator: "range", param: [0, 150]}},
+	            { name: "tempsPreparation", type: "number", width: 150, validate: { validator: "range", param: [1, 150]}},
+	            { name: "pays", type: "text", width: 150},
+	            { name: "saison", type: "select", items: saisons, valueField: "Name", textField: "Name", width: 150},
+	            { name: "description", type: "textarea", width: 150, validate: "required"},
+	            { name: "type", type: "select", items: type, valueField: "Name", textField: "Name" , width: 150},
+	            { type: "control"}
+	        ]
+	    });
+
+	    $("#insertion").click(function() {
+	    	$.ajax({
+            dataType: "json",
+            type: 'post',
+            url: "{{ path('meal_square_recette_import')}}",
+            data: JSON.stringify(recettes),
+            success: function(msg) {
+            	if(msg){
+        			console.log(msg);
+        		}
+            	else
+            		{console.log("ERREUR");}
+        		},
+        	error: function(){
+        		console.log("error");
+        	}
+	    	});
+	    });
+    </script>
+{% endblock %}

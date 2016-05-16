@@ -76,7 +76,15 @@ meal_square_recette_search:
 
 meal_square_recette_country_list:
     path:     /recette/countrylist/
-    defaults: { _controller: MealSquareRecetteBundle:Recette:countryList}    
+    defaults: { _controller: MealSquareRecetteBundle:Recette:countryList} 
+
+meal_square_recette_import_show:
+    path:     /recette/importshow/
+    defaults: { _controller: MealSquareRecetteBundle:Recette:importshow}
+
+meal_square_recette_import:
+    path:     /recette/importshow/import
+    defaults: { _controller: MealSquareRecetteBundle:Recette:import}   
     
 meal_square_ajax_ingredient:
     path:     /asynchrone/ingredient

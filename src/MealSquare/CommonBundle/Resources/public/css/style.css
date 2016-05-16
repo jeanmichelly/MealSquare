@@ -1325,3 +1325,8 @@ ol.sortable li.placeholder:before {
 .edit-section, .edit-step {
 	color: #3876A3 !important;
 }
+
+/*JSGRID*/
+.jsgrid table {margin:0}
+.jsgrid th 	{color:#000;}
+.jsgrid input[type="button"] {border:none; cursor: pointer; text-transform:uppercase;-webkit-appearance: button; background-color:none ;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:11px 14px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
