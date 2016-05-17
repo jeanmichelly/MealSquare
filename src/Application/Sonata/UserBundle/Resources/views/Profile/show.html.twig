@@ -61,7 +61,13 @@
                                 <div class="row">
                                     <dl class="basic two-third">
                                         <dt>{{ 'form.label_gender'|trans({}, 'SonataUserBundle') }}</dt>
-                                        <dd>{{ app.user.gender}}</dd>
+                                        {% if app.user.gender == "m" %}
+                                            <dd>homme</dd>
+                                        {% elseif app.user.gender == "f" %}
+                                            <dd>femme</dd>
+                                        {% else %}
+                                            <dd></dd>
+                                        {% endif %}
                                         <dt>{{ 'form.username'|trans({}, 'SonataUserBundle') }}</dt>
                                         <dd>{{ app.user.username}}</dd>
                                         <dt>{{ 'form.label_name'|trans({}, 'SonataUserBundle') }}</dt>
