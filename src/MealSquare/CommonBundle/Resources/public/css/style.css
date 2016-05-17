@@ -386,7 +386,8 @@ section.cta h2 	{padding:0;line-height:48px;}
 .instructions li				{position: relative;display: block;background: #fff;color: #666;font-size:14px;padding:15px 20px 18px;min-height:50px;margin:0 0 30px 50px;-webkit-box-shadow:0 0 1px rgba(0,0,0,.2);-moz-box-shadow:0 0 1px rgba(0,0,0,.2);box-shadow:0 0 1px rgba(0,0,0,.2);}
 .instructions li:before		{content: counter(li);counter-increment: li;position: absolute;	left: -50px;top:0;background: #447EA8;color:#fff;height:50px;width: 50px;line-height: 50px;text-align: center;font-size:33px;-webkit-text-shadow:0 1px 0 rgba(0,0,0,.15);-moz-text-shadow:0 1px 0 rgba(0,0,0,.15);text-shadow:0 1px 0 rgba(0,0,0,.15);}
 .instructions li:after		{position: absolute;	content: '';border: .5em solid transparent;left:0;top: 20px;-webkit-transition:all 0.2s ease-in;-moz-transition:all 0.2s ease-in;-o-transition:all 0.2s ease-in;-ms-transition:all 0.2s ease-in;transition:all 0.2s ease-in;}
-.instructions li:hover:after	{left:0;border-left-color: #447EA8;}		
+.instructions li:hover:after	{left:0;border-left-color: #447EA8;}	
+.sectionStep	{margin-top: 30px; margin-bottom:30px; border: 1px solid #333333;}
 	
 dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 .recipe dt,
@@ -1322,8 +1323,11 @@ ol.sortable li.placeholder:before {
     border-left-color: #3876A3;
     border-right: none; 
 }
-.edit-section, .edit-step {
+.edit-section {
 	color: #3876A3 !important;
+}
+.edit-step {
+	color: #444 !important;
 }
 
 /*JSGRID*/

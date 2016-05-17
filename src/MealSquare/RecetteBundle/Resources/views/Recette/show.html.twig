@@ -78,14 +78,16 @@
                                                 {% for descriptionToArray in block.getDescriptionToArray %}
                                                     {% for sectionStep in descriptionToArray %}
                                                         {% if sectionStep.sectionName is defined %}
-                                                            <div class="section-show">{{ sectionStep.sectionName | raw }}</div>
-                                                            {% for children in sectionStep.children %}
-                                                                {% for step in children %}
-                                                                    {% if step.stepName is defined %}
-                                                                        <li>{{ step.stepName | raw }}</li>
-                                                                    {% endif %}
+                                                            <div class="sectionStep">
+                                                                <div class="section-show">{{ sectionStep.sectionName | raw }}</div>
+                                                                {% for children in sectionStep.children %}
+                                                                    {% for step in children %}
+                                                                        {% if step.stepName is defined %}
+                                                                            <li>{{ step.stepName | raw }}</li>
+                                                                        {% endif %}
+                                                                    {% endfor %}
                                                                 {% endfor %}
-                                                            {% endfor %}
+                                                            </div>
                                                         {% else %}
                                                             <li>{{ sectionStep.stepName | raw }}</li>
                                                         {% endif %}

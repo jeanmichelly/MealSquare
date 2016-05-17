@@ -277,10 +277,10 @@
         $(document).on("click", ".remove-step, .remove-section", function() {
             $(this).parent().remove();
         });
-        $(document).on("keypress", ".edit-section", function() {
+        $(document).on("keyup", ".edit-section", function() {
             $(this).parent().attr("data-section-name", $(this).val());
         });
-        $(document).on("keypress", ".edit-step", function() {
+        $(document).on("keyup", ".edit-step", function() {
             $(this).parent().attr("data-step-name", $(this).val());
         });
     </script>
