@@ -3,6 +3,7 @@
 namespace MealSquare\RecetteBundle\Controller;
 
 use MealSquare\RecetteBundle\Entity\Recette;
+use MealSquare\RecetteBundle\Entity\IngredientRecette;
 use MealSquare\RecetteBundle\Entity\InfosBlock;
 use MealSquare\RecetteBundle\Entity\GroupVersions;
 use MealSquare\RecetteBundle\Entity\GroupVariantes;
@@ -373,7 +374,7 @@ class RecetteController extends Controller {
                 throw new NotFoundHttpException("Désolé, la page que vous avez demandée semble introuvable !");
         }else{
             
-            return $this->render('MealSquareRecetteBundle:Recette:importRecette.html.twig', array(
+            return $this->render('MealSquareRecetteBundle:Recette:import.html.twig', array(
                 'recettes' => $recettes,
                 'ingredients' => $ingredients
             ));
@@ -384,25 +385,28 @@ class RecetteController extends Controller {
     public function importAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $json = $request->getContent();
+        // $json = $request->getContent();
+        $jsonRecettes = $this->get('request')->request->get('recettes');
+        $arrayRecettes = json_decode($jsonRecettes, true);
 
-        $array = json_decode($json, true); 
+        $jsonIngredients = $this->get('request')->request->get('ingredients');
+        $arrayIngredients = json_decode($jsonIngredients, true);
 
-        for ($i=0; $i < count($array); $i++) { 
+        for ($i=0; $i < count($arrayRecettes); $i++) { 
             $recette = new Recette();
             //champs obligatoires
-            $recette->setTitre($array[$i]["titre"]);      
-            $recette->setNbPersonne($array[$i]["nbPersonne"]);
-            $recette->setDescription($array[$i]["description"]);
-            $recette->setDifficulte($array[$i]["difficulte"]);
-            $recette->setTempsPreparation($array[$i]["tempsPreparation"]);
+            $recette->setTitre($arrayRecettes[$i]["titre"]);      
+            $recette->setNbPersonne($arrayRecettes[$i]["nbPersonne"]);
+            $recette->setDescription($arrayRecettes[$i]["description"]);
+            $recette->setDifficulte($arrayRecettes[$i]["difficulte"]);
+            $recette->setTempsPreparation($arrayRecettes[$i]["tempsPreparation"]);
             //champs optionnels
-            $recette->setSource($array[$i]["source"]);
-            $recette->setSpecialite($array[$i]["specialite"]);
-            $recette->setTempsCuisson($array[$i]["tempsCuisson"]);
-            $recette->setPays($array[$i]["pays"]);
-            $recette->setSaison($array[$i]["saison"]);
-            $recette->setType($array[$i]["type"]);
+            $recette->setSource($arrayRecettes[$i]["source"]);
+            $recette->setSpecialite($arrayRecettes[$i]["specialite"]);
+            $recette->setTempsCuisson($arrayRecettes[$i]["tempsCuisson"]);
+            $recette->setPays($arrayRecettes[$i]["pays"]);
+            $recette->setSaison($arrayRecettes[$i]["saison"]);
+            $recette->setType($arrayRecettes[$i]["type"]);
 
             $usr     = $this->get('security.context')->getToken()->getUser();
             $recette->setAuteur($usr);
@@ -414,10 +418,28 @@ class RecetteController extends Controller {
             
             $em->persist($recette);
             $em->flush();
+
+            for($countIR=0; $countIR < count($arrayIngredients); $countIR++){
+                for($countIngredient=0; $countIngredient < count($arrayIngredients[$countIR]); $countIngredient++){
+                    if($arrayIngredients[$countIR][$countIngredient]["recette"] == $arrayRecettes[$i]["titre"]){
+                        $ingredientRecette = new IngredientRecette();
+                        $ingredientRecette->setIngredient($this->getDoctrine()->getRepository('MealSquareRecetteBundle:Ingredient')->findOneByLibelle($arrayIngredients[$countIR][$countIngredient]["ingredient"]));
+                        $ingredientRecette->setUnitMeasurement($arrayIngredients[$countIR][$countIngredient]["mesure"]);
+                        $ingredientRecette->setQuantite($arrayIngredients[$countIR][$countIngredient]["quantité"]);
+
+                        $em->persist($ingredientRecette);
+                        $em->flush();
+
+                        $recette->addIngredient($ingredientRecette);
+                        $em->persist($recette);
+                        $em->flush();
+                    }
+                }
+            }
         }
 
         $response = new Response();
-        $response->setContent(json_encode(array("success"=>true, "recettes"=>"insertion des recettes réussie")));
+        $response->setContent(json_encode(array("success"=>true, "recettes"=>$arrayRecettes, "ingredients"=>$arrayIngredients)));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }

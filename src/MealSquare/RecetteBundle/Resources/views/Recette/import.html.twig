@@ -26,6 +26,7 @@
 		                </h2>
 	                    <div id="jsGrid-recette"></div>
 	                	<div id="insertion" class="button white medium">{{ 'recettes.import_insertion'|trans }}</div>
+	                	<div id="jsGrid-ingredient"></div>
 	                </main>
 	            </header>
 	        </div>
@@ -37,6 +38,16 @@
         new WOW().init();
 
         var recettes = [];
+
+        var ingredients = [];
+
+        var addIngredient = [];
+
+       	var ingredientsListe = "{{ ingredients|join(',') }}".split(",");
+	    var ingredientField = [];
+	    for(var i=0;i<ingredientsListe.length-1;i++){
+			ingredientField[i] = { Name: ingredientsListe[i]};
+	    }
 
 	    var saisons = [
 	    	{ Name: "Printemps"},
@@ -87,6 +98,19 @@
 	    	{Name: 'Enfant'},
 	    	{Name: 'Salade'}
 	    ];
+
+	    var mesure = [
+	    	{Name: ''},
+	    	{Name: 'mg'},
+	    	{Name: 'g'},
+	    	{Name: 'kg'},
+	    	{Name: 'ml'},
+	    	{Name: 'l'},
+	    	{Name: 'kl'},
+	    	{Name: 'pincée(s)'},
+	    	{Name: 'cuillère(s) à soupe'},
+	    	{Name: 'cuillère(s) à café'}
+	    ]
 	 
 	    $("#jsGrid-recette").jsGrid({
 	        width: "100%",
@@ -114,16 +138,33 @@
 	            { name: "saison", type: "select", items: saisons, valueField: "Name", textField: "Name", width: 150},
 	            { name: "description", type: "textarea", width: 150, validate: "required"},
 	            { name: "type", type: "select", items: type, valueField: "Name", textField: "Name" , width: 150},
+	            { itemTemplate: function(_, item) {
+                    return $("<button>").text("Ajout des ingrédients")
+                    	.on("click", function() {
+                    		$("#jsGrid-ingredient").jsGrid("destroy");
+	                    		var titre = item.titre;
+	                    		if(!addIngredient[titre]){addIngredient[titre] = [];}
+	                        	modifIngredient(titre);
+							});
+              	}, width: 200},
 	            { type: "control"}
 	        ]
 	    });
 
 	    $("#insertion").click(function() {
+	    	var ingredientsTemp = [];
+	    	for (var key in addIngredient) {
+			  	ingredientsTemp.push(addIngredient[key]);
+			}	
+	    	var data = { 
+	    					recettes:JSON.stringify(recettes),
+	    					ingredients:JSON.stringify(ingredientsTemp)
+	    				};
 	    	$.ajax({
             dataType: "json",
             type: 'post',
             url: "{{ path('meal_square_recette_import')}}",
-            data: JSON.stringify(recettes),
+            data: data,
             success: function(msg) {
             	if(msg){
         			console.log(msg);
@@ -136,5 +177,34 @@
         	}
 	    	});
 	    });
+		
+		function modifIngredient(titreRecette){
+			$("#jsGrid-ingredient").jsGrid({
+		        width: "100%",
+		        height: "auto",
+		 
+		        inserting: true,
+		        editing: true,
+		        sorting: true,
+		        paging: true,
+		 		
+		        editButton:true,
+
+		        onItemInserted: function(item){
+		        	item.item["recette"] = titreRecette;
+		        },
+
+		        data: addIngredient[titreRecette],
+		 
+		        fields: [
+		        	{ name: "ingredient", type: "select", items: ingredientField, valueField: "Name", textField: "Name" , width: 200},
+		        	{ name: "quantité", type:"number", width: 200, validate: { validator: "range", param: [1, 1000]}},
+		        	{ name: "mesure", type: "select", items: mesure, valueField: "Name", textField: "Name" , width: 200},
+		        	{ type: "control"}
+		        ]
+		    	});
+		}    
+	    
+
     </script>
 {% endblock %}
