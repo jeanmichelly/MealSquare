@@ -24,7 +24,7 @@ class RecetteType extends AbstractType
                 'empty_value' => 'Spécialité',
             ))
             ->add('type', 'choice', array(
-                'choices'   => array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade'),
+                'choices'   => array('0' => 'Dessert' , '1' => 'Végétarien', '2' => 'Enfant', '3' => 'Salade', '4' => 'Pizza'),
                 'required'  => false,
                 'empty_value' => 'Type',
             ))
