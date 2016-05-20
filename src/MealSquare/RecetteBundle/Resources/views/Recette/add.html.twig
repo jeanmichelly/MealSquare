@@ -17,11 +17,8 @@
 {% endblock %}
 
 {% block main %}
-    	<!--main-->
     <main class="main" role="main">
-        <!--wrap-->
         <div class="wrap clearfix">
-            <!--breadcrumbs-->
             <nav class="breadcrumbs">
                 <ul>
                     <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
@@ -41,9 +38,7 @@
                     
                 </ul>
             </nav>
-            <!--//breadcrumbs-->
 
-                <!--row-->
             <div class="row">
                 <header class="s-title">
                     {% if edit is defined %}
@@ -56,168 +51,159 @@
                                 <h1>{{ 'form.variante.title'|trans({},'messages') }}</h1>
                             {% endif %}
                         {% else %}
-                            <h1>{{ 'recettes.add'|trans({},'messages') }}</h1>
+                            <h1>{{ 'recettes.add'|trans({},'messages') }}<a href="{{path('meal_square_recette_import_show')}}" class="button medium" style="float:right">Ajout de plusieurs recettes</a></h1>
                         {% endif %}
                     {% endif %}
                 </header>
 
-                    <!--content-->
-                    <section class="content full-width wow fadeInUp">
-                        <div>
-                            <a href="{{path('meal_square_recette_import_show')}}" class="button white medium">Ajout de plusieurs recettes</a>
-                        </div>
-                        <div class="submit_recipe container">
-                            {{ form_start(form) }}
-                                {{ form_errors(form) }}
-                                
-                                <section>
-                                    <h2>{{ 'form.add.basics'|trans({},'messages') }}</h2>
-                                    <p>{{ 'form.add.required'|trans({},'messages') }}</p>
-                                    <div class="f-row">
-                                        <div class="full">{{ form_widget(form.titre, { 'attr': {'placeholder': 'form.add.title'|trans({},'messages')} }) }}</div>
-                                    </div>
-                                    <div class="f-row">
-                                        <div class="third">{{ form_widget(form.tempsPreparation, { 'attr': {'placeholder': 'form.add.preparation'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.tempsCuisson, { 'attr': {'placeholder': 'form.add.cooking'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.nbPersonne, { 'attr': {'placeholder': 'form.add.nbpeople'|trans({},'messages')} }) }}</div>
-                                    </div>
-                                    <div class="f-row">
-                                        <div class="third">{{ form_widget(form.specialite, { 'attr': {'placeholder': 'form.add.speciality'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.source, { 'attr': {'placeholder': 'form.add.source'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.saison, { 'attr': {'placeholder': 'form.add.season'|trans({},'messages')} }) }}</div>
-                                    </div>
-                                    <div class="f-row">
-                                        <div class="third">{{ form_widget(form.difficulte, { 'attr': {'placeholder': 'form.add.difficulty'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.pays, { 'attr': {'placeholder': 'form.add.country'|trans({},'messages')} }) }}</div>
-                                        <div class="third">{{ form_widget(form.type, { 'attr': {'placeholder': 'form.add.type'|trans({},'messages')} }) }}</div>
-                                    </div>
-                                    {#<div class="f-row">
-                                        <div class="full">{{ form_widget(form.tags, { 'attr': {'placeholder': 'form.add.tags'|trans({},'messages')} }) }}</div>
-                                    </div>#}
-                                </section>
+                <section class="content full-width wow fadeInUp">
+                    <div class="submit_recipe container">
+                        {{ form_start(form) }}
+                            {{ form_errors(form) }}
+                            
+                            <section>
+                                <h2>{{ 'form.add.basics'|trans({},'messages') }}</h2>
+                                <p>{{ 'form.add.required'|trans({},'messages') }}</p>
+                                <div class="f-row">
+                                    <div class="full">{{ form_widget(form.titre, { 'attr': {'placeholder': 'form.add.title'|trans({},'messages')} }) }}</div>
+                                </div>
+                                <div class="f-row">
+                                    <div class="third">{{ form_widget(form.tempsPreparation, { 'attr': {'placeholder': 'form.add.preparation'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.tempsCuisson, { 'attr': {'placeholder': 'form.add.cooking'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.nbPersonne, { 'attr': {'placeholder': 'form.add.nbpeople'|trans({},'messages')} }) }}</div>
+                                </div>
+                                <div class="f-row">
+                                    <div class="third">{{ form_widget(form.specialite, { 'attr': {'placeholder': 'form.add.speciality'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.source, { 'attr': {'placeholder': 'form.add.source'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.saison, { 'attr': {'placeholder': 'form.add.season'|trans({},'messages')} }) }}</div>
+                                </div>
+                                <div class="f-row">
+                                    <div class="third">{{ form_widget(form.difficulte, { 'attr': {'placeholder': 'form.add.difficulty'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.pays, { 'attr': {'placeholder': 'form.add.country'|trans({},'messages')} }) }}</div>
+                                    <div class="third">{{ form_widget(form.type, { 'attr': {'placeholder': 'form.add.type'|trans({},'messages')} }) }}</div>
+                                </div>
+                                {#<div class="f-row">
+                                    <div class="full">{{ form_widget(form.tags, { 'attr': {'placeholder': 'form.add.tags'|trans({},'messages')} }) }}</div>
+                                </div>#}
+                            </section>
 
-                                <section>
-                                    <h2>{{ 'form.add.description'|trans({},'messages') }}</h2>
-                                    <div class="f-row">
-                                        <div class="full">{{ form_widget(form.description, { 'attr': {'placeholder': 'form.add.description_text'|trans({},'messages')} }) }}</div>
-                                    </div>
-                                </section>	
+                            <section>
+                                <h2>{{ 'form.add.description'|trans({},'messages') }}</h2>
+                                <div class="f-row">
+                                    <div class="full">{{ form_widget(form.description, { 'attr': {'placeholder': 'form.add.description_text'|trans({},'messages')} }) }}</div>
+                                </div>
+                            </section>	
 
-                                <section>
-                                    <h2>{{ 'form.add.ingredients'|trans({},'messages') }}</h2>
-                                    <div>
-                                        {{ form_errors(form.ingredients) }}
-                                        <div id="ingredient-field-list" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
-                                        {% for widget in form.ingredients.children %}
-                                            {{ _self.widget_prototype(widget, 'ingredient') }}
-                                        {% endfor %}
-                                        </div>
+                            <section>
+                                <h2>{{ 'form.add.ingredients'|trans({},'messages') }}</h2>
+                                <div>
+                                    {{ form_errors(form.ingredients) }}
+                                    <div id="ingredient-field-list" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
+                                    {% for widget in form.ingredients.children %}
+                                        {{ _self.widget_prototype(widget, 'ingredient') }}
+                                    {% endfor %}
                                     </div>
-                                    <div class="f-row full">
-                                        <button id="add-ingredient" data-target="ingredient-field-list" class="add">{{ 'form.add.add_ingredient'|trans({},'messages') }}</button>
-                                    </div>
-                                </section>	
+                                </div>
+                                <div class="f-row full">
+                                    <button id="add-ingredient" data-target="ingredient-field-list" class="add">{{ 'form.add.add_ingredient'|trans({},'messages') }}</button>
+                                </div>
+                            </section>	
 
-                                <section>
-                                    <h2>{{ 'form.add.step'|trans({},'messages') }} <span>({{ 'form.add.step_text'|trans({},'messages') }})</span></h2>
-                                    <div class='container-sortable'>
-                                        <ol id="section_step" class='sortable'>
-                                            {% if recette is defined %}
-                                                {% for block in recette.getRecetteBlocks() %}
-                                                    {% for descriptionToArray in block.getDescriptionToArray %}
-                                                        {% for sectionStep in descriptionToArray %}
-                                                            {% if sectionStep.sectionName is defined %}
-                                                                <li class="section" data-section-name="{{ sectionStep.sectionName }}"><input class="edit-section" type="text" style="width:500px !important;" value="{{ sectionStep.sectionName }}" title="Renommer la section"/> <a class="button remove-section">-</a>
-                                                                    <ol>
-                                                                        {% for children in sectionStep.children %}
-                                                                            {% for step in children %}
-                                                                                {% if step.stepName is defined %}
-                                                                                    <li class="step" data-step-name="{{ step.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ step.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
-                                                                                {% endif %}
-                                                                            {% endfor %}
+                            <section>
+                                <h2>{{ 'form.add.step'|trans({},'messages') }} <span>({{ 'form.add.step_text'|trans({},'messages') }})</span></h2>
+                                <div class='container-sortable'>
+                                    <ol id="section_step" class='sortable'>
+                                        {% if recette is defined %}
+                                            {% for block in recette.getRecetteBlocks() %}
+                                                {% for descriptionToArray in block.getDescriptionToArray %}
+                                                    {% for sectionStep in descriptionToArray %}
+                                                        {% if sectionStep.sectionName is defined %}
+                                                            <li class="section" data-section-name="{{ sectionStep.sectionName }}"><input class="edit-section" type="text" style="width:500px !important;" value="{{ sectionStep.sectionName }}" title="Renommer la section"/> <a class="button remove-section">-</a>
+                                                                <ol>
+                                                                    {% for children in sectionStep.children %}
+                                                                        {% for step in children %}
+                                                                            {% if step.stepName is defined %}
+                                                                                <li class="step" data-step-name="{{ step.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ step.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
+                                                                            {% endif %}
                                                                         {% endfor %}
-                                                                    </ol>
-                                                                </li>
-                                                            {% else %}
-                                                                <li class="step" data-step-name="{{ sectionStep.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ sectionStep.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                </ol>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="step" data-step-name="{{ sectionStep.stepName }}"><input class="edit-step" type="text" style="width:500px !important;" value="{{ sectionStep.stepName }}" title="Renommer l'étape"/> <a class="button remove-step">-</a></li>
+                                                        {% endif %}
                                                     {% endfor %}
-                                                {% endfor %}    
-                                            {% endif %}
-                                        </ol>
-                                    </div>
-                                    <div class="f-row full" style="display:none">
-                                        {{ form_widget(form.sectionStep) }}
-                                    </div>
-                                    <div class="f-row full">
-                                        <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
-                                        <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
-                                    </div>
-                                </section>
+                                                {% endfor %}
+                                            {% endfor %}    
+                                        {% endif %}
+                                    </ol>
+                                </div>
+                                <div class="f-row full" style="display:none">
+                                    {{ form_widget(form.sectionStep) }}
+                                </div>
+                                <div class="f-row full">
+                                    <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
+                                    <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
+                                </div>
+                            </section>
 
+                            <section>
+                                <h2>{{ 'form.add.photo'|trans({},'messages') }}</h2>
+                                {% if edit is defined or isVersion is defined %}
+                                    <div class="f-row" style="text-align: center">
+                                        {% thumbnail form.vars.value.image, 'admin' with {'style':'border:3px solid rgb(181, 181, 181)'} %}
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="f-row full">
+                                    {{ form_widget(form.image) }}
+                                </div>
+                            </section>	
+
+                            {% if isVersion is defined %}
+                                {% if isVersion and isRecetteMere is defined and isRecetteMere or not isVersion %}
                                 <section>
-                                    <h2>{{ 'form.add.photo'|trans({},'messages') }}</h2>
-                                    {% if edit is defined or isVersion is defined %}
-                                        <div class="f-row" style="text-align: center">
-                                            {% thumbnail form.vars.value.image, 'admin' with {'style':'border:3px solid rgb(181, 181, 181)'} %}
-                                        </div>
-                                    {% endif %}
-                                    
+                                    <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
                                     <div class="f-row full">
-                                        {{ form_widget(form.image) }}
-                                    </div>
-                                </section>	
-
-                                {% if isVersion is defined %}
-                                    {% if isVersion and isRecetteMere is defined and isRecetteMere or not isVersion %}
-                                    <section>
-                                        <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
-                                        <div class="f-row full">
-                                                {{ form_widget(form.visibilite) }}
-                                                <label>{{ 'form.add.public'|trans({},'messages') }}</label>
-                                        </div>
-                                    </section>
-                                    {% endif %}
-                                {% else %}
-                                    <section>
-                                        <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
-                                        <div class="f-row full">
                                             {{ form_widget(form.visibilite) }}
                                             <label>{{ 'form.add.public'|trans({},'messages') }}</label>
-                                        </div>
-                                    </section>
+                                    </div>
+                                </section>
                                 {% endif %}
+                            {% else %}
+                                <section>
+                                    <h2>{{ 'form.add.publication'|trans({},'messages') }} <span>({{ 'form.add.publication_text'|trans({},'messages') }})</span></h2>
+                                    <div class="f-row full">
+                                        {{ form_widget(form.visibilite) }}
+                                        <label>{{ 'form.add.public'|trans({},'messages') }}</label>
+                                    </div>
+                                </section>
+                            {% endif %}
 
-                                {% if isVersion is defined %}
-                                    {% if isVersion %}
-                                        <div class="f-row full" style="display:none;">
-                                            {{ form_widget(form.isRecetteMere) }}
-                                        </div>
-                                        <div class="f-row full">
-                                            <input class="button btn btn-lg btn-info sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Info']);"  value="{{ 'form.add.publish'|trans({},'messages') }}"/>
-                                        </div>
-                                    {% else %}
-                                        <div class="f-row full">
-                                            <input type="submit" class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
-                                        </div>
-                                    {% endif %}
+                            {% if isVersion is defined %}
+                                {% if isVersion %}
+                                    <div class="f-row full" style="display:none;">
+                                        {{ form_widget(form.isRecetteMere) }}
+                                    </div>
+                                    <div class="f-row full">
+                                        <input class="button btn btn-lg btn-info sweet-14" onclick="_gaq.push(['_trackEvent', 'example, 'try', 'Info']);"  value="{{ 'form.add.publish'|trans({},'messages') }}"/>
+                                    </div>
                                 {% else %}
                                     <div class="f-row full">
-                                        <input class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
+                                        <input type="submit" class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
                                     </div>
                                 {% endif %}
-                            </form>{#{{ form_end(form) }}#}
-                        </div>
-                    </section>
-                    <!--//content-->
+                            {% else %}
+                                <div class="f-row full">
+                                    <input class="button" id="submitRecipe" value="{{ 'form.add.publish'|trans({},'messages') }}" />
+                                </div>
+                            {% endif %}
+                        </form>{#{{ form_end(form) }}#}
+                    </div>
+                </section>
             </div>
-                <!--//row-->
         </div>
-        <!--//wrap-->
     </main>
-	<!--//main-->       
-
 {% endblock %}
 
 {% macro widget_prototype(widget, field) %}
@@ -231,10 +217,10 @@
     
     {% if field == 'ingredient' %}
         <div class="f-row ingredient"  data-content="{{ name }}">
-            <div class="third">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages')} }) }}</div>
-            <div class="third">{{ form_widget(row.quantite, { 'attr': {'placeholder': 'form.add.quantity'|trans({},'messages')} }) }}</div>
-            <div class="third">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages')} }) }}</div>
-            <button  data-related="{{ name }}"  id="remove-ingredient" class="remove">-</button>
+            <div class="fourth">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <div class="fourth">{{ form_widget(row.quantite, { 'attr': {'placeholder': 'form.add.quantity'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <div class="fourth">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <button data-related="{{ name }}"  id="remove-ingredient" class="remove fourth">-</button>
         </div>
     {% endif %}
 {% endmacro %}
