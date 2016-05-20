@@ -22,10 +22,17 @@
                                 <ul class="boxed">
                                     {% for raccourci in raccourcis%}
                                         <li class="{%if loop.index is odd %}light{%else%} medium{%endif%}">
-                                            <a href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
-                                                <i class="{{raccourci.icone}}"></i> 
-                                                <span>{{raccourci.nom}}</span>
-                                            </a>
+                                            {% if raccourci.id == 0 %}
+                                                <a class="ajax-popup-link {{raccourci.slug}}" href="{{path('meal_square_recette_vmap')}}" title="{{raccourci.description}}">
+                                                    <i class="{{raccourci.icone}}"></i> 
+                                                    <span>{{raccourci.nom}}</span>
+                                                </a>
+                                            {% else %}
+                                                <a class="{{raccourci.slug}}" href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
+                                                    <i class="{{raccourci.icone}}"></i> 
+                                                    <span>{{raccourci.nom}}</span>
+                                                </a>
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
                                 </ul>

@@ -567,7 +567,7 @@ class RecetteController extends Controller {
 
         foreach ($recettes as $recette) {
             $pays = $recette->getPays();
-            if (!is_null($pays)) {
+            if (array_key_exists($pays, $numberOfRecipesByCountryArray)) {
                 $pays = strtolower($pays);
                 $numberOfRecipesByCountryArray[$pays] = ++$numberOfRecipesByCountryArray[$pays];
             }
