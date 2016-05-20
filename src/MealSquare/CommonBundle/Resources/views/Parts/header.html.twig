@@ -15,6 +15,19 @@
                 <li><a href="{{ path('meal_square_recette_ingredient_list_filterable',{'sorted':'A'}) }}" title="{{ 'common.menu.ingredients'|trans }}"><span>{{ 'common.menu.ingredients'|trans }}</span></a></li>
                 <li><a href="{{ path('sonata_news_home') }}" title="{{ 'common.menu.news'|trans }}"><span>{{ 'common.menu.news'|trans }}</span></a></li>
                 <li><a href="{{ path('meal_square_common_message') }}" title="{{ 'common.menu.contacts'|trans }}"><span>{{ 'common.menu.contacts'|trans }}</span></a></li>
+                <li>
+                    {% if app.request.getLocale() == 'fr' %}
+                        {% image '@MealSquareCommonBundle/Resources/public/images/ico/language/en.png'  output="images/ico/language/en.png" %}
+                        <a href="{{ path('meal_square_common_setlocale', {'language': 'fr'}) }}">
+                        <img src="{{ asset_url }}" alt="fr" style="margin-left:14px;display:inline !important"></a>
+                        {% endimage %}
+                    {% else %}
+                        {% image '@MealSquareCommonBundle/Resources/public/images/ico/language/fr.png'  output="images/ico/language/fr.png" %}
+                        <a href="{{ path('meal_square_common_setlocale', {'language': 'en'}) }}">
+                        <img src="{{ asset_url }}" alt="en" style="margin-left:14px;display:inline !important"></a>
+                        {% endimage %}
+                    {% endif %}
+                </li>
             </ul>
         </nav>
 
