@@ -7,175 +7,157 @@
 {% block main %}
     <body class="home">
         <main class=" main" role="main">
-            <!--intro  -->
             {{ include( 'MealSquareCommonBundle:Default:intro.html.twig') }}
-            <!--//intro-->
             <div class="wrap clearfix">
-                <!--row-->
                 <div class="row">
-                    <!--content-->
-                    <section class="content three-fourth">
-                        <!--cwrap-->
-                        <div class="cwrap">
-                            <!--entries-->
-                            {{ include( 'MealSquareCommonBundle:Default:recettejournee.html.twig') }}
-                            <!--//entries-->
-                        </div>
-                        <!--//cwrap-->
-
-
-                        <div class="cwrap">
-                            <header class="s-title">
-                                <h2 class="ribbon bright">{{ 'common.home.see_also'|trans }}</h2>
-                            </header>
-
-                            <div class="entries row">
-                                {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_du_mois, 'label': 'common.home.recetteofmonth'|trans({},'messages') }) }}
-                                {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_selection, 'label': 'common.home.recetteselection'|trans({},'messages') }) }}
-                                {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_classic, 'label': 'common.home.recetteclassic'|trans({},'messages') }) }}
+                    <div class="cwrap">
+                        <section class="content three-fourth">
+                            <div class="cwrap">
+                                {{ include( 'MealSquareCommonBundle:Default:recettejournee.html.twig') }}
                             </div>
+                        </section>
+                        <aside class="sidebar one-fourth">
+                            <div class="widget wow fadeInRight">
+                                <h3>{{ 'common.home.shortcut'|trans({},'messages') }}</h3>
+                                <ul class="boxed">
+                                    {% for raccourci in raccourcis%}
+                                        <li class="{%if loop.index is odd %}light{%else%} medium{%endif%}">
+                                            <a href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
+                                                <i class="{{raccourci.icone}}"></i> 
+                                                <span>{{raccourci.nom}}</span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="widget members wow fadeInRight" data-wow-delay=".4s">
+                                <h3>{{ 'common.home.our_members'|trans }} </h3>
+                                <div id="members-list-options" class="item-options">
+                                    <a class="selected" href="javascript:void(0)">{{ 'common.home.newest'|trans }}</a>
+    {#                                <a href="#">Active</a>#}
+    {#                                <a href="#">Popular</a>#}
+                                </div>
+                                <ul class="boxed">
+                                    {% for user in new_users %}
+                                        <li><div class="avatar">
+                                            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") or app.user is null or app.user.id != user.id %}
+                                               <a class="ajax-popup-link" href="{{ path('meal_square_member_profil',{ 'id':user.id }) }}">
+                                                    {% thumbnail user.avatar, 'square' with {'width':'100%','height':'auto'} %}
+                                                    <span style="font-size: 10px">{{user.username}}</span>
+                                               </a> 
+                                            {% else %}
+                                                <a href="{{ path('fos_user_profile_show') }}">
+                                                    {% thumbnail user.avatar, 'square' with {'width':'100%','height':'auto'} %}
+                                                    <span style="font-size: 10px">{{user.username}}</span>
+                                               </a>    
+                                            {% endif %}
+                                            
+                                            </div>
+                                        </li>{#
+                                    {% else %}
+                                        <div class="container">
+                                            <li><h3> {{ 'common.home.no_user'|trans }} </h3></li>
+                                        </div>#}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </aside>
+                        <div class="quicklinks">
+                            <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
+                        </div>
+                    </div>
+
+                    <div class="cwrap">
+                        <header class="s-title">
+                            <h2 class="ribbon bright">{{ 'common.home.see_also'|trans }}</h2>
+                        </header>
+
+                        <div class="entries row">
+                            {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_du_mois, 'label': 'common.home.recetteofmonth'|trans({},'messages') }) }}
+                            {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_selection, 'label': 'common.home.recetteselection'|trans({},'messages') }) }}
+                            {{ include( 'MealSquareCommonBundle:Default:featured_recipe.html.twig', { 'recette': recette_classic, 'label': 'common.home.recetteclassic'|trans({},'messages') }) }}
                         </div>
 
+                        <div class="quicklinks">
+                            <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
+                        </div>    
+                    </div>
 
-                        <!--cwrap-->
-                        <div class="cwrap">
-                            <header class="s-title">
-                                <h2 class="ribbon bright">{{ 'recettes.last_recette'|trans({},'messages') }}</h2>
-                            </header>
-                            <!--entries-->
-                            <div class="entries row">
-                                {% for recette in dernieres_recette %}
-                                    <!--item-->
-                                    <div class="entry one-third wow fadeInLeft">
-                                        <figure>
-                                            {% thumbnail recette.image, 'square' with {'width':'100%','height':'auto'} %}
-                                            <figcaption><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}"><i class="ico i-view"></i> <span>{{ 'recettes.detail'|trans({}, 'messages') }}</span></a></figcaption>
-                                        </figure>
-                                        <div class="container">
-                                            <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{{recette.Titre | slice (0, 20)}}{% if recette.Titre|length > 20 %} ...{% endif %}</a></h2> 
-                                            <div class="actions">
-                                                <div>
-                                                    <div class="difficulty"><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
-                                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
-                                                        <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
-                                                            {% endif %}
-                                                    <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
-                                                    <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
-                                                </div>
+                    <div class="cwrap">
+                        <header class="s-title">
+                            <h2 class="ribbon bright">{{ 'recettes.last_recette'|trans({},'messages') }}</h2>
+                        </header>
+                        <div class="entries row">
+                            {% for recette in dernieres_recette %}
+                                <div class="entry one-fourth wow fadeInLeft">
+                                    <figure>
+                                        {% thumbnail recette.image, 'square' with {'width':'100%','height':'auto'} %}
+                                        <figcaption><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}"><i class="ico i-view"></i> <span>{{ 'recettes.detail'|trans({}, 'messages') }}</span></a></figcaption>
+                                    </figure>
+                                    <div class="container">
+                                        <h2><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}">{{recette.Titre | slice (0, 20)}}{% if recette.Titre|length > 20 %} ...{% endif %}</a></h2> 
+                                        <div class="actions">
+                                            <div>
+                                                <div class="difficulty"><span style="font-size: 11px">{{recette.Difficulte}}</span></div>
+                                                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and recette.auteur is not null and app.user is not null and app.user.id == recette.auteur.id %}
+                                                    <div class="edit"><a href="{{ path('meal_square_recette_edit',{'id':recette.id}) }}"><i class="ico fa fa-edit"></i></a></div>   
+                                                        {% endif %}
+                                                <div class="likes"><i class="ico i-likes"></i>{{ recette.like.numLikes }}</div>
+                                                <div class="rates"><i class="ico fa fa-star"></i>{{ recette.note.average }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--item-->
-                                {% else %}
-                                    <div class="container">
-                                        <h2> {{ 'common.home.no_recette'|trans({},'messages') }} </h2>
-                                    </div>
-                                {% endfor %}
-
-                                <div class="quicklinks">
-                                    <a href="{{ path('meal_square_recette_list')}}" class="button">{{ 'common.home.plus_de_recette'|trans }}</a>
-                                    <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
                                 </div>
-                            </div>
-                            <!--//entries-->
-                        </div>
-                        <!--//cwrap-->
+                            {% else %}
+                                <div class="container">
+                                    <h2> {{ 'common.home.no_recette'|trans({},'messages') }} </h2>
+                                </div>
+                            {% endfor %}
 
-                        <!--cwrap-->
-                        <div class="cwrap">
-                            <header class="s-title">
-                                <h2 class="ribbon bright">{{ 'common.home.last_articles'|trans }}</h2>
-                            </header>
-                            <!--entries-->
-                            <div class="entries row">
-                                {% for article in articles %}
-                                    <!--item-->
-                                    <div class="entry one-third wow fadeInLeft">
-                                        <figure>
-                                            {% thumbnail article.image, 'square' with {'width':'100%','height':'auto'} %}
-                                            <figcaption><a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(article) }) }}"><i class="ico i-view"></i> <span>{{ 'common.home.voir_article'|trans }}</span></a></figcaption>
-                                        </figure>
-                                        <div class="container">
-                                            <h5><a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(article) }) }}">{{article.title | slice (0, 26)}}{% if article.title|length > 26 %} ...{% endif %}</a></h5> 
-                                            <div class="actions">
-                                                <div>
-                                                    <div class="date"><i class="ico i-date"></i><a href="#">{{ article.createdAt|date("d/m/Y") }}</a></div>
-                                                    <div class="author"><i class="fa fa-user"></i>&nbsp;&nbsp;<a href="#comments">{{article.author.username}}</a></div>
-                                                </div>
+                            <div class="quicklinks">
+                                <a href="{{ path('meal_square_recette_list')}}" class="button">{{ 'common.home.plus_de_recette'|trans }}</a>
+                                <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cwrap">
+                        <header class="s-title">
+                            <h2 class="ribbon bright">{{ 'common.home.last_articles'|trans }}</h2>
+                        </header>
+                        <div class="entries row">
+                            {% for article in articles %}
+                                <div class="entry one-third wow fadeInLeft">
+                                    <figure>
+                                        {% thumbnail article.image, 'square' with {'width':'100%','height':'auto'} %}
+                                        <figcaption><a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(article) }) }}"><i class="ico i-view"></i> <span>{{ 'common.home.voir_article'|trans }}</span></a></figcaption>
+                                    </figure>
+                                    <div class="container">
+                                        <h5><a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(article) }) }}">{{article.title | slice (0, 26)}}{% if article.title|length > 26 %} ...{% endif %}</a></h5> 
+                                        <div class="actions">
+                                            <div>
+                                                <div class="date"><i class="ico i-date"></i><a href="#">{{ article.createdAt|date("d/m/Y") }}</a></div>
+                                                <div class="author"><i class="fa fa-user"></i>&nbsp;&nbsp;<a href="#comments">{{article.author.username}}</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--item-->
-                                {% else %}
-                                    <div class="container">
-                                        <h2> {{ 'common.home.no_article'|trans }} </h2>
-                                    </div>
-                                {% endfor %}
-                                <div class="quicklinks">
-                                    <a href="{{ path('sonata_news_archive')}}" class="button">{{ 'common.home.more_articles'|trans }}</a>
-                                    <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
                                 </div>
+                            {% else %}
+                                <div class="container">
+                                    <h2> {{ 'common.home.no_article'|trans }} </h2>
+                                </div>
+                            {% endfor %}
+                            <div class="quicklinks" style="margin-top:30px">
+                                <a href="{{ path('sonata_news_archive')}}" class="button">{{ 'common.home.more_articles'|trans }}</a>
+                                <a href="javascript:void(0)" class="button scroll-to-top">{{ 'common.home.haut'|trans }}</a>
                             </div>
-                            <!--//entries-->
                         </div>
-                        <!--//cwrap-->
-                    </section>
-                    <!--//content-->
-                    <aside class="sidebar one-fourth">
-                        <div class="widget wow fadeInRight">
-                            <h3>{{ 'common.home.shortcut'|trans({},'messages') }}</h3>
-                            <ul class="boxed">
-                                {% for raccourci in raccourcis%}
-                                    <li class="{%if loop.index is odd %}light{%else%} medium{%endif%}">
-                                        <a href="{{path('meal_square_recette_raccourci',{'id':raccourci.id, 'slug':raccourci.slug})}}" title="{{raccourci.description}}">
-                                            <i class="{{raccourci.icone}}"></i> 
-                                            <span>{{raccourci.nom}}</span>
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-
-
-                        <div class="widget members wow fadeInRight" data-wow-delay=".4s">
-                            <h3>{{ 'common.home.our_members'|trans }} </h3>
-                            <div id="members-list-options" class="item-options">
-                                <a class="selected" href="javascript:void(0)">{{ 'common.home.newest'|trans }}</a>
-{#                                <a href="#">Active</a>#}
-{#                                <a href="#">Popular</a>#}
-                            </div>
-                            <ul class="boxed">
-                                {% for user in new_users %}
-                                    <li><div class="avatar">
-                                        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") or app.user is null or app.user.id != user.id %}
-                                           <a class="ajax-popup-link" href="{{ path('meal_square_member_profil',{ 'id':user.id }) }}">
-                                                {% thumbnail user.avatar, 'square' with {'width':'100%','height':'auto'} %}
-                                                <span style="font-size: 10px">{{user.username}}</span>
-                                           </a> 
-                                        {% else %}
-                                            <a href="{{ path('fos_user_profile_show') }}">
-                                                {% thumbnail user.avatar, 'square' with {'width':'100%','height':'auto'} %}
-                                                <span style="font-size: 10px">{{user.username}}</span>
-                                           </a>    
-                                        {% endif %}
-                                        
-                                        </div>
-                                    </li>{#
-                                {% else %}
-                                    <div class="container">
-                                        <li><h3> {{ 'common.home.no_user'|trans }} </h3></li>
-                                    </div>#}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </aside>
+                    </div>
 					<div class="cwrap">
-					<!--bloc stat -->
 						{{ include( 'MealSquareCommonBundle:Default:statistique.html.twig') }}
-                    <!--//bloc stat-->
 					</div>
                 </div>
-                <!--//right sidebar-->
             </div>  
 
         </main>
