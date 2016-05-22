@@ -80,9 +80,11 @@ class DefaultController extends Controller {
         $articles = $queryarticle->getResult();
 
         $queryuser = $em->createQuery(
-                        'SELECT p FROM ApplicationSonataUserBundle:User p
-                         WHERE p.enabled = true
-                         ORDER BY p.createdAt DESC'
+                        'SELECT u, count(r.auteur) as HIDDEN nbrec FROM ApplicationSonataUserBundle:User u, MealSquareRecetteBundle:Recette r
+                         WHERE u.enabled = true
+                         AND r.auteur = u.id
+                         GROUP BY u.id
+                         ORDER BY nbrec DESC'
                 );
         $queryuser->setMaxResults(9);
         $users = $queryuser->getResult();
@@ -101,7 +103,7 @@ class DefaultController extends Controller {
             'recette_du_mois' => $recette_du_mois,
             'recette_classic' => $recette_classic,
             'recette_selection' => $recette_selection,
-            'new_users' => $users,
+            'top_users' => $users,
             'dernieres_recette' => $recettes,
             'nbastuce' => $nbastuce,
             'raccourcis' => $raccourcis

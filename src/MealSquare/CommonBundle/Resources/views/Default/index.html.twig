@@ -39,14 +39,14 @@
                             </div>
 
                             <div class="widget members wow fadeInRight" data-wow-delay=".4s">
-                                <h3>{{ 'common.home.our_members'|trans }} </h3>
+                                <h3>{{ 'common.home.best_members'|trans }} </h3>
                                 <div id="members-list-options" class="item-options">
-                                    <a class="selected" href="javascript:void(0)">{{ 'common.home.newest'|trans }}</a>
+                                    <a class="selected" href="javascript:void(0)">{{ 'common.home.best'|trans }}</a>
     {#                                <a href="#">Active</a>#}
     {#                                <a href="#">Popular</a>#}
                                 </div>
                                 <ul class="boxed">
-                                    {% for user in new_users %}
+                                    {% for user in top_users %}
                                         <li><div class="avatar">
                                             {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") or app.user is null or app.user.id != user.id %}
                                                <a class="ajax-popup-link" href="{{ path('meal_square_member_profil',{ 'id':user.id }) }}">
