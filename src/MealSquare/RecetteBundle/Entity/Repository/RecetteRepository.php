@@ -46,6 +46,24 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
                 $i++;
             }
         }
+        if(isset($data['exclude_ingredients'])){
+            $query->leftJoin('a.ingredients', 'iExclLine');
+            $query->leftJoin('iExclLine.ingredient', 'exclusion');
+            $i = 0;
+            foreach ($data['exclude_ingredients'] as $ing) {
+                $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
+                $ingredient = $repository->findOneById($ing);
+                $ing = $ingredient->getLibelle();
+
+                $query->andWhere(
+                    $query->expr()->orX(
+                        $query->expr()->not($query->expr()->like('exclusion.libelle', ':libelle'.$i)),
+                        $query->expr()->not($query->expr()->like('a.full_ingredients', ':libelle'.$i))
+                    ));
+                $query->setParameter('libelle'.$i,'%'.$ing.'%');
+                $i++;
+            }
+        }        
         if ($data['pays'] != null) {
             $query->andWhere('a.pays = :pays');
             $query->setParameter('pays',$data['pays']);

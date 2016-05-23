@@ -37,14 +37,23 @@
                             <h3>{{ 'recettes.recherchebyingredients'|trans({},'messages') }}</h3>
                             <p>{{ 'recettes.search_ingredients_instruction'|trans({},'messages') }}</p>
                             
-                            <div id="ingredient-field-list" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
+                            <div id="ingredient-field-list-add" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
                             {% for widget in form.ingredients.children %}
                                     {{ _self.widget_prototype(widget, 'ingredient') }}
                             {% endfor %}
                             </div>
                             <div class="f-row full">
-                                <button id="add-ingredient" data-target="ingredient-field-list" class="add">{{ 'form.add.add_ingredient'|trans({},'messages') }}</button>
+                                <button id="add-ingredient" data-target="ingredient-field-list-add" class="add">{{ 'form.add.add_ingredient'|trans({},'messages') }}</button>
                             </div>
+
+                            <div id="ingredient-field-list-exclude" data-prototype="{{ _self.widget_prototype(form.exclude_ingredients, 'ingredient')|escape }}">
+                            {% for widget in form.exclude_ingredients.children %}
+                                    {{ _self.widget_prototype(widget, 'exclude_ingredient') }}
+                            {% endfor %}
+                            </div>
+                            <div class="f-row full">
+                                <button id="exclude-ingredient" data-target="ingredient-field-list-exclude" class="add">{{ 'form.add.exclude_ingredient'|trans({},'messages') }}</button>
+                            </div>                            
                         </div>
                         <div class="right">
 
@@ -132,6 +141,8 @@
     <script type="text/javascript">
         
         var addSelector = $('#add-ingredient');
+        var excludeSelector = $('#exclude-ingredient');
+
         var removeSelector = '#remove-ingredient';
         
         $(document).ready(function(){
@@ -140,6 +151,12 @@
                 addFormField($(this));
                 return false;
             });
+
+            excludeSelector.click(function(event) {
+                addFormField($(this));
+                return false;
+            });
+
             $('body').on('click', removeSelector ,function(event) {
                 removeFormField($(this));
                 return false;

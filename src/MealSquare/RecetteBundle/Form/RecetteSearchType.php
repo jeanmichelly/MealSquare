@@ -78,6 +78,22 @@ class RecetteSearchType extends AbstractType{
                     'empty_value' => 'Ingrédient',
                 )
             ))
+            ->add('exclude_ingredients', 'collection', array(
+                'type' => 'entity',
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'options'  => array(
+                    'class' => 'MealSquare\RecetteBundle\Entity\Ingredient',
+                    'query_builder' => function(EntityRepository $er ) {
+                        return $er->createQueryBuilder('c')
+                                 ->orderBy('c.libelle', 'ASC');
+                    },
+                    'required'  => true,
+                    'empty_value' => 'Ingrédient',
+                )
+            ))            
             ->add('auteur', 'entity', array(
                 'class' => 'Application\Sonata\UserBundle\Entity\User',
                 'query_builder' => function(EntityRepository $er ) {

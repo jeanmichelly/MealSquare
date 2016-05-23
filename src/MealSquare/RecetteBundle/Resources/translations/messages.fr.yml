@@ -96,6 +96,7 @@ form:
         quantity: Quantité
         unitMeasurement: Unité de mesure
         add_ingredient: Ajouter un ingrédient
+        exclude_ingredient: Exclure un ingrédient
         step: Etapes
         step_text: Entrer les instructions de la recette, pas à pas
         step_description: Tâches à réaliser
