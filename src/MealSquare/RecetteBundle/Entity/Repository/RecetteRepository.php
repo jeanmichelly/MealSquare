@@ -28,42 +28,41 @@ class RecetteRepository extends \Doctrine\ORM\EntityRepository {
         $query->where('a.titre LIKE  :titre ');
         $query->setParameter('titre','%' . $data['titre'] . '%');
         
-        if(isset($data['ingredients'])){
+        if(isset($data['ingredients']) || isset($data['exclude_ingredients'])){
             $query->leftJoin('a.ingredients', 'iLine');
             $query->leftJoin('iLine.ingredient', 'i');
             $i = 0;
-            foreach ($data['ingredients'] as $ing) {
-                $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
-                $ingredient = $repository->findOneById($ing);
-                $ing = $ingredient->getLibelle();
+            if(isset($data['ingredients'])){
+                foreach ($data['ingredients'] as $ing) {
+                    $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
+                    $ingredient = $repository->findOneById($ing);
+                    $ing = $ingredient->getLibelle();
 
-                $query->andWhere(
-                    $query->expr()->orX(
-                        $query->expr()->like('i.libelle', ':libelle'.$i),
-                        $query->expr()->like('a.full_ingredients', ':libelle'.$i)
-                    ));
-                $query->setParameter('libelle'.$i,'%'.$ing.'%');
-                $i++;
+                    $query->andWhere(
+                        $query->expr()->orX(
+                            $query->expr()->like('i.libelle', ':libelle'.$i),
+                            $query->expr()->like('a.full_ingredients', ':libelle'.$i)
+                        ));
+                    $query->setParameter('libelle'.$i,'%'.$ing.'%');
+                    $i++;
+                }
             }
-        }
-        if(isset($data['exclude_ingredients'])){
-            $query->leftJoin('a.ingredients', 'iExclLine');
-            $query->leftJoin('iExclLine.ingredient', 'exclusion');
-            $i = 0;
-            foreach ($data['exclude_ingredients'] as $ing) {
-                $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
-                $ingredient = $repository->findOneById($ing);
-                $ing = $ingredient->getLibelle();
+            if(isset($data['exclude_ingredients'])){
+                foreach ($data['exclude_ingredients'] as $ing) {
+                    $repository = $this->getEntityManager()->getRepository("MealSquareRecetteBundle:Ingredient");
+                    $ingredient = $repository->findOneById($ing);
+                    $ing = $ingredient->getLibelle();
 
-                $query->andWhere(
-                    $query->expr()->orX(
-                        $query->expr()->not($query->expr()->like('exclusion.libelle', ':libelle'.$i)),
-                        $query->expr()->not($query->expr()->like('a.full_ingredients', ':libelle'.$i))
-                    ));
-                $query->setParameter('libelle'.$i,'%'.$ing.'%');
-                $i++;
+                    $query->andWhere(
+                        $query->expr()->orX(
+                            $query->expr()->not($query->expr()->like('i.libelle', ':libelle'.$i)),
+                            $query->expr()->not($query->expr()->like('a.full_ingredients', ':libelle'.$i))
+                        ));
+                    $query->setParameter('libelle'.$i,'%'.$ing.'%');
+                    $i++;
+                }
             }
-        }        
+        } 
         if ($data['pays'] != null) {
             $query->andWhere('a.pays = :pays');
             $query->setParameter('pays',$data['pays']);
