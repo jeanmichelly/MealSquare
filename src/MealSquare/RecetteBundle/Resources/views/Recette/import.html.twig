@@ -27,6 +27,16 @@
 	                    <div id="jsGrid-recette"></div>
 	                	<div id="insertion" class="button white medium">{{ 'recettes.import_insertion'|trans }}</div>
 	                	<div id="jsGrid-ingredient"></div>
+                    	<div class="container_section_step container">
+		                	<div id="container-sortable">   
+	                            <ol id="section_step" class='sortable'>
+	                            </ol>
+	                            <div class="f-row full">
+	                                <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
+	                                <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
+	                            </div>
+		                	</div>
+	                	</div>
 	                </main>
 	            </header>
 	        </div>
@@ -42,6 +52,8 @@
         var ingredients = [];
 
         var addIngredient = [];
+
+        var addSectionStep = [];
 
        	var ingredientsListe = "{{ ingredients|join(',') }}".split(",");
 	    var ingredientField = [];
@@ -127,6 +139,7 @@
 	        data: recettes,
 	 
 	        fields: [
+	        	{ type: "control"},
 	            { name: "image_id", type: "text", width: 100},
 	            { name: "titre", type: "text", width: 200, validate: "required"},
 	            { name: "source", type: "text", width: 150},
@@ -148,7 +161,14 @@
 	                        	modifIngredient(titre);
 							});
               	}, width: 200},
-	            { type: "control"}
+              	{ itemTemplate: function(_, item) {
+                    return $("<button>").text("Ajout des sections et des étapes")
+                    	.on("click", function() {
+							var titre = item.titre;
+                    		if(!addSectionStep[titre]){addSectionStep[titre] = [];}
+                        	modifSectionStep(titre);
+						});
+              	}, width: 200}
 	        ]
 	    });
 
@@ -204,7 +224,28 @@
 		        	{ type: "control"}
 		        ]
 		    	});
-		}    
+		}
+
+        $("#add-section").click(function() {
+            $("#section_step").append($("<li class=\"section\" data-section-name=\"Nom de la section\"><input class=\"edit-section\" type=\"text\" style=\"width:500px !important;\" value=\"Nom de la section\" title=\"Renommer la section\"/> <a class=\"button remove-section\">-</a><ol></ol></li>"));
+        });
+        $("#add-step").click(function() {
+            $("#section_step").append($("<li class=\"step\" data-step-name=\"Nom de l'étape\"><input class=\"edit-step\" type=\"text\" style=\"width:500px !important;\" value=\"Nom de l'étape\" title=\"Renommer l'étape\"/> <a class=\"button remove-step\">-</a></li>"));
+        });
+
+        $(document).on("click", ".remove-step, .remove-section", function() {
+            $(this).parent().remove();
+        });
+        $(document).on("keyup", ".edit-section", function() {
+            $(this).parent().attr("data-section-name", $(this).val());
+        });
+        $(document).on("keyup", ".edit-step", function() {
+            $(this).parent().attr("data-step-name", $(this).val());
+        });
+
+		function modifSectionStep(titreRecette) {
+			$("#container-sortable").show();
+		}
 	    
 
     </script>

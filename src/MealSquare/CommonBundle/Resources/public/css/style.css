@@ -418,7 +418,7 @@ dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 
 /*SUBMIT RECIPE*/
 .submit_recipe section 						{padding:0 0 20px;display:inline-block;width:100%;}
-.submit_recipe input 							{float:left;}
+.submit_recipe input, .container_section_step input 	{float:left;}
 .f-row .third 						{width:33.33%;float:left;padding-right:20px;position:relative;}
 .f-row .third:nth-child(3n)			{padding-right:0;}
 .f-row .fourth 						{float:left;padding-right:20px;position:relative;}
@@ -427,7 +427,7 @@ dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 .submit_recipe .large					 	{width:50%;}
 .submit_recipe .small					 	{width:11.7%;}
 .submit_recipe .remove						{margin-left:20px;font-size:37px;padding:0;width:37px;height:37px;line-height:37px;}
-.submit_recipe .remove-step, .submit_recipe .remove-section	 	{float:right;font-size:37px;padding:0;width:37px !important; min-width:37px !important;height:37px;line-height:37px;}
+.submit_recipe .remove-step, .submit_recipe .remove-section, .container_section_step .remove-step, .container_section_step .remove-section	 	{float:right;font-size:37px;padding:0;width:37px !important; min-width:37px !important;height:37px;line-height:37px;}
 .submit_recipe .instruction .full			{width:95%;}
 .submit_recipe h2		{padding:0 0 18px;}
 .submit_recipe h2 span 	{font-size:13px;font-weight:400;display:inline-block;}
@@ -435,7 +435,7 @@ dl 			{display:inline-block;width:100%;margin:0 0 22px;}
 .field_ingredient {width:430px !important;}
 
 .submit_recipe button,
-.submit_recipe .button {width:263px;text-align:center;max-width:100%;}
+.submit_recipe .button, .container_section_step .button {width:263px;text-align:center;max-width:100%;}
 	
 /*SEARCH FOR RECIPES*/
 .recipefinder			{width:100%;padding:22px 30px 30px !important;margin:0 0 30px;}
