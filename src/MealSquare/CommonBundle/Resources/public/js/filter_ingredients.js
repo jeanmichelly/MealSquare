@@ -343,7 +343,7 @@
        	$('.mix').each(function() {
        		var $this = $(this);
        		var ingredientsRecette = $this.attr('ingredients').split(',');
-       		//console.log(ingredientsRecette);
+
        		var found = false;
        		for ( ing in ingredients ) {
        			if ( ingredientsRecette.includes(ingredients[ing].innerHTML) ) {

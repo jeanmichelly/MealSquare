@@ -1,7 +1,7 @@
 $(document).ready(function() {
     /*USERNAME*/
     $('#sonata_user_registration_form_username').keyup(function() {
-        var username = $('#sonata_user_registration_form_username');
+        var username = $('#sonata_user_registration_form_username').val();
         var pswd = $("#sonata_user_registration_form_plainPassword_first").val();
         var confirm_pswd = $("#sonata_user_registration_form_plainPassword_second").val();
 
@@ -33,7 +33,7 @@ $(document).ready(function() {
         return filter.test(email.val());
     }
     $('#sonata_user_registration_form_email').keyup(function() {
-        var username = $('#sonata_user_registration_form_username');
+        var username = $('#sonata_user_registration_form_username').val();
         var pswd = $("#sonata_user_registration_form_plainPassword_first").val();
         var confirm_pswd = $("#sonata_user_registration_form_plainPassword_second").val();
 
@@ -59,7 +59,7 @@ $(document).ready(function() {
 
     /*PASSWORD*/
     $('#sonata_user_registration_form_plainPassword_first').keyup(function() {
-        var username = $('#sonata_user_registration_form_username');
+        var username = $('#sonata_user_registration_form_username').val();
         var pswd = $(this).val();
         var confirm_pswd = $("#sonata_user_registration_form_plainPassword_second").val();
 
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
     /*CONFIRM PASSWORD*/
     $('#sonata_user_registration_form_plainPassword_second').keyup(function() {
-        var username = $('#sonata_user_registration_form_username');
+        var username = $('#sonata_user_registration_form_username').val();
         var pswd = $("#sonata_user_registration_form_plainPassword_first").val();
         var confirm_pswd = $("#sonata_user_registration_form_plainPassword_second").val();
 
