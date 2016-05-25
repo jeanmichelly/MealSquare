@@ -1,4 +1,4 @@
-<li class="mix {{ recette.Difficulte | lower | replace({'è': 'e', 'é': 'e', ' ': '_'}) }} entry one-fourth fadeInLeft" temps-preparation={{ recette.tempsPreparation }} temps-cuisson={{ recette.tempsCuisson }} ingredients="{% for item in recette.ingredients %}{{item.ingredient.libelle}}{% if not loop.last %},{% endif %}{% endfor %}" style="float:none; padding:0">
+<li class="mix {{ recette.Difficulte | lower | replace({'è': 'e', 'é': 'e', ' ': '_'}) }} entry one-fourth fadeInLeft" temps-preparation='{{ recette.tempsPreparation }}' temps-cuisson='{{ recette.tempsCuisson }}' ingredients="{% for item in recette.ingredients %}{{item.ingredient.libelle}}{% if not loop.last %},{% endif %}{% endfor %}" style="float:none; padding:0">
     <figure style="min-height: 270px;">
         {% thumbnail recette.image, 'square' with {'width':'100%','height':'auto'} %}
         <figcaption><a href="{{ path('meal_square_recette_show',{'id':recette.id}) }}"><i class="ico i-view"></i> <span>{{ 'recettes.detail'|trans({}, 'messages') }}</span></a></figcaption>
