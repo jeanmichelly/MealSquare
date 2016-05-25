@@ -93,6 +93,10 @@ form:
         description_text: Description de la recette
         ingredients: Ingrédients
         ingredient: Ingrédient
+        ingredient_libelle: Libellé de l'ingrédient
+        ingredient_type: Type de l'ingrédient
+        ingredient_description: Description de l'ingrédient
+        ingredient_publish: Enregistrer cet ingrédient
         quantity: Quantité
         unitMeasurement: Unité de mesure
         add_ingredient: Ajouter un ingrédient
@@ -121,6 +125,7 @@ form:
         
     edit:
         title: Editer une recette
+        title_ingredient: Editer un ingredient
 
     version:
         title: Version de recette

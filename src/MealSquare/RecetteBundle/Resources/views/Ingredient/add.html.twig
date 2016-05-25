@@ -1,0 +1,76 @@
+{# empty Twig template #}
+{% extends "MealSquareCommonBundle::layout.html.twig" %}
+
+
+{% block title %}
+    {{ 'common.menu.recettes'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <main class="main" role="main">
+        <div class="wrap clearfix">
+            <nav class="breadcrumbs">
+                <ul>
+                    <li><a href="{{path('meal_square_common_homepage')}}" title="{{ 'common.menu.home'|trans }}">{{ 'common.menu.home'|trans }}</a></li>
+                    <li>{{ 'common.menu.ingredients'|trans }}</li>
+                </ul>
+            </nav>
+
+	        <div class="row">
+
+                <header class="s-title">
+                    <h1>{{ 'form.edit.title_ingredient'|trans({},'messages') }}</h1>
+                </header>
+
+	        	<section class="content full-width wow fadeInUp">
+                    <div class="submit_recipe container">
+                        {{ form_start(form) }}
+                            {{ form_errors(form) }}
+                            
+                            <section>
+                            	<div class="f-row">
+                                    <div class="full">{{ form_widget(form.libelle, { 'attr': {'placeholder': 'form.add.ingredient_libelle'|trans({},'messages')} }) }}</div>
+                                </div>
+                            </section>
+
+                            <section>
+                            	<div class="f-row">
+                            		<div class="full">{{ form_widget(form.type, { 'attr': {'placeholder': 'form.add.ingredient_type'|trans({},'messages')} }) }}</div>
+                            	</div>
+                            </section>
+
+                            <section>
+                                <h2>{{ 'form.add.description'|trans({},'messages') }}</h2>
+                                <div class="f-row">
+                                    <div class="full">{{ form_widget(form.description, { 'attr': {'placeholder': 'form.add.ingredient_description'|trans({},'messages')} }) }}</div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>{{ 'form.add.photo'|trans({},'messages') }}</h2>
+                                <div class="f-row full">
+                                    {{ form_widget(form.image) }}
+                                </div>
+                            </section>
+
+                            <div class="f-row full">
+                                    <input class="button" id="submitIngredient" value="{{ 'form.add.ingredient_publish'|trans({},'messages') }}" />
+                            </div>
+
+                        </form>{#{{ form_end(form) }}#}
+                    </div>
+                </section>
+	        </div>
+	    </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+	
+	<script type="text/javascript">
+		$('#submitIngredient').click(function(){
+			$("form[name=ingredient_add]").submit(); 
+		});
+	</script>
+
+{% endblock %}

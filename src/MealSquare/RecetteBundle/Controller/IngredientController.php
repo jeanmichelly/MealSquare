@@ -3,6 +3,7 @@
 namespace MealSquare\RecetteBundle\Controller;
 
 use MealSquare\RecetteBundle\Entity\Ingredient;
+use MealSquare\RecetteBundle\Form\IngredientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +44,27 @@ class IngredientController extends Controller {
                 'recettes' => $recettes
             ));
         }
+    }
+
+    public function addAction() {
+        
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new IngredientType(), new Ingredient());
+
+        $form->handleRequest($this->getRequest());
+        
+        
+        if ($form->isValid()) {
+            $ingredient = $form->getData();
+            
+            $em->persist($ingredient);
+            $em->flush();
+
+            return $this->redirect( $this->generateUrl( 'meal_square_recette_ingredient_show', array('id' => $ingredient->getId()) ));
+        }
+
+        return $this->render('MealSquareRecetteBundle:Ingredient:add.html.twig', array('form' => $form->createView()));
     }
 
 }

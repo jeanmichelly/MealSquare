@@ -118,3 +118,7 @@ meal_square_member_profil:
 meal_square_user_avatar:
     path:     /profile/avatar
     defaults: { _controller: ApplicationSonataUserBundle:ProfileFOSUser1:avatar }
+
+meal_square_ingredient_add:
+    path:   /ingredient/add/
+    defaults: { _controller: MealSquareRecetteBundle:Ingredient:add }

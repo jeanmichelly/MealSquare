@@ -34,6 +34,7 @@
 
                 <header class="s-title">
                     <h2 class="ribbon bright">{{ 'common.menu.ingredients'|trans }}</h2>
+                    <a href="{{path('meal_square_ingredient_add')}}" class="button medium" style="float:right">Ajout d'un nouvel ingrédient</a>
                     <main class="cd-main-content">
                         {{ include( 'MealSquareRecetteBundle:Ingredient:tab-filter.html.twig' ) }}
                         <section class="cd-gallery content full-width wow fadeInUp">
