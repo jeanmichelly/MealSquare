@@ -188,11 +188,9 @@
             data: data,
             success: function(msg) {
             	if(msg){
-        			console.log(msg);
+        			window.location.replace("{{ path('fos_user_profile_show') }}");
         		}
-            	else
-            		{console.log("ERREUR");}
-        		},
+        	},
         	error: function(){
         		console.log("error");
         	}
