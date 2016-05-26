@@ -224,6 +224,8 @@
                                                 </li>
                                             {% endif %}
                                         {% endfor %}
+                                    {% else %}
+                                        <li>Aucune versions.</li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -238,6 +240,8 @@
                                         <li><a href="{{ path('meal_square_recette_show',{'id':variante.id}) }}">{% thumbnail variante.image,'small' with {'width':'32px'} %}
                                         <span>{{variante.titre}}</span></a><div class="clearfix"></div></li>
                                     {% endfor %}
+                                    {% else %}
+                                        <li>Aucune variantes.</li>
                                 {% endfor %}
                             </ul>
                         </div>

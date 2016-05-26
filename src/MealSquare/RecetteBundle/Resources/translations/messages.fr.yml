@@ -74,10 +74,11 @@ recettes:
     filter:
         title: Filtres
         by_publication_date: Date de publication
-    import: Import des recettes
+    import: Import de recettes
     import_recipe_detail: Détail des recettes
     import_ingredient_detail: Détail des ingrédients
     import_insertion: Valider les recettes
+    import_step: Etapes
 
 form:
     add:

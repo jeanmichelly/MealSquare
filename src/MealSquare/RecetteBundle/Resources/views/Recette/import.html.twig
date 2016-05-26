@@ -1,7 +1,6 @@
 {# empty Twig template #}
 {% extends "MealSquareCommonBundle::layout.html.twig" %}
 
-
 {% block title %}
     {{ 'common.menu.recettes'|trans }} - {{ parent() }}
 {% endblock %}
@@ -17,20 +16,19 @@
             </nav>
 	        <div class="row">
 	        	<header class="s-title">
-	                <h2 class="ribbon bright">
-	                    {{ 'recettes.import'|trans }}
-	                </h2>
+	                <h1>{{ 'recettes.import'|trans({},'messages') }}</h1>
 	                <main class="cd-main-content">
-		                <h2 class="ribbon bright">
-		                    {{ 'recettes.import_recipe_detail'|trans }}
-		                </h2>
+		                <h2 class="ribbon bright">{{ 'recettes.import_recipe_detail'|trans }}</h2>
 	                    <div id="jsGrid-recette"></div>
-	                	<div id="insertion" class="button white medium">{{ 'recettes.import_insertion'|trans }}</div>
-	                	<div id="jsGrid-ingredient"></div>
-                    	<div class="container_section_step container">
-		                	<div id="container-sortable" style="display:none">   
-	                            <ol id="section_step" class='sortable'>
-	                            </ol>
+	                	<a href="#" id="insertion" class="button medium" style="margin-top:10px;float:right">{{ 'recettes.import_insertion'|trans }}</a>
+	                	<div id="container_ingredients" style="margin-top:60px;display:none;">
+	                		<h2 class="ribbon bright">{{ 'recettes.import_ingredient_detail'|trans }}</h2>
+	                		<div id="jsGrid-ingredient"></div>
+	                	</div>
+                    	<div id="container_section_step" class="container_section_step" style="display:none; margin-top:30px">
+                    		<h2 class="ribbon bright">{{ 'recettes.import_step'|trans }}</h2>
+		                	<div id="container-sortable" class="container">   
+	                            <ol id="section_step" class='sortable'></ol>
 	                            <div class="f-row full">
 	                                <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
 	                                <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
@@ -48,17 +46,10 @@
     <script charset="UTF-8"> 
         new WOW().init();
 
-        var recettes = [];
-
-        var ingredients = [];
-
-        var addIngredient = [];
-
-        var addSectionStep = [];
+        var recettes = [], ingredients = [], addIngredient = [], addSectionStep = [], ingredientField = [];
 
        	var ingredientsListe = "{{ ingredients|join(',') }}".split(",");
-	    var ingredientField = [];
-	    for(var i=0;i<ingredientsListe.length-1;i++){
+	    for ( var i=0;i<ingredientsListe.length-1;i++ ) {
 			ingredientField[i] = { Name: ingredientsListe[i]};
 	    }
 
@@ -129,19 +120,15 @@
 	    $("#jsGrid-recette").jsGrid({
 	        width: "100%",
 	        height: "auto",
-	 
 	        inserting: true,
 	        editing: true,
 	        sorting: true,
 	        paging: true,
-	 		
 	        editButton:true,
-
 	        data: recettes,
 	 
 	        fields: [
 	        	{ type: "control"},
-	            { name: "image_id", type: "text", width: 100},
 	            { name: "titre", type: "text", width: 200, validate: "required"},
 	            { name: "source", type: "text", width: 150},
 	            { name: "specialite", type: "select", items: specialite, valueField: "Name", textField: "Name" , width: 200},
@@ -156,18 +143,19 @@
 	            { itemTemplate: function(_, item) {
                     return $("<button>").text("Ajout des ingrédients")
                     	.on("click", function() {
+                    		$("#container_ingredients").show();
                     		$("#jsGrid-ingredient").jsGrid("destroy");
-	                    		var titre = item.titre;
-	                    		if(!addIngredient[titre]){addIngredient[titre] = [];}
-	                        	modifIngredient(titre);
-							});
+                    		var titre = item.titre;
+                    		if(!addIngredient[titre]){ addIngredient[titre] = []; }
+                        	modifIngredient(titre);
+						});
               	}, width: 200},
               	{ itemTemplate: function(_, item) {
                     return $("<button>").text("Ajout des sections et des étapes")
                     	.on("click", function() {
 							var titre = item.titre;
 							$("#validation").attr("value", titre);
-                    		if(!addSectionStep[titre]) {
+                    		if ( !addSectionStep[titre] ) {
                     			addSectionStep[titre] = [];
                     			modifSectionStep(titre);
                     		}
@@ -182,17 +170,17 @@
 	    $("#insertion").click(function() {
 	    	var ingredientsTemp = [];
 	    	var sectionstepTemp = [];
-	    	for (var key in addIngredient) {
+	    	for ( var key in addIngredient ) {
 			  	ingredientsTemp.push(addIngredient[key]);
 			}
-			for (var key in addSectionStep)	{
+			for ( var key in addSectionStep ) {
 				sectionstepTemp.push(addSectionStep[key]);
 			}
 	    	var data = { 
-	    					recettes:JSON.stringify(recettes),
-	    					ingredients:JSON.stringify(ingredientsTemp),
-	    					sectionstep:JSON.stringify(sectionstepTemp)
-	    				};
+				recettes:JSON.stringify(recettes),
+				ingredients:JSON.stringify(ingredientsTemp),
+				sectionstep:JSON.stringify(sectionstepTemp)
+			};
 	    	$.ajax({
             dataType: "json",
             type: 'post',
@@ -215,12 +203,10 @@
 			$("#jsGrid-ingredient").jsGrid({
 		        width: "100%",
 		        height: "auto",
-		 
 		        inserting: true,
 		        editing: true,
 		        sorting: true,
 		        paging: true,
-		 		
 		        editButton:true,
 
 		        onItemInserted: function(item){
@@ -235,7 +221,7 @@
 		        	{ name: "quantité", type:"number", width: 200, validate: { validator: "range", param: [1, 1000]}},
 		        	{ name: "mesure", type: "select", items: mesure, valueField: "Name", textField: "Name" , width: 200}
 		        ]
-		    	});
+		    });
 		}
 
         $("#add-section").click(function() {
@@ -256,12 +242,12 @@
         });
 
 		function modifSectionStep(titreRecette) {
-			$("#container-sortable").show();
+			$("#container_section_step").show();
 		}
 	    
 	    function getPreviousSectionStep(titreRecette) {
 	    	$("#section_step").html("");
-	    	$("#container-sortable").show();
+	    	$("#container_section_step").show();
 	    	var values = addSectionStep[titreRecette];
 	    	values = JSON.parse(values);
 			for(var i = 0; i < values[0].length; i++) {
@@ -295,14 +281,9 @@
     	$("#validation").click(function() {
     		var group = $("ol.sortable");
             var data = group.sortable("serialize").get();
-
             var jsonString = JSON.stringify(data, null, ' ');
 
             addSectionStep[$("#validation").attr("value")] = jsonString;
-
-            $("#container-sortable").hide();
-           	$("#section_step").html("");
     	});
-
     </script>
 {% endblock %}
