@@ -46,7 +46,7 @@
                                 <button id="add-ingredient" data-target="ingredient-field-list-add" class="add">{{ 'form.add.add_ingredient'|trans({},'messages') }}</button>
                             </div>
 
-                            <div id="ingredient-field-list-exclude" data-prototype="{{ _self.widget_prototype(form.exclude_ingredients, 'ingredient')|escape }}">
+                            <div id="ingredient-field-list-exclude" data-prototype="{{ _self.widget_prototype(form.exclude_ingredients, 'exclude_ingredient')|escape }}">
                             {% for widget in form.exclude_ingredients.children %}
                                     {{ _self.widget_prototype(widget, 'exclude_ingredient') }}
                             {% endfor %}
