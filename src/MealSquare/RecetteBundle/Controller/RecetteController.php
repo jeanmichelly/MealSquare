@@ -414,7 +414,9 @@ class RecetteController extends Controller {
             $usr     = $this->get('security.context')->getToken()->getUser();
             $recette->setAuteur($usr);
 
-            $recette->addRecetteBlock(new infosBlock($arraySectionStep[$i]));
+            if(isset($arraySectionStep[$i])){
+                $recette->addRecetteBlock(new infosBlock($arraySectionStep[$i]));
+            }
 
             $em->persist($recette);
             $em->flush();
