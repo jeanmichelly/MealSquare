@@ -28,12 +28,13 @@
 	                	<div id="insertion" class="button white medium">{{ 'recettes.import_insertion'|trans }}</div>
 	                	<div id="jsGrid-ingredient"></div>
                     	<div class="container_section_step container">
-		                	<div id="container-sortable">   
+		                	<div id="container-sortable" style="display:none">   
 	                            <ol id="section_step" class='sortable'>
 	                            </ol>
 	                            <div class="f-row full">
 	                                <a id="add-section" class="button add">{{ 'form.add.add_section'|trans({},'messages') }}</a>
 	                                <a id="add-step" class="button add">{{ 'form.add.add_step'|trans({},'messages') }}</a>
+	                                <a id="validation" class="button add" value="nom_recette">Valider</a>
 	                            </div>
 		                	</div>
 	                	</div>
@@ -165,8 +166,14 @@
                     return $("<button>").text("Ajout des sections et des étapes")
                     	.on("click", function() {
 							var titre = item.titre;
-                    		if(!addSectionStep[titre]){addSectionStep[titre] = [];}
-                        	modifSectionStep(titre);
+							$("#validation").attr("value", titre);
+                    		if(!addSectionStep[titre]) {
+                    			addSectionStep[titre] = [];
+                    			modifSectionStep(titre);
+                    		}
+                    		else {
+                    			getPreviousSectionStep(titre);
+                    		}
 						});
               	}, width: 200}
 	        ]
@@ -174,12 +181,17 @@
 
 	    $("#insertion").click(function() {
 	    	var ingredientsTemp = [];
+	    	var sectionstepTemp = [];
 	    	for (var key in addIngredient) {
 			  	ingredientsTemp.push(addIngredient[key]);
-			}	
+			}
+			for (var key in addSectionStep)	{
+				sectionstepTemp.push(addSectionStep[key]);
+			}
 	    	var data = { 
 	    					recettes:JSON.stringify(recettes),
-	    					ingredients:JSON.stringify(ingredientsTemp)
+	    					ingredients:JSON.stringify(ingredientsTemp),
+	    					sectionstep:JSON.stringify(sectionstepTemp)
 	    				};
 	    	$.ajax({
             dataType: "json",
@@ -218,10 +230,10 @@
 		        data: addIngredient[titreRecette],
 		 
 		        fields: [
+		        	{ type: "control"},
 		        	{ name: "ingredient", type: "select", items: ingredientField, valueField: "Name", textField: "Name" , width: 200},
 		        	{ name: "quantité", type:"number", width: 200, validate: { validator: "range", param: [1, 1000]}},
-		        	{ name: "mesure", type: "select", items: mesure, valueField: "Name", textField: "Name" , width: 200},
-		        	{ type: "control"}
+		        	{ name: "mesure", type: "select", items: mesure, valueField: "Name", textField: "Name" , width: 200}
 		        ]
 		    	});
 		}
@@ -247,6 +259,50 @@
 			$("#container-sortable").show();
 		}
 	    
+	    function getPreviousSectionStep(titreRecette) {
+	    	$("#section_step").html("");
+	    	$("#container-sortable").show();
+	    	var values = addSectionStep[titreRecette];
+	    	values = JSON.parse(values);
+			for(var i = 0; i < values[0].length; i++) {
+				var sectionStep = values[0][i];
+		        if (sectionStep.sectionName) {
+		            $("#section_step").append("<li class=\"section\" data-section-name=\"" + sectionStep.sectionName + "\"><input class=\"edit-section\" type=\"text\" style=\"width:500px !important;\" value=\"" + sectionStep.sectionName + "\" title=\"Renommer la section\"/> <a class=\"button remove-section\">-</a><ol id=\"step_list"+i+"\">");
+		                    jQuery.each(sectionStep, function(key, value) {
+		                    	if(key == "children") {
+		                    		for(var j = 0; j < value[0].length; j++) {
+		                    			var step = value[0][j];
+				                    	jQuery.each(step, function(k, v) {
+				                    		if(k == "stepName") {
+					                            if (v) {
+					                                $("#step_list"+i).append("<li class=\"step\" data-step-name=\"" + v + "\"><input class=\"edit-step\" type=\"text\" style=\"width:500px !important;\" value=\"" + v + "\" title=\"Renommer l'étape\"/> <a class=\"button remove-step\">-</a></li>");
+					                            }
+					                        }
+				                        });
+				                    }
+			                    }
+		                    });
+		                $("#section_step").append("</ol>");
+		            $("#section_step").append("</li>");
+		        }
+		        else {
+		            $("#section_step").append("<li class=\"step\" data-step-name=\"" + sectionStep.stepName + "\"><input class=\"edit-step\" type=\"text\" style=\"width:500px !important;\" value=\"" + sectionStep.stepName + "\" title=\"Renommer l'étape\"/> <a class=\"button remove-step\">-</a></li>");
+		        }
+		    }
+
+	    }
+
+    	$("#validation").click(function() {
+    		var group = $("ol.sortable");
+            var data = group.sortable("serialize").get();
+
+            var jsonString = JSON.stringify(data, null, ' ');
+
+            addSectionStep[$("#validation").attr("value")] = jsonString;
+
+            $("#container-sortable").hide();
+           	$("#section_step").html("");
+    	});
 
     </script>
 {% endblock %}

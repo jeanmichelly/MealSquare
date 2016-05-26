@@ -392,6 +392,9 @@ class RecetteController extends Controller {
         $jsonIngredients = $this->get('request')->request->get('ingredients');
         $arrayIngredients = json_decode($jsonIngredients, true);
 
+        $jsonSectionStep = $this->get('request')->request->get('sectionstep');
+        $arraySectionStep = json_decode($jsonSectionStep, true);
+
         for ($i=0; $i < count($arrayRecettes); $i++) { 
             $recette = new Recette();
             //champs obligatoires
@@ -410,6 +413,8 @@ class RecetteController extends Controller {
 
             $usr     = $this->get('security.context')->getToken()->getUser();
             $recette->setAuteur($usr);
+
+            $recette->addRecetteBlock(new infosBlock($arraySectionStep[$i]));
 
             $em->persist($recette);
             $em->flush();
@@ -439,7 +444,7 @@ class RecetteController extends Controller {
         }
 
         $response = new Response();
-        $response->setContent(json_encode(array("success"=>true, "recettes"=>$arrayRecettes, "ingredients"=>$arrayIngredients)));
+        $response->setContent(json_encode(array("success"=>true, "recettes"=>$arrayRecettes, "ingredients"=>$arrayIngredients, "sectionstep"=>$arraySectionStep)));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
