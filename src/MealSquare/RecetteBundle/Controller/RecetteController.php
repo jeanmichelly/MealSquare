@@ -355,10 +355,30 @@ class RecetteController extends Controller {
             $em->flush();
 
             
-            if(!$recette->getArchive())
+            if(!$recette->getArchive()) {
+                $badge = $usr->getBadges();
+                $badgePremiereRecette = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Première recette");
+                if(!$badge->contains($badgePremiereRecette)){
+                    $usr->addBadge($badgePremiereRecette);
+
+                    $em->persist($usr);
+                    $em->flush();
+                }
+                $recetteUser = $em->getRepository("MealSquareRecetteBundle:Recette")->findByAuteur($usr->getId());
+                if(count($recetteUser) > 4) {
+                    $badgeMultiRecettes = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Multi-recettes");
+                    if(!$badge->contains($badgeMultiRecettes)){
+                        $usr->addBadge($badgeMultiRecettes);
+
+                        $em->persist($usr);
+                        $em->flush();
+                    } 
+                }
                 return $this->redirect( $this->generateUrl( 'meal_square_recette_show', array('id' => $recette->getId()) ));
-            else
+            }
+            else {
                 return $this->redirect( $this->generateUrl('fos_user_profile_show'));
+            }
 
         }
 
@@ -443,6 +463,24 @@ class RecetteController extends Controller {
                     }
                 }
             }
+        }
+        $badge = $usr->getBadges();
+        $badgePremiereRecette = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Première recette");
+        if(!$badge->contains($badgePremiereRecette)){
+            $usr->addBadge($badgePremiereRecette);
+
+            $em->persist($usr);
+            $em->flush();
+        }
+        $recetteUser = $em->getRepository("MealSquareRecetteBundle:Recette")->findByAuteur($usr->getId());
+        if(count($recetteUser) > 4) {
+            $badgeMultiRecettes = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Multi-recettes");
+            if(!$badge->contains($badgeMultiRecettes)){
+                $usr->addBadge($badgeMultiRecettes);
+
+                $em->persist($usr);
+                $em->flush();
+            } 
         }
 
         $response = new Response();
@@ -617,7 +655,16 @@ class RecetteController extends Controller {
             'MealSquareRecetteBundle:Recette:comment.html.twig', 
             array( 'comment' => $comment )
         );
-        
+
+        $badge = $user->getBadges();
+        $badgeFirstComment = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Premier commentaire");
+        if(!$badge->contains($badgeFirstComment)){
+            $user->addBadge($badgeFirstComment);
+
+            $em->persist($user);
+            $em->flush();
+        }
+
         $response = new Response();
         $response->setContent(json_encode($rendered));
         $response->headers->set('Content-Type', 'application/json');

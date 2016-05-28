@@ -39,9 +39,27 @@ class AsynchroneController extends Controller
                     ));
         
         if(is_null($like)){
-            $like = new Like($em->getRepository('MealSquareRecetteBundle:Like\LikeThread')->findOneById($thread),$user);
+
+            $likeThread = $em->getRepository('MealSquareRecetteBundle:Like\LikeThread')->findOneById($thread);
+
+            $recette = $em->getRepository("MealSquareRecetteBundle:Recette")->findOneByLike($likeThread);
+            $auteurID = $recette->getAuteur();
+            $auteur = $em->getRepository("ApplicationSonataUserBundle:User")->findOneById($auteurID);
+
+            $like = new Like($likeThread,$user);
             $em->persist($like);
             $em->flush($like);
+
+            if($likeThread->getNumLikes() > 4) {
+                $badge = $auteur->getBadges();
+                $badgeMeilleureRecette = $em->getRepository("ApplicationSonataUserBundle:Badge")->findOneByNom("Meilleure recette");
+                if(!$badge->contains($badgeMeilleureRecette)){
+                    $auteur->addBadge($badgeMeilleureRecette);
+
+                    $em->persist($auteur);
+                    $em->flush();
+                } 
+            }
         }
         else{
             $em->remove($like);
