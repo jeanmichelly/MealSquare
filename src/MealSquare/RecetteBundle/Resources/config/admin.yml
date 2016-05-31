@@ -18,6 +18,14 @@ services:
         calls:
             - [ setTranslationDomain, [MealSquareRecetteBundle]]
 
+    mealsquare.admin.ingredientRecette:
+        class: MealSquare\RecetteBundle\Admin\IngredientRecetteAdmin
+        arguments: [~, MealSquare\RecetteBundle\Entity\IngredientRecette, SonataAdminBundle:CRUD, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: IngredientRecette}
+        calls:
+            - [ setTranslationDomain, [MealSquareRecetteBundle]]
+
     mealsquare.admin.ingredient:
         class: MealSquare\RecetteBundle\Admin\IngredientAdmin
         arguments: [~, MealSquare\RecetteBundle\Entity\Ingredient, SonataAdminBundle:CRUD]

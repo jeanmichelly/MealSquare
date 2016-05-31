@@ -19,6 +19,7 @@ class InfosBlockAdmin extends Admin
             ->add('id')
             ->add('description')
             ->add('lien')
+            ->add('recette','sonata_type_model_hidden')
         ;
     }
 
@@ -31,6 +32,7 @@ class InfosBlockAdmin extends Admin
             ->add('id')
             ->add('description')
             ->add('lien')
+            ->add('recette','sonata_type_model_hidden')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -49,6 +51,7 @@ class InfosBlockAdmin extends Admin
         $formMapper
             ->add('description')
             ->add('lien')
+            ->add('recette','sonata_type_model_hidden')
             ->add('image', 'sonata_type_model_list', array('required' => false), array(
                     'link_parameters' => array(
                         'context' => 'recette',
@@ -67,6 +70,7 @@ class InfosBlockAdmin extends Admin
             ->add('id')
             ->add('description')
             ->add('lien')
+            ->add('recette','sonata_type_model_hidden')
         ;
     }
 }

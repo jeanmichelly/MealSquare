@@ -31,17 +31,6 @@ class RecetteAdmin extends Admin
                             'hide_context' => true
                         )
                     ))
-
-                    ->add('categorie', 'sonata_type_model_list', array('required' => false), array(
-                        'link_parameters' => array(
-                            'context' => 'recette',
-                            'hide_context' => true
-                        )
-                    ))
-                    ->add('tags', 'sonata_type_model_autocomplete', array(
-                        'property' => 'name',
-                        'multiple' => 'true'
-                    ))
                 ->end()
                 ->with('Stats', array(
                         'class' => 'col-md-4'
@@ -69,7 +58,13 @@ class RecetteAdmin extends Admin
                     ->add('recetteBlocks', 'sonata_type_collection', array(), array(
                              'edit' => 'inline',
                              'sortable'  => 'position'
-
+                    ))
+                ->end()
+            ->end()
+            ->tab('Ingredients')
+                ->with('Recette')
+                    ->add('ingredients', 'sonata_type_collection', array(), array(
+                            'edit' => 'inline'
                     ))
                 ->end()
             ->end()

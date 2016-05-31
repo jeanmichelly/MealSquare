@@ -54,7 +54,7 @@ class InfosBlock
      */
     protected $recette;
     
-    function __construct($description) {
+    function __construct($description = null) {
         $this->type = "sectionStep";
         $this->description = $description;
     }

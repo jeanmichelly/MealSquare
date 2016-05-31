@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class IngredientAdmin extends Admin
+class IngredientRecetteAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,8 +17,10 @@ class IngredientAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('libelle')
-            ->add('description')
+            ->add('ingredient')
+            ->add('recette','sonata_type_model_hidden')
+            ->add('quantite')
+            ->add('unitMeasurement')
         ;
     }
 
@@ -28,9 +30,11 @@ class IngredientAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('custom', 'string', array('template' => 'MealSquareCommonBundle:Admin:list_imagefield_custom.html.twig', 'label' => 'Image'))
             ->add('id')
-            ->add('libelle')
+            ->add('ingredient')
+            ->add('recette','sonata_type_model_hidden')
+            ->add('quantite')
+            ->add('unitMeasurement')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -47,15 +51,23 @@ class IngredientAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('libelle')
-            ->add('description')
-            ->add('image', 'sonata_type_model_list', array('required' => false), array(
-                    'link_parameters' => array(
-                        'context' => 'ingredient',
-                        'hide_context' => true
-                    )
-                ))
-            
+            ->add('ingredient')
+            ->add('recette','sonata_type_model_hidden')
+            ->add('quantite')
+            ->add('unitMeasurement','choice', array(
+                'choices' => array(
+                    '' => '',
+                    'mg' => 'mg',
+                    'g' => 'g',
+                    'kg' => 'kg',
+                    'ml' => 'ml',
+                    'l' => 'l',
+                    'kl'=> 'kl',
+                    'pincée(s)' => 'pincée(s)',
+                    'cuillère(s) à soupe' => 'cuillère(s) à soupe',
+                    'cuillère(s) à café' => 'cuillère(s) à café'
+                )
+            ))
         ;
     }
 
@@ -66,8 +78,10 @@ class IngredientAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('libelle')
-            ->add('description')
+            ->add('ingredient')
+            ->add('recette','sonata_type_model_hidden')
+            ->add('quantite')
+            ->add('unitMeasurement')
         ;
     }
 }
