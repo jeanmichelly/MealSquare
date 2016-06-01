@@ -304,6 +304,7 @@ class RecetteController extends Controller {
                 $recette->setSaison($this->manageAttribut('saison',$recette->getSaison()));
                 $recette->setSpecialite($this->manageAttribut('specialite',$recette->getSpecialite()));
                 $recette->setType($this->manageAttribut('type',$recette->getType()));
+                $recette->getRecetteBlocks()[0]->setDescription($form->get("sectionStep")->getData());
             
                 $em->persist($recette);
                 $em->flush();  
@@ -545,6 +546,7 @@ class RecetteController extends Controller {
                 $clone->setSpecialite($this->manageAttribut('specialite',$clone->getSpecialite()));
                 $clone->setType($this->manageAttribut('type',$clone->getType()));
                 $clone->setAuteur($usr);
+                $clone->getRecetteBlocks()[0]->setDescription($form->get("sectionStep")->getData());
                 
                 $em     ->persist($clone);
                 $em     ->flush(); 
