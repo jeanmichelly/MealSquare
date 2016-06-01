@@ -99,9 +99,15 @@
                                 <div>
                                     {{ form_errors(form.ingredients) }}
                                     <div id="ingredient-field-list" data-prototype="{{ _self.widget_prototype(form.ingredients, 'ingredient')|escape }}">
-                                    {% for widget in form.ingredients.children %}
-                                        {{ _self.widget_prototype(widget, 'ingredient') }}
-                                    {% endfor %}
+                                    {% if isVersion is not defined %}
+                                        {% for widget in form.ingredients.children %}
+                                            {{ _self.widget_prototype(widget, 'ingredient') }}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for widget in form.ingredients.children %}
+                                            {{ _self.widget_prototype(widget, 'ingredient-edit') }}
+                                        {% endfor %}
+                                    {% endif %}
                                     </div>
                                 </div>
                                 <div class="f-row full">
@@ -220,6 +226,14 @@
             <div class="fourth">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
             <div class="fourth">{{ form_widget(row.quantite, { 'attr': {'placeholder': 'form.add.quantity'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
             <div class="fourth">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <button data-related="{{ name }}"  id="remove-ingredient" class="remove fourth">-</button>
+        </div>
+    {% endif %}
+    {% if field == 'ingredient-edit' %}
+        <div class="f-row ingredient" data-content="{{ name }}">
+            <div class="fourth" style="width:450px">{{ form_widget(row.ingredient, { 'attr': {'placeholder': 'form.add.ingredient'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <div class="fourth" style="width:160px">{{ form_widget(row.quantite, { 'attr': {'placeholder': 'form.add.quantity'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
+            <div class="fourth" style="width:450px">{{ form_widget(row.unitMeasurement, { 'attr': {'placeholder': 'form.add.unitMeasurement'|trans({},'messages'), 'class': 'field_ingredient'} }) }}</div>
             <button data-related="{{ name }}"  id="remove-ingredient" class="remove fourth">-</button>
         </div>
     {% endif %}

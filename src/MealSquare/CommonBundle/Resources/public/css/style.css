@@ -195,7 +195,7 @@ tr:nth-child(2n+1) td{background:#f6f6f6;}
 /*BUTTONS*/
 .button 			{border:none;display:inline-block;text-decoration:none !important;position:relative;background:#3876A3;color:#fff !important;text-align:center;font-size:13px;font-weight:700;padding:11px 14px;min-width:80px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;text-transform:uppercase;}
 .button:hover, 
-.button:focus 	{background:#2C71A3;-webkit-box-shadow:inset 0 0 30px rgba(0,0,0,.2);-moz-box-shadow:inset 0 0 30px rgba(0,0,0,.2);box-shadow:inset 0 0 30px rgba(0,0,0,.2);}
+.button:focus 	{background:#2C71A3;-webkit-box-shadow:inset 0 0 30px rgba(0,0,0,.2);-moz-box-shadow:inset 0 0 30px rgba(0,0,0,.2);box-shadow:inset 0 0 30px rgba(0,0,0,.2);cursor:pointer;}
 #button_compose_message {background-color:#d9534f;border-color:#d43f3a}
 .button_nav_left {border:none;display:inline-block;text-decoration:none !important;position:relative;color:#fff;font-size:13px;font-weight:700;padding:11px 14px;min-width:80px;-webkit-border-radius:0px;-moz-border-radius:0px;border-radius:0px;text-transform:uppercase;width:100%;}
 .button_nav_left_dark {background:#3876A3;}
