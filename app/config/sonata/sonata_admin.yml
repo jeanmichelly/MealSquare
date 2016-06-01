@@ -57,12 +57,12 @@ sonata_admin:
                     - mealsquare.admin.ingredient
                     - mealsquare.admin.raccourci
                     
-            sonata.admin.group.news:
-                label:           Actualité
-                label_catalogue: SonataNewsBundle
-                icon:            '<i class="fa fa-newspaper-o"></i>'
-                items:
-                    - sonata.news.admin.post
+#            sonata.admin.group.news:
+#                label:           Actualité
+#                label_catalogue: SonataNewsBundle
+#                icon:            '<i class="fa fa-newspaper-o"></i>'
+#                items:
+#                    - sonata.news.admin.post
                     
             sonata.admin.group.media:
                 label:           Mediatheque

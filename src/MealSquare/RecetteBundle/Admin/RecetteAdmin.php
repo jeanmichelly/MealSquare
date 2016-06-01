@@ -19,6 +19,7 @@ class RecetteAdmin extends Admin
                     ))
                     ->add('auteur', 'sonata_type_model_list')
                     ->add('titre')
+                    ->add('description')
                     ->add('source')
                     ->add('nbPersonne')
                     ->add('saison')
