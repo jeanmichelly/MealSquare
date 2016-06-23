@@ -1,5 +1,5 @@
 
-<img alt="MealSquare logo" width="300px" src="http://mealsquare.ovh/images/ico/logo.jpg"><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/12/1418948033symfony-logo.png" alt="Logo Foodsquare" width="40px"/>
+<img alt="MealSquare logo" width="300px" src="http://img11.hostingpics.net/pics/266409logo.png"><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/12/1418948033symfony-logo.png" alt="Logo Foodsquare" width="40px"/>
 MealSquare
 ========================
 
