@@ -87,12 +87,3 @@ familiariser avec toutes les fonctionnalités de la plateforme.
 ## License
 
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
-
-
-## Etude du projet
-
-* [Analyse de l'Existant](https://docs.google.com/document/d/1Uv1NDfb1atww4CNMw8XGFCvzRu5vdyqzPKRxzmqLEl0/edit?usp=sharing)
-* [Cahier Des Charges](https://docs.google.com/document/d/1DRC2f4Y-OtlTN77_CravyZIK4N0oOoOeETYOGEfbWnU/edit?usp=sharing)
-* [Architecture Logicielle](https://docs.google.com/document/d/1jTZSYPerp4HDEJnJPzsXd3Ee_ruQsMtXpYt1XhoVcfo/edit?usp=sharing)
-* [Spécification de l'interface utilisateur](https://docs.google.com/document/d/10oR_p8ySDrjrTTO1yAA97ZWhjM9BcM05QfRdyvNYo4s/edit?usp=sharing)
-* [Mise au point jeux de tests](https://docs.google.com/document/d/1yaWnDB80-zMD3zqK-55QwSvKKyfgeCKJuGWoFhm1cQM/edit?usp=sharing)
