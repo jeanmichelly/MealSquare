@@ -1,6 +1,5 @@
 
-<img alt="MealSquare logo" width="300px" src="http://img11.hostingpics.net/pics/266409logo.png"><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/12/1418948033symfony-logo.png" alt="Logo Foodsquare" width="40px"/>
-MealSquare
+<img alt="MealSquare logo" width="300px" src="http://image.noelshack.com/fichiers/2018/39/6/1538241417-logo.png"><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/12/1418948033symfony-logo.png" alt="Logo Foodsquare" width="40px"/>
 ========================
 
 MealSquare est une application web de gestion de recette MARMITON like. Développé avec le framework PHP [Symphony2](http://symfony.com/), il permettra d'apporter en plus une multitude de fonctionnalités.
